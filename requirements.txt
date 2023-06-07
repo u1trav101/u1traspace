@@ -1,0 +1,10 @@
+boto3==1.26.102
+celery[redis]==5.2.7
+flask==2.3.2
+flask-misaka==1.0.0
+flask-paginate==2022.1.8
+flask-simple-captcha==1.1.1
+flask-wtf==1.1.1
+mariadb==1.1.6
+pillow==9.0.1
+python-magic==0.4.27

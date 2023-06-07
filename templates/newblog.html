@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{cdn_uri}}/static/css/profile.css">
+
+{% endblock %}
+{% block body %}
+<div id="container">
+    <div id="pageNav">
+        <div class="relatedLinks">
+            <h3>Writing blog posts:</h3>
+            <span>Text limit is 3500 chars.</span>
+            <p><span>Embedding images, URLs, etc is supported, using <a href="/faq#markdown">Markdown.</a></span>
+
+        </div>
+        <div class="relatedLinks">
+            <h3>Basic Markdown syntax:</h3>
+            <h2>Embed URLs:</h2>
+            <span><code>[text for link](http://example.cx)</code></span>
+            <h2>Embed images:</h2>
+            <span><code>![alt text](http://example.cx/hello.jpg)</code></span>
+            <h2>Italicized text:</h2>
+            <span><code>*italy*</code></span>
+            <h2>Bold text:</h2>
+            <span><code>**bold text**</code></span>
+        </div>
+
+
+    </div>
+    <div id="content">
+        <div id="breadCrumb">
+            <p><a href="/blog">Blogs</a> / <a href="#">New Post</a> /</p>
+        </div>
+
+        <div class="mainContent">
+            <table cellpadding="0" cellspacing="" summary="">
+                <tr valign="top">
+                <tr>
+                    <td class="tableLeft newBlog_tl">
+                        <a href="/id/{{session['user_id']}}">
+                            <img class="" width="100"
+                                src="{{cdn_uri}}/usercontent/img/rsz/100px/{{session.get('user_id')}}.gif">
+                        </a>
+                    </td>
+                    <td class="tableRight newBlog_tr">
+                        <div>
+                            <form action="" method="post" novalidate>
+                                {{ form.hidden_tag() }}
+                                <p><span><u>Title:</u></span></p>
+                                <p>{{ form.title(size=32, style="width: auto; margin-top: 0px; padding-top: 0px;",placeholder='title') }}
+                                </p>
+                                {% for error in form.title.errors %}
+                                <marquee direction="left"><strong style="color: red;">!!!{{ error }}!!!</span></marquee>
+                                {% endfor %}
+                                <p class="comText">
+                                    <p><span><u>Corpus:</u></span></p>
+                                    {{ form.corpus(cols=70, rows=20, style="width: auto; margin-top: 0px; padding-top: 0px;", placeholder="post contents") }}
+                                    {% for error in form.corpus.errors %}
+                                    <marquee direction="left"><strong style="color: red;">!!!{{ error }}!!!</span>
+                                    </marquee>
+                                    {% endfor %}
+                        </div>
+                            {{ form.submit() }}
+                        </td>
+                </tr>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div id="siteInfo">
+        <a href="/">Index</a> | <a href="mailto:admin@chiyo.org">Mail</a> | <a href="/news">News</a> ⑨ 2004 MARISASPACE
+    </div>
+</div>
+
+<br>
+</body>
+
+</html>
+
+{% endblock %}

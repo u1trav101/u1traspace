@@ -1,0 +1,10 @@
+.blogAvi {
+    display: table;
+}
+
+.blogContents {
+    width: 100%;
+}
+.comText * {
+    display:unset;
+}

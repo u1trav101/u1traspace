@@ -1,0 +1,178 @@
+#content {
+    border: none;
+    margin: 0;
+}
+
+.notifsRight,
+.notifsLeft {
+    padding: 8px;
+}
+
+.notifsLeft {
+    width: 420px;
+}
+
+.notifsRight {
+    display:table;
+    width: 420px;
+}
+
+.comment {
+    background-color: rgba(200, 200, 0, 0.1);
+    width: 100%;
+    word-wrap: anywhere;
+    padding-right: 100%;
+    border: 1px #281d3b solid;
+    padding: 2px 0px 0px 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: text-top;
+    vertical-align: top;
+}
+
+.comment img {
+    max-height: 420px;
+    /* hehehe */
+}
+
+.comText,
+.comInfo {
+    vertical-align: top;
+    top: 0;
+    bottom: 0;
+    margin-top: 0px;
+}
+.comInfo {
+    display: contents;  
+}
+
+
+
+.list * {
+    margin: 4px;
+}
+
+
+textarea,
+textarea:focus,
+input,
+button {
+    outline: none;
+    box-shadow: none !important;
+    border: 1px solid #281d3b;
+    margin-top: 10px;
+    color: #281d3b;
+}
+
+.deleteButton {
+    display: inline;
+}
+
+.deleteButton button, .friendActions {
+    font-size: xx-small;
+    margin-top: unset;
+    margin-bottom:unset;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+.comText b,
+.comInfo b {
+    color: #281d3b !important;
+    font-size: 10px !important;
+    font-weight: bold !important;
+}
+
+.comText a,
+.comInfo a {
+    color: green !important;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+td {
+    vertical-align: top;
+}
+
+
+
+.newMsg img {
+    margin: 2px;
+	float:left;
+}
+
+.newMsg span {
+    margin-left: 2px;
+}
+
+.newMsg * {
+	margin-left: 2px;
+	vertical-align: top;
+  }
+.newMsg {
+    padding: 2px;
+    background-color: rgba(200, 200, 0, 0.1);
+	vertical-align: top;
+    width: 100%;
+    margin-bottom: 4px;
+	display: table;
+}
+
+
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.userlist {
+    text-align: left;
+    padding: 4px;
+}
+
+.userlist p>u,
+.userlist p>a,
+.userlist img {
+    display: block;
+    color: green !important;
+}
+
+
+.userelement {
+    background-color: rgba(200, 200, 0, 0.1);
+
+}
+
+
+.userelement span {
+    color: #281d3b !important;
+    text-decoration: none;
+}
+
+.userlist center{
+  padding: 8px;
+  margin: 4px;
+  margin-bottom: 4px;
+  padding-bottom: 0px;
+}
+
+.elementtext {
+    display: contents;
+}
+
+.userAvi {
+    width: 80px;
+}
+
+.onlineIndicator{
+    width:80px;
+}
+
+h3 {
+    font-size: large !important;
+}

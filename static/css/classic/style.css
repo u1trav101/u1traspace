@@ -1,0 +1,472 @@
+.fixed {
+  width: 850px;
+  background-image: url("https://sys.chiyo.org/static/img/classic/bg.gif");
+  border-style: dashed;
+  border-width: 1px;
+  border-color: #ffffff;
+  margin: auto;
+  margin-bottom: 8px;
+  height: auto;
+  position: relative;
+  overflow: true;
+  overflow-x: hidden;
+}
+
+img {
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  image-orientation: from-image;
+}
+
+.blogposts {
+  background-color: black;
+  background-image: url("https://sys.chiyo.org/static/img/classic/bg2.gif");
+}
+
+@keyframes rainbow {
+  0% {
+    color: pink;
+  }
+
+  11% {
+    color: orange;
+  }
+
+  22% {
+    color: yellow;
+  }
+
+  33% {
+    color: lightgreen;
+  }
+
+  44% {
+    color: cyan;
+  }
+
+  55% {
+    color: deepskyblue;
+  }
+
+  66% {
+    color: mediumslateblue;
+  }
+
+  77% {
+    color: violet;
+  }
+
+  88% {
+    color: hotpink;
+  }
+
+  100% {
+    color: pink;
+  }
+}
+
+.unameName {
+  display: contents;
+}
+
+.rainbow {
+  animation: rainbow 1s infinite;
+}
+
+body {
+  background-image: url("https://sys.chiyo.org/static/img/classic/starfield_bg.gif");
+  overflow-x: hidden;
+}
+
+.navigation {
+  padding-bottom: 4px;
+}
+
+.uname {
+  border: dotted;
+  border-width: 2px;
+  border-color: #ffffff;
+  width: 49%;
+  height: 400px;
+  text-align: center;
+  padding-top: 20px;
+  float: left;
+
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #202020;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #505050;
+  border: solid;
+  border-width: 1px;
+  border-color: #1b1b1b;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #979797;
+
+}
+
+.notif {
+  text-decoration: none;
+}
+
+@keyframes newComments {
+  from {
+    color: violet;
+  }
+
+  to {
+    color: lavender;
+  }
+}
+
+@keyframes newFriends {
+  from {
+    color: yellow;
+  }
+
+  to {
+    color: orange;
+  }
+}
+
+
+@keyframes newMessages{
+  0%{		color: lavender;	}
+  50%{	color: red;	}
+}
+
+.comNotif {
+  animation: linear 0.1s newComments infinite alternate-reverse;
+}
+
+
+.msgNotif {
+  animation: linear 0.3s newMessages infinite alternate-reverse;
+}
+
+.frNotif {
+  animation: linear 0.1s newFriends infinite alternate-reverse;
+}
+
+.age {
+  margin: 0;
+}
+
+.addFriend {
+  margin: 0;
+}
+
+.allFriends {
+  display: block;
+  justify-content: center;
+}
+
+.friendReq {
+  padding: 8px;
+  display: inline-block;
+}
+
+
+.blogs {
+  border: dotted;
+  position: relative;
+  border-width: 2px;
+  border-color: #ffffff;
+  width: 49%;
+  text-align: center;
+  height: 400px;
+  padding-bottom: 20px;
+  float: right;
+  overflow: true;
+  overflow-x: hidden;
+  /* width */
+}
+
+.friends {
+  position: sticky;
+  padding: 4px;
+  bottom: 0px;
+  left: 0px;
+  height: max-content;
+  width: 100%;
+  background-image: url("https://sys.chiyo.org/static/img/classic/bg2.gif");
+}
+
+.indFriend {}
+
+.friend {
+  display: table-cell;
+  padding: 8px;
+
+}
+
+
+.blogposts {
+  border: dotted;
+  border-width: 2px;
+  border-color: #ffffff;
+  width: 60%;
+  text-align: center;
+  padding-top: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: table;
+  margin-bottom: 4px;
+}
+
+.avatar {
+  border: solid;
+  border-width: 1px;
+  border-color: #ffffff;
+  height: 200px;
+  width: 200px;
+}
+
+a:hover {
+  opacity: 75%;
+}
+
+.usercontent {
+  margin: auto;
+  width: 98%;
+}
+
+.marisaspace_text {
+  padding-right: 10px;
+}
+
+.login {
+  border: dashed;
+  border-width: 2px;
+  border-color: #ffffff;
+  width: 40%;
+  text-align: center;
+  margin-top: 1%;
+  background-image: url("https://sys.chiyo.org/static/img/classic/bg2.gif");
+  padding: 8px;
+  padding-top: 0px;
+  margin-bottom: 8px;
+}
+
+.notfound {
+  border: dashed;
+  border-width: 2px;
+  border-color: #ffffff;
+  width: 40%;
+  text-align: center;
+  margin-top: 1%;
+  background-image: url("https://sys.chiyo.org/static/img/classic/bg2.gif");
+}
+
+.musics {
+  padding-top: 2%;
+}
+
+@keyframes blink_a {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.blink {
+  animation: blink_a 0.5s linear infinite;
+}
+
+@keyframes hue {
+  0% {
+    filter: hue-rotate(0);
+  }
+
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+.hue_a {
+  animation: hue 5s linear infinite;
+}
+
+.border {
+  border: solid;
+  border-width: 1px;
+  border-color: #ffffff;
+  width: 12%;
+  text-align: center;
+}
+
+.about {
+  text-align: center;
+  border: dotted;
+  border-width: 2px;
+  border-color: #ffffff;
+  height: 260px;
+  width: 70%;
+  float: right;
+  margin-top: 4px;
+  overflow: true;
+  overflow-x: hidden;
+}
+
+.status {
+  text-align: center;
+  border: dotted;
+  border-width: 2px;
+  border-color: #ffffff;
+  height: 260px;
+  width: 28%;
+  float: left;
+  margin-top: 4px;
+  overflow: true;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.aboutuser {}
+
+.commentbox {
+  text-align: center;
+  border: dotted;
+  border-width: 2px;
+  border-color: #ffffff;
+  height: 290px;
+  width: 54%;
+  float: right;
+  margin-top: 4px;
+  overflow: true;
+  overflow-x: hidden;
+}
+
+.commentform {
+  text-align: center;
+  border: dotted;
+  border-width: 2px;
+  border-color: #ffffff;
+  height: 290px;
+  width: 44%;
+  float: left;
+  margin-top: 4px;
+  overflow: true;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.commentform_body {
+  padding-right: 8px;
+  padding-left: 8px;
+  padding-bottom: 8px;
+}
+
+.comment {
+  border: dashed;
+  border-color: #ffffff;
+  border-width: 1px;
+  margin-left: 8px;
+  text-align: left;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  position: relative;
+  height: auto%;
+  position: relative;
+  overflow: extend;
+  overflow-x: hidden;
+}
+
+.commentbox_top {
+  height: 15px;
+  padding-bottom: 4px;
+  float: right;
+}
+
+.preferences {
+  border: dashed;
+  border-width: 2px;
+  border-color: #ffffff;
+  width: 80%;
+  text-align: center;
+  margin-top: 1%;
+  background-image: url("https://sys.chiyo.org/static/img/classic/bg2.gif");
+  padding: 8px;
+  padding-top: 0px;
+  margin-bottom: 8px;
+}
+
+textarea,
+input {
+  background-color: black;
+  color: white;
+}
+
+.blogdel_a {
+  opacity: 75%;
+  background-color: black;
+}
+
+.r_text {
+  color: #ffffff;
+}
+
+/* userlist fix by Felix170905 [id: 31] */
+.userlist {
+  width: calc(100% - 30px);
+  padding-top: 8px;
+}
+
+.userlist font {
+  display: flex;
+  margin-left: -8px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.location {
+  margin: 0;
+}
+
+.userlist p {
+  width: 130px;
+  margin: 8px 0;
+  height: 60px;
+  margin-top: 2%;
+  display: inline-block;
+  overflow-wrap: break-word;
+}
+
+.userlist p>u,
+.userlist p>a {
+  display: block;
+}
+
+/* end userlist fix */
+.notfound {
+  border: dashed;
+  border-width: 2px;
+  border-color: #ffffff;
+  width: 40%;
+  text-align: center;
+  margin-top: 1%;
+  background-image: url("https://sys.chiyo.org/static/img/classic/bg2.gif");
+}
+
+.usrsearch p {
+  display: contents;
+}
+
+.usrsearch {
+  padding-left: 8px;
+  padding-top: 8px;
+}

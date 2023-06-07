@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block body %}
+<link rel="stylesheet" href="{{cdn_uri}}/static/css/profile.css">
+<link rel="stylesheet" href="{{cdn_uri}}/static/css/register.css">
+
+<div id="container">
+    <div id="breadCrumb">
+        <p> / <a href="#">auth</a> / <a href="#">Register</a>
+        </p>
+    </div>
+
+    <center>
+        <div id="content">
+            <div class="mainContent">
+                <table summary="" cellspacing="" cellpadding="0">
+                    <tbody>
+                        <tr valign="top">
+                        </tr>
+                        <tr>
+                            <td class="tableLeft registerLeft">
+                                <u>
+                                    <h2>welcome to the watering hole</h2>
+                                </u>
+                                <form action="/auth/register" method="post" novalidate>
+                                    {{ form.hidden_tag() }}
+                                    {{ form.username(placeholder='username') }}
+                                    {{ form.password(placeholder='password') }}
+                                    <p></p>
+                                    <img class="captcha-img" src="data:image/png;base64, {{captcha['img']}}" />
+                                    <input type="text" placeholder='solve captcha' class="captcha-text"
+                                        name="captcha-text">
+                                    <input type="hidden" name="captcha-hash" value="{{captcha['hash']}}">
+                                    {{ form.submit() }}
+                                </form>
+                                ⑨ please read chiyo <a href="#">rules</a> before registering.
+                                <br>⑨ usernames are not unique, you will be assigned a numeric id which you can
+                                login with :)
+                                <br> ⑨ have a chiyo day
+                                <br>
+                            </td>
+                            <td class="tableRight registerRight">
+                                <h3><u>Chiyo.org</u></h3> =w= PROBABLY THE BEST WEBSITE IN THE UNIVERSE <b>⑨</b>
+                                <br>
+                                <span>
+                                    <img class="cat" src="{{cdn_uri}}/static/img/propaganda/num/{{range(1,3)|random}}.gif">
+                                </span>
+
+                                <img class="propaganda0" src="{{cdn_uri}}/static/img/chiyop3.gif">
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+    </center>
+
+    <div id="siteInfo">
+        <a href="/">Index</a> | <a href="mailto:admin@chiyo.org">Mail</a> | <a href="/news">News</a> ⑨ 2004 MARISASPACE
+    </div>
+</div>
+
+<br>
+
+{% endblock %}

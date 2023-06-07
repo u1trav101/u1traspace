@@ -1,0 +1,180 @@
+html {
+    color-scheme: dark !important;
+}
+
+body {
+	image-rendering: crisp-edges;
+	image-rendering: pixelated;
+	background: #ffe url('https://sys.chiyo.org/static/img/propaganda/radiowaves_sm_dark.gif') no-repeat;
+  	background-size: cover; 
+	-ms-background-size: cover;
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	-webkit-background-size: cover; 
+	color: rgb(60, 255, 60);
+	font-family: "Konatu";
+}
+
+.content {
+	position: relative;
+	max-width: 600px;
+	border: 1px #800 solid;
+	background-color: #dce7c8;
+}
+
+.content a {
+	color: rgb(60, 255, 60);
+}
+
+form {
+	margin: 0;
+}
+
+.nav {
+	color: black;
+	background: rgba(0, 0, 0, 0.1);
+}
+
+.nav a {
+	color: black
+}
+
+.featured_posts {
+	background-color: rgba(0, 0, 0, 0.1);
+	margin-bottom: 16px;
+}
+
+.featured_posts img {
+	width: 48px;
+}
+
+
+.userlist {
+	margin-left: auto;
+	margin-right: auto;
+	width: calc(100% - 30px);
+}
+
+.userlist div {
+	display: flex;
+	background-color: rgba(200, 200, 0, 0.1);
+	padding-top: 24px;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.usrquery {
+	float: left;
+	padding-left: 16px;
+}
+
+.userlist p {
+	width: 130px;
+	margin: 8px 0;
+	height: 60px;
+	margin-top: 2%;
+	display: inline-block;
+	overflow-wrap: break-word;
+}
+
+.userlist p>u,
+.userlist p>a,
+.userlist img {
+	display: block;
+	color: green;
+}
+
+.userlist #username {
+	width: 200px;
+	margin-bottom: 8px;
+}
+
+.albumCover {
+	float: right;
+	width: 40px;
+	height: 40px
+}
+
+.userlist #submit {
+	width: 70px;
+	margin-bottom: 8px;
+}
+
+.meow {
+	float: left;
+	border: 1px black solid;
+	border-right: none;
+	background-color: #f4fff8;
+	width: 70px;
+	height: 800px;
+	padding: 10px;
+}
+
+@media screen and (max-width: 600px) {
+
+	.right,
+	.rightTd,
+	video,
+	.search {
+		display: none;
+	}
+	.banner {
+		display: none;
+	}
+	.harrisonPlayer {
+		display: inline-block;
+	}
+	.newChiyo {
+		display: inline-block;
+		float:unset!important;
+	}
+}
+
+
+body {
+    background-color: rgb(46, 46, 0);
+  	background: #000 url('https://sys.chiyo.org/static//img/propaganda/radiowaves_sm_dark.gif') no-repeat;
+  	background-size: cover; 
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover; 
+    color: #00ce00;
+}
+.content {
+    border-color: rgb(214, 0, 0);
+    background-color: rgb(18, 2, 23);
+}
+.content a {
+    color: #00ce00;
+}
+
+.featuredPosts {
+	color:#e6e6fa;
+}
+
+.nav {
+    color: rgb(232, 230, 227);
+    background-color: rgba(0, 0, 0, 0.1);
+    background-image: none;
+}
+.nav a {
+    color: rgb(232, 230, 227);
+}
+.featured_posts {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.userlist div {
+    background-color: rgba(160, 160, 0, 0.1);
+}
+.userlist p > u,
+.userlist p > a,
+.userlist img {
+    color: rgb(114, 255, 114);
+}
+.meow {
+    border-color: rgb(140, 130, 115) currentcolor rgb(140, 130, 115) rgb(140, 130, 115);
+    background-color: rgb(0, 58, 30);
+}
+
