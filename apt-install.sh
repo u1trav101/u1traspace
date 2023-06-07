@@ -4,4 +4,4 @@
 # - libmariadb-dev in the debian repos is too out of date, add the mariadb repo beforehand
 # - redis must be installed through the redis repository
 
-sudo apt install libjpeg-dev zlib1g-dev mariad libmariadb3 libmariadb-dev mariadb-server ffmpeg redis
+sudo apt install libjpeg-dev zlib1g-dev mariadb-server libmariadb3 libmariadb-dev mariadb-server ffmpeg redis
