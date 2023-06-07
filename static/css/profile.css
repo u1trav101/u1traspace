@@ -1,0 +1,213 @@
+.mcUsername {
+    display:contents;
+}
+
+.onlineIndicator {
+    margin-left: 4px;
+}
+
+
+.commentdiv {
+    padding: 10px 0px 0px 10px;
+    font-size: 80%;
+}
+
+.newBlog_tr {
+    padding: 0px 16px 4px 8px;
+}
+
+.newBlog_tl {
+    display:table;
+}
+
+.commentdiv h3 {
+    font: bold 125% Arial;
+    color: #000000;
+}
+
+.commentdiv p {
+    padding: 0px 0px 10px 0px;
+}
+
+.comTable {
+    max-width: 400px;
+}
+
+.box {
+    padding-left: 10px;
+    border: none;
+    overflow: hidden;
+}
+
+audio {
+    margin-top: 5px;
+    height: 30px;
+    outline: none;
+    margin-bottom: -3px;
+    width: 100%;
+}
+
+.songName {
+    margin-top: 0px;
+    font-size: small;
+}
+
+.player {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 4px;
+    padding-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-image: url('https://sys.chiyo.org/static/img/weed.jpg');
+    color: rgb(255, 255, 255);
+    border: 1px solid #281d3b;
+}
+
+.commentForm {
+    padding: 10px 0px 0px 10px;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    display: text-top;
+}
+
+audio {
+    filter: sepia(100%);
+}
+
+.blogDel {
+    margin-top: 0px;
+}
+
+textarea,
+textarea:focus,
+input,
+button {
+    outline: none;
+    box-shadow: none !important;
+    border: 1px solid #281d3b;
+    margin-top: 10px;
+    color: #281d3b;
+}
+
+.pmUser {
+    margin: 0;
+}
+
+#friend {
+    margin-top:0px;
+}
+
+.deleteButton {
+    display: inline;
+}
+
+.deleteButton button {
+    font-size: xx-small;
+    margin-top: unset;  
+}
+
+.prefsTxt {
+    float:right;
+    padding: 2px;
+    background-color: rgba(200, 200, 0, 0.1);
+}
+.newPostTxt {
+    padding: 2px;
+    background-color: rgba(200, 200, 0, 0.1);
+}
+.newPost_a {
+    padding:4px 0px 4px 0px;
+}
+.newPost_a:hover{
+    text-decoration: none;
+}
+
+.mcRight {
+    width: 410px !important;    
+}
+
+
+.commentPost {
+    width: auto;
+}
+
+.friendReq {
+    background-color: #13110c;
+    border: 1px solid #ffffdd;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 8px;
+}
+
+.friendReq img {
+    border: 1px solid #ffffdd;
+}
+
+.comment {
+    background-color: rgba(200, 200, 0, 0.1);
+    width: 100%;
+    word-wrap: anywhere;
+    padding-right: 100%;
+    border: 1px #281d3b solid;
+    padding: 2px 0px 0px 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: text-top;
+    vertical-align: top;
+}
+
+.comment img {
+    max-height: 420px;
+    /* hehehe */
+}
+
+.comText, .comInfo {
+    vertical-align: top;
+    top: 0;
+    bottom: 0;
+    margin-top: 0px;
+}
+
+.comText a, .comInfo a {
+    color: green !important;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.comText b, .comInfo b {
+    color: #281d3b !important;
+    font-size: 10px !important;
+    font-weight: bold !important;
+}
+
+.comText *, .comInfo * {
+    
+}
+
+.comInfo {
+    display: contents;  
+}
+
+.comText img, .comInfo img {
+    max-width: 255px;
+}
+
+td {
+    height: 80px;
+    vertical-align: top;
+}
+
+.comment p {
+    padding: 0px;
+}
+
+
+.comAvatar {
+    border: 1px white solid;
+}
+
+.usrAvatar {
+    margin-right: 8px;
+}
+

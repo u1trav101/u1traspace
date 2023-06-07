@@ -1,0 +1,107 @@
+<head>
+	<link rel="stylesheet" href="{{cdn_uri}}/static/css/classic/style.css">
+	<link rel="stylesheet" href="{{cdn_uri}}/usercontent/css/{{properties['id']}}.css">
+    {% if ('user_id') in session and notification_counters %}
+    <title>
+        [{{notification_counters['profile_comment_approval'] + notification_counters['blog_comment_approval'] + notification_counters['friend_request_approval'] + notification_counters['unseen_message']}}]
+        ChiyoNET</title>
+    {%else%}
+    <title>ChiyoNET</title>
+    {% endif %}
+	<meta name="description" content="welcome to chiyo town" />
+	<meta property="og:og:title" content="ChiyoNET Online" />
+	<meta property="og:type" content="website" />
+	<meta id="interface-type" value="classic">
+    <link rel="icon" href="{{cdn_uri}}/static/img/favicon.gif">
+	<script type="text/javascript" src="{{ url_for('static', filename='js/notificationPoll.js') }}"></script>
+	<meta property="og:description" content="{{properties['username']}} @ ChiyoNET Online" />
+	<meta property="og:image" content="{{cdn_uri}}/usercontent/img/rsz/200px/{{properties['id']}}.gif">
+	<meta property="og:url" content="https://chiyo.org/id/{{properties['id']}}">
+	<meta property="og:site_name" content="ChiyoNET Online" />
+</head>
+<style>
+</style>
+<div class="fixed">
+	{% extends "classic/navigation.htm" %}
+	{% block content %}
+
+	<div class="usercontent">
+		<center>
+			<font color="#ffffff" class="fcon"><u>
+					<h2 class="name u_blogname">{{properties['username']}}'s blogs</h2>
+				</u></font>
+		</center>
+		<center>
+			<div class="blogposts b_sn">
+				<p>
+					<font class="fcon" color="#ffffff"><u>
+							<h1 class="blogtitle"><a class="r_text bloglt">{{blogpost['title']}}</a></h1>
+						</u></font>
+				</p>
+				<font class="fcon" color="white"><span
+						class="blogcorpus">{% for newline in blogpost['corpus'].split('\n') %}<p><span
+								class="blogc2">{{newline|escape|regex_replace('javascript:','meowmeow:')|markdown}}</span></p>{% endfor %}</span></font>
+				<p>
+					<font color="#ffffff"><small class="blogdate">{{time(blogpost['date'])}}</small></font>
+				</p>
+				{% if session.get('user_id') == properties['id'] %} <center>
+					<form action="" method="post"><button name="del_b" value="{{post.id}}" type="submit"
+							class="blogdel_a r_text">delete</form>
+				</center> {% endif %}
+			</div>
+			<div class="commentform">
+				<h3 class="commenttitle_a" style="color: white"><u>comment</u></h3>{% if ('user_id') in session %}<form
+					action="" method="post" novalidate>{{ comment_form.hidden_tag() }} <span
+						style="color: white;">{{ comment_form.corpus.label }}</span>
+					<div class="commentform_body">{{comment_form.corpus(cols=35, rows=10)}}</div>{{comment_form.submit}}
+				</form>{% else %} <h3 class="loginmsg" style="color: white;">you must be logged in to leave a comment!!
+				</h3> {% endif %}
+			</div>
+			<div class="commentbox">
+				<h3 class="commenttitle_b" style="color: white;"><u>comments</u> ({%if comments%} {{comments|length}}
+					{%else%}0{%endif%})</h3>
+				{%if comments%}
+				{% for comment in comments %}<div class="comment"><a style="color: white;"
+						href="{{'/id/' + comment['authorid']|string}}"><img
+							style="width: 64px; height: 64px; float: left; border-width: 1px;"
+							src="https://sys.chiyo.org/usercontent/img/rsz/100px/{{comment['authorid']}}.gif"
+							class="avatar commentavatar">
+						<h4 class="commentname" style="color: white; float: left; margin-left: 4px; margin-top: 4px;">
+							<u>{{ comment['username']  }}</u>
+					</a>{% if session.get('user_id')|int == comment['authorid'] or session.get('user_id') == properties['id']%}
+							<form action="" method="post" novalidate style="float: right; padding-left: 4px;">
+								{{delete_form.hidden_tag()}}
+								<button style="opacity: 75%; background-color: black; color: white;" name="delete" value="{{comment.id}}"
+								type="submit">delete</form>
+							</form>
+
+							{% endif %}</h4>
+					<div class="commentbox_top"><small class="commentdate"
+							style="float: right; color: white; position: absolute; right: 2px; top: 0px;">({{time(comment['date'])}})</small>
+					</div><span
+						style="color: white; float: left; margin-left: 4px; margin-top: 0px; position: absolute; left: 66px; top: 24px;">{{comment['corpus']}}</span>
+				</div>{% endfor %}
+				{%else%}
+				<h2 style="color:white;">where'd the comments go?</h2>
+				<small style="color:white;">i don't know</small>
+				{%endif%}
+			</div>
+			<center>
+				<font color="white"><span><a style="color:white;" href="/">index</a> //
+						{% if session.get('konata') == 1 %}~konataspace~ {% else %}~marisaspace~{% endif %} //
+						<font color="white"><span><a style="color:white;" href="/news">news</a></font>
+			</center>
+
+	</div>
+	</center>
+
+
+</div>
+{% if session.get('konata') == 1 %}
+<img style="position: absolute; right: 10px; top: 0px; width: 200px; transform: rotate(180deg);"
+	src="{{ url_for('static', filename= 'img/classic/konata1.gif') }}" ) }}">
+<img style="position: absolute; left: 10px; bottom: 0px; width: 200px;"
+	src="{{ url_for('static', filename= 'img/classic/konata2.gif') }}" ) }}">
+{% endif %}
+
+{% endblock %}

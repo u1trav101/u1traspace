@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+                            __   _                         
+ _    ___    ___    __ ____/ /  (_)_ _____   ___  _______ _
+| |/|/ / |/|/ / |/|/ // __/ _ \/ / // / _ \_/ _ \/ __/ _ `/
+|__,__/|__,__/|__,__(_)__/_//_/_/\_, /\___(_)___/_/  \_, / 
+                                /___/               /___/  
+
+ PROBABLY THE COOLEST WEBSITE ON THE INTERNET (9)
+-->
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta id="interface-type" value="myspace">
+	<link rel="stylesheet" href="{{cdn_uri}}/static/css/myspace/style.css">
+	<link rel="icon" href="{{cdn_uri}}/static/img/favicon.gif">
+	<script type="text/javascript" src="{{ url_for('static', filename='js/notificationPoll.js') }}"></script>
+	<link rel="stylesheet" href="https://sys.chiyo.org/usercontent/css/{{properties['id']}}.css">
+    {% if ('user_id') in session and notification_counters %}
+    <title>
+        [{{notification_counters['profile_comment_approval'] + notification_counters['blog_comment_approval'] + notification_counters['friend_request_approval'] + notification_counters['unseen_message']}}]
+        ChiyoNET</title>
+    {%else%}
+    <title>ChiyoNET</title>
+    {% endif %}
+</head>
+
+<body>
+	<div id="container" style="animation-name: none;">
+		<link rel="stylesheet" href="{{cdn_uri}}/static/css/myspace/inline-0.css">
+		<div id="header">
+			<a class="logo" href="/" style=""><b><span style="padding-top: 2px; position: absolute;">ChiyoNET
+						Online</span></b></a>
+			<span id="hUp" style="float:right;margin-right: 5px;margin-top: 3px;font-size: small;">
+				{% if ("user_id") in session %}
+
+				<a id="friend-counter-a" class="blinkYellow" href="/notifications"><span id="friend-counter" class="">
+						{% if notification_counters %}
+						{% if notification_counters['friend_request_approval']%}
+						{{notification_counters['friend_request_approval']}} new
+						friend{%if notification_counters['friend_request_approval'] == 1 %}{%else%}s{%endif%}!!
+						{%endif%}
+						{%endif%}
+
+					</span></a>
+				<a id="comment-counter-a" class="blinkViolet" href="/notifications"><span id="comment-counter" class="">
+						{% if notification_counters %}
+						{% if notification_counters['blog_comment_approval'] or notification_counters['profile_comment_approval']%}
+						{{notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval']}}
+						new
+						comment{%if notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval'] == 1 %}{%else%}s{%endif%}!!
+						{%endif%}
+					</span></a>
+
+				<a id="message-counter-a" class="blinkRed" href="/notifications"><span id="message-counter" class="">
+					{% if notification_counters %}
+					{% if notification_counters['unseen_message']%}
+					{{notification_counters['unseen_message']}} new
+					message{%if notification_counters['unseen_message'] == 1 %}{%else%}s{%endif%}!!
+					{%endif%}
+					{%endif%}
+				</span></a>
+
+
+				{%endif%}
+
+				<a href="/auth/logout">Logout</a>
+				{%else%}
+				<a href="/auth/register">SignUp</a><a href="/auth/login">Login</a></span>
+			{%endif%}
+		</div>
+		<div id="hSub">
+			<a href="/">Home</a> | <a href="/users">All <span class="sep">Fwiends</span></a> | {%if ('user_id') in session%}<a href="/id/{{session.get('user_id')}}/friends">My Fwiends</span></a> |{%endif%} <a
+				href="/users/random">Rand<span class="sep">om</span></a> | <a href="/users?show=online">Online</a> | <a
+				href="/id/{{properties['id']}}/blog">Blog</a> </span> | <a href="/search">Search</a>
+		</div>
+		<div class="topLeft" style="animation-name: none;">
+			<div>
+				<h2 class="uName" id="name">{{properties['username']}}</h2>
+			</div>
+			<table class="short">
+				<tbody>
+					<tr>
+						<td>
+							<img src="https://sys.chiyo.org/usercontent/img/raw/{{properties['id']}}.gif" class="avatar"
+								id="avatar">
+
+						</td>
+						<td class="shortRight">
+							<div><span id="credo"></span></div><br>
+							<div id="gender">Computer</div>
+							<div><span id="age">{{properties['age']}}</span> years old</div>
+							<div id="country">Bat Country</div>
+							{% if current_time - properties['lastseen']|int < 300 %}
+							<div id="online" style="margin-top: 10px;"><img src="{{cdn_uri}}/static/img/myspace/online.gif"></div>
+							{%endif%}
+							<div style="font-size:small;margin-top:10px;">Last Login:<br><span
+									id="lastLogin">{{time(properties['lastseen'])}}</span></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="boxInfo box">
+				<div class="boxHead"><b>Contacting <span class="uName">{{properties['username']}}</span></b></div>
+				{% if session.get('user_id')|int in friends|map(attribute="friend")%}
+
+				<a href="/msg/{{properties['id']}}">
+					<div class="boxButton" id="sMsg">Send Message</div>
+				</a>
+				{%endif%}
+				<a href="mailto:admin@chiyo.org">
+					<div class="boxButton" id="report">Report</div>
+				</a>
+				{% if not session.get('user_id')|int == properties['id']%}
+				{% if not session.get('user_id')|int in friends|map(attribute="friend")%}
+				<div class="boxButton" id="add">
+					<form action="/id/{{properties['id']}}/add-friend" method="post" novalidate>
+						{{friend_form.hidden_tag()}}
+						<button class="chiyo_addfriend" id="friend" name="friend" type="submit" value="friend">Add to
+							fwiends</button>
+					</form>
+				</div>
+				{%else%}
+				<div class="boxButton" id="remove">
+					<form action="/id/{{properties['id']}}/remove-friend" method="post" novalidate>
+						{{friend_form.hidden_tag()}}
+						<button class="chiyo_addfriend" id="friend" name="friend" type="submit" value="remove">Remove
+							from fwiends</button>
+					</form>
+				</div>
+				{%endif%}
+				{%endif%}
+			</div>
+			<div class="url box">
+				<div><b>Chiyo URL:</b></div>
+				<div><a style="color:#000;text-decoration:none;"
+						href="/id/{{properties['id']}}">https://chiyo.org/id/{{properties['id']}}</a></div>
+			</div>
+			<div class="player box">
+				<div class="songName"><b>Song:</b> <span class="songTitle">
+					</span><a href="https://sys.chiyo.org/usercontent/audio/{{properties['id']}}.ogg"
+						download="{{properties['username']}}.ogg"><img
+							style="height: 15px; float: right; padding-right: 2px;"
+							src="{{cdn_uri}}/static/img/myspace/download.svg"></a></div><audio controls="" autoplay=""
+					src="https://sys.chiyo.org/usercontent/audio/{{properties['id']}}.ogg"
+					controlslist="nodownload"></audio>
+			</div>
+		</div>
+		<div class="topRight" style="animation-name: none;">
+			<div class="extended box">
+				{% if session.get('user_id')|int == properties['id']%}
+				<h3><a href="/preferences">Edit profile :)</a></h3>
+				{%else%}
+				<h3><span class="uName">{{properties['username']}}</span> is in your extended network</h3>
+				{%endif%}
+			</div>
+			<div class="box blurbs">
+				<div class="blogs">
+					<div><b>{{properties['username']}}'s Latest Blog Entry</b></div>
+					{%if session.get('user_id')|int == properties['id']%}
+					<a class="newPost_a" href="/id/{{properties['id']}}/blog/new"><button>new blogpost!!</button></a>
+					<br><br>
+					{%endif%}
+
+					{%if blogposts%}
+					{%for post in blogposts%}
+					<div>{{post['title']}} [<a href="/id/{{properties['id']}}/blog/{{post['id']}}">view more</a>]
+					</div>
+					{%endfor%}
+					{%endif%}
+				</div>
+				<div class="rightHead"><b><span class="uName">{{properties['username']}}</span>'s blurbs</b></div>
+				<h4>About me:</h4>
+				<div id="about">
+					<p>
+						{{ properties['about']|escape|regex_replace('javascript:','meowmeow:')|markdown}}
+					</p>
+				</div>
+				<h4>Who I'd like to meet:</h4>
+				<div id="who">
+					<p>9 cats</p>
+				</div>
+			</div>
+			<div class="box fwiends">
+				<div class="rightHead"><b><span class="uName">{{properties['username']}}</span>'s Fwiends Space</b>
+				</div>
+				<div class="fwiendCounter"><b><span class="uName">{{properties['username']}}</span> has <span
+							class="fwiendCount">{{friends|length}}</span>
+						fwiends.</b></div>
+				<div id="top">
+					{%for friend in friends[0:8] %}
+					<a href="/id/{{friend['friend']}}">
+						<div class="fwiendFace"><b>{{friend['username']}}</b><img
+								src="https://sys.chiyo.org/usercontent/img/rsz/100px/{{friend['friend']}}.gif"></div>
+					</a>
+					{%endfor%}
+					<div id="viewFriends"><b>View <a href="/id/{{properties['id']}}/friends">All</a> <span
+								class="uName">{{properties['username']}}</span>'s Fwiends</b></div>
+				</div>
+				<div class="box comments">
+					{%if ('user_id') in session%}
+					<div class="boxHead"><b>Leave a comment</b></div>
+					<form class="commentForm" action="" method="post" novalidate>{{ comment_form.hidden_tag() }}
+						<div>{{comment_form.corpus(id="commentInput",placeholder="comment!!")}}</div>
+						{{comment_form.submit}}
+					</form>
+					{%else%}
+					<div style="margin-bottom:20px;">Please <a href="/auth/login">login</a> to
+						leave a comment. </div>
+
+					{%endif%}
+					<div class="boxHead"><b>Comments</b></div>
+					<table id="userWall">
+						<tbody>
+							{%if comments%}
+							{%for comment in comments%}
+							<tr>
+								<td class="tableLeft"><a href="/id/{{comment['authorid']}}">
+										<div><b>{{comment['username']}}</b></div><img
+											src="https://sys.chiyo.org/usercontent/img/rsz/200px/{{comment['authorid']}}.gif">
+									</a></td>
+								<td class="tableRight">
+									<div><b class="date">{{time(comment['date'])}}</b></div>
+									<div>
+										<p>{{comment['corpus']}}</p>
+									</div>
+									{% if session['user_id'] == comment['authorid']|string or session['user_id'] == properties['id']|string %}
+									<form class="deleteButton" action="" method="post" novalidate>
+										{{delete_form.hidden_tag()}}
+										<br><button style="float:left;" name="delete" value="{{comment.id}}"
+											type="submit">delete</button>
+									</form>
+									{%endif%}
+
+								</td>
+							</tr>
+							{%endfor%}
+							{%endif%}
+						</tbody>
+					</table>
+					<div style="font-size:small;text-align:right;">
+						({%if comments%}{{comments|length}}{%else%}0{%endif%}/1024)</div>
+				</div>
+			</div>
+			<div id="footer" class="box">
+				<div>
+					<p>
+						<a href="/">Index</a> <a href="mailto:admin@chiyo.org">Mail</a>
+						<a href="/news">News</a> <br>© 2000 <a style="text-decoration:none;"
+							href="http://chiyo.org/">Chiyo</a>
+					</p>
+				</div>
+			</div>
+		</div>
+</body>
+
+</html>

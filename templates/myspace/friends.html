@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta id="interface-type" value="myspace">
+		<link rel="stylesheet" href="{{cdn_uri}}/static/css/myspace/style.css">
+		<link rel="icon" href="{{cdn_uri}}/static/img/favicon.gif">
+		<script type="text/javascript" src="{{ url_for('static', filename='js/notificationPoll.js') }}"></script>
+		<link rel="stylesheet" href="https://sys.chiyo.org/usercontent/css/{{properties['id']}}.css">
+			{% if ('user_id') in session and notification_counters %}
+		<title>
+			[{{notification_counters['profile_comment_approval'] + notification_counters['blog_comment_approval'] + notification_counters['friend_request_approval'] + notification_counters['unseen_message']}}]
+			ChiyoNET</title>
+		{%else%}
+		<title>ChiyoNET</title>
+		{% endif %}
+		</head>
+
+<body style="padding: 20px;padding-top: 70px;">
+	<div id="container">
+
+		<div id="header">
+			<a class="logo" href="/" style=""><b><span style="padding-top: 2px; position: absolute;">ChiyoNET
+						Online</span></b></a>
+			<span id="hUp" style="float:right;margin-right: 5px;margin-top: 3px;font-size: small;">
+				{% if ("user_id") in session %}
+
+				<a id="friend-counter-a" class="blinkYellow" href="/notifications"><span id="friend-counter" class="">
+						{% if notification_counters %}
+						{% if notification_counters['friend_request_approval']%}
+						{{notification_counters['friend_request_approval']}} new
+						friend{%if notification_counters['friend_request_approval'] == 1 %}{%else%}s{%endif%}!!
+						{%endif%}
+						{%endif%}
+
+					</span></a>
+				<a id="comment-counter-a" class="blinkViolet" href="/notifications"><span id="comment-counter" class="">
+						{% if notification_counters %}
+						{% if notification_counters['blog_comment_approval'] or notification_counters['profile_comment_approval']%}
+						{{notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval']}}
+						new
+						comment{%if notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval'] == 1 %}{%else%}s{%endif%}!!
+						{%endif%}
+					</span></a>
+
+				<a id="message-counter-a" class="blinkRed" href="/notifications"><span id="message-counter" class="">
+					{% if notification_counters %}
+					{% if notification_counters['unseen_message']%}
+					{{notification_counters['unseen_message']}} new
+					message{%if notification_counters['unseen_message'] == 1 %}{%else%}s{%endif%}!!
+					{%endif%}
+					{%endif%}
+				</span></a>
+
+
+				{%endif%}
+
+				<a href="/auth/logout">Logout</a>
+				{%else%}
+				<a href="/auth/register">SignUp</a><a href="/auth/login">Login</a></span>
+			{%endif%}
+		</div>
+		<div id="hSub">
+			<a href="/">Home</a> | <a href="/users">All <span class="sep">Fwiends</span></a> | {%if ('user_id') in session%}<a href="/id/{{session.get('user_id')}}/friends">My Fwiends</span></a> |{%endif%} <a
+				href="/users/random">Rand<span class="sep">om</span></a> | <a href="/users?show=online">Online</a> | <a
+				href="/id/{{properties['id']}}/blog">Blog</a> </span> | <a href="/search">Search</a>
+		</div>
+		<div class="allfwieds"><a href="/id/{{properties['id']}}"">< Go Back</a><h2>{{properties['username']}}'s Last 50 Fwiends</h2>
+            {% for friend in friends[0:50] %}
+            <div class=" allfwiedsItem"><a href="/id/{{friend['friend']}}"><b>{{friend['username']}}</b>
+					<div><img src="{{cdn_uri}}/usercontent/img/rsz/200px/{{friend['friend']}}.gif"
+							style="width:calc( 100% - 20px ); max-height:300px;"></div>
+				</a>
+				{% if session.get('user_id')|int == properties['id'] %}
+				<form method="post" action="/id/{{friend['friend']}}/remove-friend">
+					{{friend_form.hidden_tag()}}
+					<button class="deleteFriend" id="friend" name="friend" type="submit" value="remove">remove</button>
+				</form>
+				{%endif%}
+
+		</div>
+		{%endfor%}
+	</div>
+	<div id="footer" class="box">
+		<div>
+			<p>
+				<a href="/">Index</a> <a href="mailto:admin@chiyo.org">Mail</a>
+				<a href="/news">News</a> <br>© 2000 <a style="text-decoration:none;" href="http://chiyo.org/">Chiyo</a>
+			</p>
+		</div>

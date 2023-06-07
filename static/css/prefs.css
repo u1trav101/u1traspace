@@ -1,0 +1,38 @@
+#content {
+    border: none;
+    margin: 0;
+}
+.prefsLeft, .prefsRight {
+    padding: 8px;
+}
+
+.prefsLeft {
+    width: 240px;
+}
+
+.prefsRight {
+    width: 760px;
+}
+
+img {
+    margin: 5px 0px 0px 0px  !important;
+    border: 1px #281d3b solid;
+    float: unset !important;
+}
+input {
+    margin-top: 5px;
+    height: unset;
+    border: none;
+}
+
+.abtForm, .cssForm {
+    height: auto;
+    width: 98.8%;   
+    min-height:200px;
+    resize: none;
+}
+
+.prefsSubmit {
+    float:right;
+    width: 64px;
+}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block body %}
+<link rel="stylesheet" href="{{cdn_uri}}/static/css/profile.css">
+<link rel="stylesheet" href="{{cdn_uri}}/static/css/directmsg.css">
+<script type="text/javascript" src="{{ url_for('static', filename='js/messagePoll.js') }}"></script>
+
+<div id="container">
+    <div id="pageNav">
+        <div class="relatedLinks">
+            <h3>Conversations</h3>
+            {%for conversation in conversations%}
+            {% if not conversation['id'] == session.get('user_id')|int%}
+            {% if conversation['id'] in friends|map(attribute="friend")%}
+            <span><a href="/msg/{{conversation['id']}}">{{conversation['username']}}</a> [{{conversation['id']}}]</span><br>
+            {%endif%}
+            {%endif%}
+            {%endfor%}
+        </div>
+
+
+
+    </div>
+    <div id="content">
+        <div class="mainContent">
+            <h4><u>Conversation with <span style="color:green">{{properties['username']}}</span>
+                    [{{properties['id']}}]</u></h4>
+            <div class="msgBox">
+                <table class="msgTable">
+                    <tr class="inputTr">
+                        <td class="inputTd" valign="bottom">
+                            <form method="post" style="width:600px;" class="messageForm">
+                                {{ form.hidden_tag() }}
+                                {{form.corpus(class="msgInput",placeholder='Message',id="message-input")}}
+                                {{ form.submit(value="send")}}
+                            </form>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td id="message-container" valign="top">
+                            {% if messages %}
+                            {%for message in messages%}
+                            <div value="{{message['messageid']}}" class="msg">
+                                <span class="timestamp">[{{time(message['date'], True)}}]</span><span class="username">[{{message['username']}}]</span><span class="content">{{message['corpus']}}</span></span>
+                            </div>
+                            {%endfor%}    
+                            {%else%}
+                            <div class="msg">
+                                Where'd the messages go? I don't know!!
+                            </div>
+                            {%endif%}
+                        </div>
+        
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div id="siteInfo">
+        <a href="/">Index</a> | <a href="mailto:admin@chiyo.org">Mail</a> | <a href="/news">News</a> ⑨ 2004 MARISASPACE
+    </div>
+</div>
+
+<br>
+
+{% endblock %}

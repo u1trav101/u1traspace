@@ -1,0 +1,48 @@
+#content {
+    border: none;
+    margin: 0;
+}
+.loginLeft {
+    padding: 8px;
+}
+
+
+
+.loginLeft {
+  width: 220px;
+  display: table;
+  text-align: center;
+}
+
+.loginImg {
+    width:100%;
+}
+
+.loginNote {
+    color:red;
+}
+
+.propaganda0 {
+    width:65%;
+    float: right;
+}
+
+.cat {
+    width: 100%;
+}
+
+.loginRight span {
+  width: 200px;
+}
+
+.loginRight {
+}
+
+input {
+    width: 195px;
+    margin-top: 5px !important;
+}
+
+#submit {
+    width: 65px;
+}

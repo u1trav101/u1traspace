@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Helvetica';
+    src: url('https://sys.chiyo.org/static/etc/h_regular.woff2') format('woff2'),
+        url('https://sys.chiyo.org/static/etc/h_regular.woff') format('woff');
+}
+
+* {
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('https://sys.chiyo.org/static/etc/h_bold.woff2') format('woff2'),
+        url('https://sys.chiyo.org/static/etc/h_bold.woff') format('woff');
+    font-style: Bold;
+}
+
+#content {
+    border: none;
+    margin: 0;
+}
+
+.tinylogin {
+    width:  195px!important;  
+    text-align:center;
+    top: 31px;
+    left: 644px;
+}
+.tinylogin input {
+   width: 185px!important;  
+}
+
+
+.tinylogin small {
+    color: red!important;
+    display: unset !important;
+    float: unset !important;
+    padding: unset !important;
+}
+
+
+.tinylogin {
+  position: fixed;
+  z-index: 2;
+  border: 1px solid #281d3b !important;
+  background-image: url("https://sys.chiyo.org/static/img/blinky.gif");
+}
+
+
+@font-face {
+    font-family: Konatu;
+    src: url('https://sys.chiyo.org/static/etc/Konatu.ttf');
+}
+
+@font-face {
+    font-family: Konatu;
+    src: url('https://sys.chiyo.org/static/etc/Konatu.ttf');
+}
+@font-face {
+    font-family: battlenet;
+    src: url('https://sys.chiyo.org/static/etc/battlenet.ttf');
+}

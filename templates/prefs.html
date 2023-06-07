@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block body %}
+<link rel="stylesheet" href="{{cdn_uri}}/static/css/profile.css">
+<link rel="stylesheet" href="{{cdn_uri}}/static/css/prefs.css">
+<div id="container">
+    <div id="breadCrumb">
+        <p> / <a href="#">Preferences</a>
+        </p>
+    </div>
+
+    <center>
+        <div id="content">
+            <div class="mainContent">
+                <table summary="" cellspacing="" cellpadding="0">
+                    <tbody>
+                        <tr valign="top">
+                        </tr>
+                        <tr>
+                            <form enctype="multipart/form-data" method="post" action="" novalidate>
+                                {{form.hidden_tag()}}
+                                <td class="tableLeft prefsLeft">
+                                    <b><u>Audio:</u></b>
+                                    <br>
+                                    <small>accepted formats: <font color="red">ogg, .mp3, .m4a, .xm, .mod</font></small>
+                                    {{form.audio}}
+                                    <audio controls
+                                        src="{{cdn_uri}}/usercontent/audio/{{properties['id']}}.ogg"></audio>
+
+                                    <br></br>
+                                    <b><u>Avatar:</u></b>
+                                    <br>
+                                    <small>accepted formats: <font color="red">gif, png, jpeg, webp</font></small>
+                                    {{form.avatar}}
+                                    <img style="width:200px;" class="avi"
+                                        src="{{cdn_uri}}/usercontent/img/raw/{{properties['id']}}.gif">
+                                    <br></br>
+                                    <b><u>Options:</u></b>
+                                    <br>
+                                    Profile Layout:
+                                    {{form.interface}}
+
+                                    <br>
+                                    Comment Filter: 
+                                    {{form.privacy}}
+
+                                    <br><small><i>*this setting limits who can comment on your page and
+                                            blogposts.</i></small>
+
+
+                                </td>
+                                <td class="tableRight prefsRight">
+                                    <b><u>About:</u></b>
+                                    <br>
+                                    <small>
+                                        markdown is accepted! (including embedding images). view this
+                                        <a href="#">guide on markdown.</a>
+                                    </small>
+                                    <br>
+                                    <textarea class="abtForm" id="bio" name="bio" rows="20">{{properties['about']}}</textarea>
+                                    <br></br>
+                                    <b><u>Custom CSS stylesheet:</u></b>
+                                    <br>
+                                    <textarea class="cssForm" id="css" name="css" rows="20">{{properties['css']}}</textarea>
+                                    <br>
+                                    {{form.submit(class="submit")}} <small><font color="red">please allow upto 30 minutes for changes to fully propagate:)</font></small>
+
+                                </td>
+                            </form>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+    </center>
+
+    <div id="siteInfo">
+        <a href="/">Index</a> | <a href="mailto:admin@chiyo.org">Mail</a> | <a href="/news">News</a> ⑨ 2004 MARISASPACE
+    </div>
+</div>
+
+<br>
+
+{% endblock %}

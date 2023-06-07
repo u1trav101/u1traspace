@@ -1,0 +1,421 @@
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta id="interface-type" value="default">
+    {% if ('user_id') in session and notification_counters %}
+    <title>
+        [{{notification_counters['profile_comment_approval'] + notification_counters['blog_comment_approval'] + notification_counters['friend_request_approval'] + notification_counters['unseen_message']}}]
+        ChiyoNET</title>
+    {%else%}
+    <title>ChiyoNET</title>
+    {% endif %}
+    <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1">
+    <meta id="interface-type" value="twitter">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/notificationPoll.js') }}"></script>
+    <link rel="stylesheet" href="{{cdn_uri}}/static/css/twitter/profile.css">
+    <link rel="icon" href="{{cdn_uri}}/static/img/favicon.gif">
+    <link rel="stylesheet" href="https://sys.chiyo.org/usercontent/css/{{properties['id']}}.css">
+
+</head>
+
+<body class="user-style-chiyo" dir="ltr">
+    <div id="doc" class="route-profile">
+
+        <div class="topbar topbar">
+            <div class="global-nav">
+                <div class="global-nav-inner">
+                    <div class="container">
+                        <ul class="nav">
+                            <li class="home">
+                                <a class="nav-logo-link" href="/">
+                                    <i class="chiyo-navlogo"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        {% if ("user_id") in session %}
+                        <ul class="nav">
+                            <li class="">
+                                <a class="dropdown-toggle dropdown-signin" href="/id/{{ session.get('user_id') }}">
+                                    Profile
+                                </a>
+                            </li>
+                        </ul>
+                        {%endif%}
+
+                        <ul class="nav">
+                            <li class="">
+                                <a class="dropdown-toggle dropdown-signin" href="/users">
+                                    Users
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav">
+                            <li class="">
+                                <a class="dropdown-toggle dropdown-signin" href="/users/random">
+                                    Random
+                                </a>
+                            </li>
+                        </ul>
+
+
+                        <div class="pull-right">
+
+                            <ul class="nav">
+                                <li class="">
+                                    <a id="comment-counter-a"
+                                        class="comment-notif notif dropdown-toggle dropdown-signin"
+                                        href="/notifications">
+                                        {% if notification_counters %}
+                                        {% if notification_counters['blog_comment_approval'] or notification_counters['profile_comment_approval']%}
+                                        {{notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval']}}
+                                        new
+                                        comment{%if notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval'] == 1 %}{%else%}s{%endif%}!!
+                                        {%endif%}
+                                        {%endif%}
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav">
+                                <li class="">
+                                    <a id="friend-counter-a" class="friend-notif notif dropdown-toggle dropdown-signin"
+                                        href="/notifications">
+                                        {% if notification_counters %}
+                                        {% if notification_counters['friend_request_approval']%}
+                                        {{notification_counters['friend_request_approval']}} new
+                                        friend{%if notification_counters['friend_request_approval'] == 1 %}{%else%}s{%endif%}!!
+                                        {%endif%}
+                                        {%endif%}
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav">
+                                <li class="">
+                                    <a id="message-counter-a" class="msg-notif notif dropdown-toggle dropdown-signin"
+                                        href="/notifications">
+                                        {% if notification_counters %}
+                                        {% if notification_counters['unseen_message']%}
+                                        {{notification_counters['unseen_message']}} new
+                                        message{%if notification_counters['unseen_message'] == 1 %}{%else%}s{%endif%}!!
+                                        {%endif%}
+                                        {%endif%}
+                                    </a>
+                                </li>
+                            </ul>
+
+
+                            <form class="form-search" method="post" action="/search">
+                                <input class="search-input" type="text" id="corpus" placeholder="Search" name="corpus"
+                                    autocomplete="off" spellcheck="false">
+                                <span class="search-icon">
+                                    <button type="submit" class="icon nav-search"></button>
+                                </span>
+                                <input disabled="disabled" class="search-input search-hinting-input" spellcheck="false">
+                            </form>
+                            {% if ("user_id") in session %}
+                            <ul class="nav">
+                                <li class="">
+                                    <a class="dropdown-toggle dropdown-signin" href="/auth/logout">
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                            {%else%}
+                            <ul class="nav">
+                                <li class="">
+                                    <a class="dropdown-toggle dropdown-signin" href="/auth/login">
+                                        Login
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav">
+                                <li class="">
+                                    <a class="dropdown-toggle dropdown-signin" href="/auth/register">
+                                        Register
+                                    </a>
+                                </li>
+                            </ul>
+
+                            {%endif%}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="page-outer">
+            <div id="page-container" class="wrapper wrapper-profile white">
+                <div class="dashboard">
+                    <div class="component">
+                        <div class="module profile-nav">
+                            <ul>
+                                <li class="">
+                                    <a class="list-link" href="/id/{{properties['id']}}">Profile<i
+                                            class="chev-right"></i></a>
+                                </li>
+                                <li class="active">
+                                    <a class="list-link" href="/id/{{properties['id']}}/blog">Blog
+                                        Posts<i class="chev-right"></i></a>
+                                </li>
+                                <li class="">
+                                    <a class="list-link"
+                                        href="/id/{{properties['id']}}/friends/">Friends<i class="chev-right"></i></a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="component">
+                        <div class="module profile-nav">
+                            
+                            <div class="module-audio">
+                                <small class="currentSong">currently playing:</small>
+
+                                <audio class="audioPlayer" controls autoplay="true" src="{{cdn_uri}}/usercontent/audio/{{properties['id']}}.ogg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="component">
+                        <div class="module profile-nav">
+                            
+                            <ul>
+                                <div class="module-header">
+                                    <h2 class="modulePosts">Posts</h2>
+                                    {%if session.get('user_id')|int == properties['id']%}
+                                     <a class="newPost_a" href="/id/{{properties['id']}}/blog/new"><small class="newPostTxt">new blogpost</small></a>
+                                    {%endif%}
+                                </div>
+                                {% for post in blogposts %}
+                                    {% if post['id'] == blogpost['id']%}
+                                        <li class="active">
+                                    {% else %}
+                                        <li class="">
+                                    {%endif%}
+                                    <a class="list-link" href="{{url_for('blog', user_id=properties['id'], post_id=post['id'])}}">{{post['title']}}<i class="chev-right"></i></a>
+                                </li>
+                                {%endfor%}
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="module site-footer ">
+                        <div class="flex-module">
+                            <div class="flex-module-inner js-items-container">
+                                <ul class="clearfix">
+                                    <li class="copynine">⑨ 2009 chiyo</li>
+
+                                    <li><a href="https://chiyo.org">Index</a></li>
+                                    <li><a href="/users">User Directory</a>
+                                    </li>
+                                    <li><a href="https://chiyo.org/news">News</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+                    
+                <div class="permalink">
+
+                    <div class="permalink-inner permalink-tweet-container">
+
+                        <div class="tweet permalink-tweet">
+
+                            <div class="content clearfix">
+                                <div class="permalink-header">
+
+                                    <div class="follow-bar">
+                                        {% if ('user_id') in session%}
+                                        {% if not session.get('user_id')|int == properties['id'] %}
+                                        {% if not session.get('user_id')|int in friends|map(attribute="friend")%}
+                                        <div class="user-actions btn-group not-following">
+                                            <form action="/id/{{properties['id']}}/add-friend" method="post" novalidate>
+                                                {{friend_form.hidden_tag()}}
+                                                <button id="friend" name="friend" type="submit" value="friend" class="follow-button btn" type="button">
+                                                    <span class="button-text follow-text"><i class="follow"></i> Add as friend</span>
+                                                </button>
+                                             </form>
+                                        </div>
+                                        {%else%}
+                                        <div class="user-actions btn-group not-following">
+                                            <a href="/msg/{{properties['id']}}">
+                                                {{friend_form.hidden_tag()}}
+                                                <button class="follow-button btn" type="button">
+                                                    <span class="button-text follow-text"><i class="follow"></i>  Message</span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                        {%endif%}
+                                        {%endif%}
+                                        {%endif%}
+                                        </div>
+                                    <a class="account-group" href="/id/{{properties['id']}}">
+                                        <img class="avatar" src="https://sys.chiyo.org/usercontent/img/rsz/100px/{{properties['id']}}.gif" alt="{{properties['username']}}">
+                                        <strong class="fullname">{{properties['username']}}</strong>
+                                        <span class="username"><s>/id/</s><b>{{properties['id']}}</b></span>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            <p class="tweet-text "> 
+                                <div class="twPostCorpus">
+                                {% for newline in blogpost['corpus'].split('\n') %}
+                                    <span>{{newline|escape|regex_replace('javascript:','meowmeow:')|markdown}}</span>
+                                {% endfor %}
+                                </div>
+                            </p>
+
+                            <div class="stream-item-footer">
+
+                                <ul class="tweet-actions">
+
+                                    <li class="action-del-container">
+                                        {% if session['user_id'] == properties['id']|string %}
+                                        <form action="" method="post" novalidate>
+                                            {{delete_form.hidden_tag()}}
+                                            <button class="twtdeleteButton" name="delete" value="blog"
+                                            type="submit">delete</form>
+                                        </form>
+                                        {%endif%}
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <div class="permalink-footer">
+
+                                <div class="tweet-details-fixer">
+
+                                    <div class="tweet-stats-container ">
+
+                                        <ul class="stats">
+
+                                            <li class="stat-count">
+                                                <a class="">
+                                                    <strong>{%if comments%}{{comments|length}}{%else%}0{%endif%}</strong>comments</a>
+                                            </li>
+
+                                            <li class="avatar-row">
+                                                {%if comments%}
+                                                {%for comment in comments%}
+                                                <a class="" href="/id/{{comment['authorid']}}">
+                                                    <img class="avatar size24" src="https://sys.chiyo.org/usercontent/img/rsz/32px/{{comment['authorid']}}.gif" title="{{comment['username']}}">
+                                                </a>
+                                                {%endfor%}
+                                                {%endif%}
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                    <div class="client-and-actions">
+                                        <span class="metadata">
+                                            <span>{{time(blogpost['date'])}}</span>
+
+                                        <span class="tweet-contributors">by <a href="/id/{{properties['id']}}"
+                                                    class="user-profile-link">{{properties['username']}}</a></span>
+
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <center>
+
+                    <div class="flex-module blogComBox">
+                        <div class="flex-module-header">
+                            <h2>Leave a comment</h2>
+                        </div>
+                        
+                        <form action="" method="post" novalidate="">
+                            <div class="holding">
+                                {{comment_form.hidden_tag()}}
+                                {{comment_form.corpus(class="blogcommentForm")}}
+                            </div>
+                            {{comment_form.submit(class="blog-comment-btn btn", value="comment!!")}}
+                        </form>
+                    </div>
+                </center>
+
+                    <div class="replies-to  permalink-inner permalink-replies">
+                        <div class="tweets-wrapper">
+                            <div id="descendants">
+                                <div class="stream-container ">
+                                    <div class="stream permalink-stream">
+                                        <div class="stream-items" id="stream-items-id">
+                                            {%if comments%}
+                                            {%for comment in comments%}
+                                            <div class="simple-tweet tweet">
+
+                                                <div class="content">
+
+                                                    <div class="stream-item-header">
+                                                        <small class="time">
+                                                            <span class="tweet-timestamp"><span>{{time(comment['date'])}}</span></span>
+                                                        </small>
+
+                                                        <a class="account-group" href="/id/{{comment['authorid']}}">
+                                                            <img class="avatar" src="https://sys.chiyo.org/usercontent/img/rsz/100px/{{comment['authorid']}}.gif" alt="comment['username']">
+                                                            <strong class="fullname">{{comment['username']}}</strong>
+                                                            <span>‏</span><span class="username"><s>/id/</s><b>{{comment['authorid']}}</b></span>
+                                                        </a>
+
+                                                    </div>
+
+                                                    <p class="blogcomText">
+                                                        {{comment['corpus']}}
+                                                    </p>
+
+                                                    <div class="stream-item-footer">
+                                                        {% if session['user_id'] == comment['authorid']|string or session['user_id'] == properties['id']|string %}
+                                                        <form class="" action="" method="post" novalidate >
+                                                            {{delete_form.hidden_tag()}}
+                                                            <button class="twtdeleteButton" name="delete" value="{{comment.id}}" type="submit">delete</button>
+                                                        </form>
+                                                        {%endif%}
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                     {%endfor%}
+                                    {%endif%}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+</body>
+
+</html>
