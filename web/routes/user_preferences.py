@@ -53,47 +53,50 @@ def user_preferences():
 
 
 def form_handler(query, preferences_form):
-    query.update_user_preferences(
-        session["user_id"],
-        preferences_form.bio.data,
-        [
-            "default",
-            "twitter",
-            "myspace",
-            "classic"
-        ][int(preferences_form.interface.data)],
-        int(preferences_form.privacy.data)
-    )
+    if len(preferences_form.bio.data) < 4096:
+        query.update_user_preferences(
+            session["user_id"],
+            preferences_form.bio.data,
+            [
+                "default",
+                "twitter",
+                "myspace",
+                "classic"
+            ][int(preferences_form.interface.data)],
+            int(preferences_form.privacy.data)
+        )
 
     avatar = preferences_form.avatar.data
     if avatar:
         file_extension = os.path.splitext(secure_filename(avatar.filename))[-1]
+        if file_extension in CONFIG.ALLOWED_IMAGE_UPLOAD_EXTENSIONS:
 
-        file_name = f"img/{session['user_id'] + file_extension}"
-        file_path = os.path.join(temp_dir, file_name)
-        avatar.save(file_path)
+            file_name = f"img/{session['user_id'] + file_extension}"
+            file_path = os.path.join(temp_dir, file_name)
+            avatar.save(file_path)
 
-        if magic.from_file(file_path, mime=True) in CONFIG.ALLOWED_IMAGE_MIME_TYPES:
-            tasks.transcode_and_upload_images.delay(
-                file_path,
-                usercontent_dir,
-                session["user_id"]
-            )
+            if magic.from_file(file_path, mime=True) in CONFIG.ALLOWED_IMAGE_MIME_TYPES:
+                tasks.transcode_and_upload_images.delay(
+                    file_path,
+                    usercontent_dir,
+                    session["user_id"]
+                )
 
     audio = preferences_form.audio.data
     if audio:
         file_extension = os.path.splitext(secure_filename(audio.filename))[-1]
+        if file_extension in CONFIG.ALLOWED_AUDIO_UPLOAD_EXTENSIONS:
 
-        file_name = f"audio/{session['user_id'] + file_extension}"
-        file_path = os.path.join(temp_dir, file_name)
-        audio.save(file_path)
+            file_name = f"audio/{session['user_id'] + file_extension}"
+            file_path = os.path.join(temp_dir, file_name)
+            audio.save(file_path)
 
-        if magic.from_file(file_path, mime=True) in CONFIG.ALLOWED_AUDIO_MIME_TYPES:
-            tasks.transcode_and_upload_audio.delay(
-                file_path,
-                usercontent_dir,
-                session["user_id"]
-            )
+            if magic.from_file(file_path, mime=True) in CONFIG.ALLOWED_AUDIO_MIME_TYPES:
+                tasks.transcode_and_upload_audio.delay(
+                    file_path,
+                    usercontent_dir,
+                    session["user_id"]
+                )
 
     css = preferences_form.css.data
     if css:
