@@ -1,10 +1,8 @@
 from flask import redirect, session
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
+from flask_wtf.file import FileField
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length
-from db import Query
-from config import CONFIG
 
 
 class login_form(FlaskForm):
@@ -15,7 +13,7 @@ class login_form(FlaskForm):
 
 def login_commit(user_id):
     print(f"CHIYO: User ID '{user_id}' logged in...")
-    session["user_id"] = user_id
+    session["user_id"] = str(user_id)
 
     return redirect(f"/id/{user_id}")
 
@@ -29,7 +27,7 @@ class register_form(FlaskForm):
 def register_commit(username, user_id):
     print(f"CHIYO: User '{username}' created...")
 
-    session["user_id"] = user_id
+    session["user_id"] = str(user_id)
 
     return redirect(f"/id/{user_id}")
 
@@ -54,8 +52,8 @@ class search_form(FlaskForm):
 
 
 class preferences_form(FlaskForm):
-    avatar = FileField("avatar", validators=[FileAllowed(CONFIG.ALLOWED_IMAGE_UPLOAD_EXTENSIONS, "Invalid image file type")])
-    audio = FileField("audio", validators=[FileAllowed(CONFIG.ALLOWED_AUDIO_UPLOAD_EXTENSIONS, "Invalid audio file type")])
+    avatar = FileField("avatar")
+    audio = FileField("audio")
     css = TextAreaField("css")
     bio = TextAreaField("bio")
     interface = SelectField("interface", choices=[(0, "default"), (1, "twitter"), (2, "myspace"), (3, "classic")])

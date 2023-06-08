@@ -5,6 +5,13 @@
 <title>{{properties['username']}} @ ChiyoNET Online!!</title>
 {% endblock %}
 {% block body %}
+
+<style>
+.abtText img {
+  max-width:100%;
+}
+</style>
+
 <div id="container">
     <div id="pageNav">
         
@@ -115,10 +122,10 @@
                                     <strong>{{properties['pagecount']}}</strong> // Last Seen:
                                     <strong>{{time(properties['lastseen'])}}</strong></span>
 
-                                <p class="comText">
-                                </p>
                                 <h2>About {{ properties['username'] }}:</h2>
+				<div class="abtText">
                                 {{ properties['about']|escape|regex_replace('javascript:','meowmeow:')|markdown}}
+				</div>
                             </div>
                         </td>
                     </tr>

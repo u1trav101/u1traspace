@@ -20,7 +20,6 @@ def register(captcha):
             # registration successful
             user_id = auth.register_user(register_form.username.data, register_form.password.data)
 
-            session["user_id"] = user_id
             copy_default_avatar.delay(user_id)
 
             return forms.register_commit(register_form.username.data, user_id)
