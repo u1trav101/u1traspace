@@ -30,7 +30,7 @@
                         <td class="inputTd" valign="bottom">
                             <form method="post" style="width:600px;" class="messageForm">
                                 {{ form.hidden_tag() }}
-                                {{form.corpus(class="msgInput",placeholder='Message',id="message-input")}}
+                                {{form.corpus(class="msgInput",placeholder='Message',id="message-input", autocomplete="off")}}
                                 {{ form.submit(value="send")}}
                             </form>
                         </td>
