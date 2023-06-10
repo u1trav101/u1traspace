@@ -93,8 +93,6 @@
 			<div style="font-size:small;">Last Login: <span id="lastLogin">{{time(properties['lastseen'])}}</span></div>
 			{% if current_time - properties['lastseen']|int < 300 %}
 			<div id="online" style="margin-top: 10px;"><img src="/static/img/myspace/online.gif"></div>
-			{%else%}
-			{{current_time - properties['lastseen']|int}}
 			{%endif%}
 
 
@@ -206,15 +204,15 @@
 
 		</div>
 
+	        <div id="footer" class="box">
+                <div>
+                        <p>
+                                <a href="/">Index</a> <a href="mailto:admin@chiyo.org">Mail</a>
+                                <a href="/news">News</a> <br>© 2000 <a style="text-decoration:none;" href="http://chiyo.org/">Chiyo</a>
+                        </p>
+                </div>
+        </div>
 
-	</div>
-	<div id="footer" class="box">
-		<div>
-			<p>
-				<a href="/">Index</a> <a href="mailto:admin@chiyo.org">Mail</a>
-				<a href="/news">News</a> <br>© 2000 <a style="text-decoration:none;" href="http://chiyo.org/">Chiyo</a>
-			</p>
-		</div>
 	</div>
 </body>
 
