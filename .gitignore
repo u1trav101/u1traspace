@@ -1,6 +1,9 @@
 .env/
 .vscode/
 __pycache__/
+
+dump.rdb
+
 .tmp/
 usercontent/
 
