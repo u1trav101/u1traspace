@@ -5,6 +5,7 @@ from db import Query
 from web.misc import render_template
 from config import CONFIG
 import os
+import pylibmagic
 import magic
 import web.forms as forms
 import profile
