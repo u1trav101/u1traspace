@@ -11,7 +11,7 @@ pkgs.mkShell rec {
 
   buildInputs = [
     redis
-    mariadb
+    mariadb_1011
     ffmpeg
   ];
 
@@ -35,7 +35,7 @@ pkgs.mkShell rec {
     MYSQL_DATADIR=$MYSQL_HOME/data
     export MYSQL_UNIX_PORT=$MYSQL_HOME/mysql.sock
     MYSQL_PID_FILE=$MYSQL_HOME/mysql.pid
-    alias mysql='mysql -u root'
+    alias mysql='sudo mysql --socket=$MYSQL_UNIX_PORT'
 
     if [ ! -d "$MYSQL_HOME" ]; then
       # Make sure to use normal authentication method otherwise we can only
@@ -50,9 +50,12 @@ pkgs.mkShell rec {
       --socket=$MYSQL_UNIX_PORT 2> $MYSQL_HOME/mysql.log &
     MYSQL_PID=$!
 
+    # Changes the mysql root password
+    sudo mysql --socket=$MYSQL_UNIX_PORT -e "SET PASSWORD FOR root@'localhost' = PASSWORD('root')"
+
     finish()
     {
-      mysqladmin -u root --socket=$MYSQL_UNIX_PORT shutdown
+      sudo mysqladmin --socket=$MYSQL_UNIX_PORT shutdown
       kill $MYSQL_PID
       wait $MYSQL_PID
     }
