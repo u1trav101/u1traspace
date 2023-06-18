@@ -5,8 +5,11 @@ __pycache__/
 dump.rdb
 
 .tmp/
+.redis/
+.mysql/
 usercontent/
 
 config.py
 chiyo.ini
 todo.md
+redis.conf
