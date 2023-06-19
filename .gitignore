@@ -2,15 +2,14 @@
 .vscode/
 __pycache__/
 db_*/
-
-dump.rdb
-
 .tmp/
-.redis/
-.mysql/
+.nix-shell/
 usercontent/
 
 config.py
 chiyo.ini
 todo.md
 redis.conf
+dump.rdb
+minio
+mc
