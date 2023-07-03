@@ -173,7 +173,7 @@ class _Query():
 
         return self.cur.fetchall()
 
-    def get_all_blogposts(self):
+    def get_all_blogposts(self, limit=999999999999):
         self.cur.execute("""
             SELECT
                 blogs.authorid,
@@ -186,8 +186,8 @@ class _Query():
                 ON users.id = blogs.authorid
             WHERE blogs.state = 1
             ORDER BY blogs.date DESC 
-            LIMIT 6;
-        """)
+            LIMIT ?;
+        """, [limit])
 
         return self.cur.fetchall()
 
