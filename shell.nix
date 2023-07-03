@@ -74,18 +74,26 @@ pkgs.mkShell rec {
     mkdir -p $PWD/.nix-shell/minio
     echo Starting MinIO...
     $PWD/minio server $PWD/.nix-shell/minio > /dev/null 2>&1 &
-    sleep 2
+    sleep 1
 
     # Creating S3 bucket
     echo Creating S3 bucket...
     $PWD/mc alias set minio http://localhost:9000 minioadmin minioadmin
     $PWD/mc mb minio/chiyo-cdn
 
+    # Starting celery
+    echo Starting Celery worker...
+    celery -A wsgi.celery_app worker > /dev/null 2>&1 &
+
+    # Starting Flask
+    python wsgi.py
+
     finish()
     {
       sudo mysqladmin --socket=$MYSQL_UNIX_PORT shutdown
       kill $MYSQL_PID
       wait $MYSQL_PID
+      sudo killall celery
       sudo killall minio
       sudo killall redis-server
     }
