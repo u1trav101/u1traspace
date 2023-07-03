@@ -32,6 +32,10 @@ def declare_routes(app, captcha):
     @app.route("/users/random/")
     def random_user():
         return routes.random_user()
+    
+    @app.route("/news")
+    def news():
+        return routes.news()
 
     @app.route("/id/")
     def redirect_to_user_list():
@@ -40,7 +44,7 @@ def declare_routes(app, captcha):
     @app.route("/id/<user_id>/", methods=["GET", "POST"])
     def user_profile(user_id):
         return routes.user_profile(user_id)
-
+    
     @app.route("/id/<user_id>/blog/")
     def blog_list(user_id):
         return routes.blog_list(user_id)

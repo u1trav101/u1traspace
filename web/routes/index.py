@@ -5,7 +5,7 @@ from db import Query
 
 def index():
     query = Query()
-    res = query.get_all_blogposts()
+    res = query.get_all_blogposts(6)
 
     search_form = forms.search_form()
 
