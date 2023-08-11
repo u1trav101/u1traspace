@@ -172,6 +172,22 @@ class _Query():
         """, [user_id])
 
         return self.cur.fetchall()
+    
+    def get_all_friend_blogposts(self, user_id, limit=999999999999):
+        self.cur.execute("""
+            SELECT
+                blogs.authorid,
+                blogs.id,
+                blogs.title,
+                blogs.date,
+                users.username
+            FROM blogs
+            LEFT JOIN users
+                ON users.id = blogs.authorid
+            WHERE blogs.state = 1
+            ORDER BY blogs.date DESC 
+            LIMIT ?; 
+        """)
 
     def get_all_blogposts(self, limit=999999999999):
         self.cur.execute("""
