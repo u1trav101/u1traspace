@@ -86,6 +86,7 @@ pkgs.mkShell rec {
     celery -A wsgi.celery_app worker > /dev/null 2>&1 &
 
     # Starting Flask
+    export FLASK_DEBUG=1
     python wsgi.py
 
     finish()
