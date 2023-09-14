@@ -1,0 +1,43 @@
+#content {
+    border: none;
+    margin: 0;
+}
+
+
+.comment {
+    background-color: rgba(200, 200, 0, 0.1);
+    width: 100%;
+    word-wrap: anywhere;
+    padding-right: 100%;
+    padding: 2px 0px 0px 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: text-top;
+    vertical-align: top;
+}
+
+.comment img {
+    max-height: 420px;
+    /* hehehe */
+}
+
+.comText,
+.comInfo {
+    vertical-align: top;
+    top: 0;
+    bottom: 0;
+    margin-top: 0px;
+}
+
+.comInfo {
+    display: contents;
+}
+.tableLeft {
+    width: 32px;
+}
+.tableRight {
+    padding: 0px 0px 0px 2px;
+  }
+td {
+    vertical-align: top;
+}
