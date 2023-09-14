@@ -1,4 +1,53 @@
 {% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/news.css">
+
+{% endblock %}
 {% block body %}
-{{ new_posts }}
+<div id="container">
+    <div id="breadCrumb">
+        <p> / <a href="#">News</a>
+        </p>
+    </div>
+
+    <center>
+        <div id="content">
+            <div class="mainContent">
+                {% for post in new_posts %}
+                <table class="comment" summary="" cellspacing="" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td class="tableLeft">
+                                <a href="/id/{{post['authorid']}}">
+                                    <img class="comAvatar" style="width: 48px;"
+                                        src="{{cdn_uri}}/usercontent/img/rsz/100px/{{post['authorid']}}.gif"></a>
+                            </td>
+                            <td class="tableRight">
+                                <div>
+                                    <h2>{{post['title']}}</h2>
+                                    <p class="comText comInfo">by <a href="/id/{{post['authorid']}}">{{post['username']}}</a>
+                                        <b>({{time(post['date'])}})</b>
+                                    </p>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </tbody>
+                </table>
+                {% endfor %}
+            </div>
+
+        </div>
+        <div id="siteInfo">
+            <a href="/">Index</a> | <a href="mailto:admin@chiyo.org">Mail</a> | <a href="/news">News</a> ⑨ 2004
+            MARISASPACE
+        </div>
+</div>
+
+<br>
+</body>
+
+</html>
+
 {% endblock %}
