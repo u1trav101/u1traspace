@@ -20,7 +20,7 @@ def render_template(*args, **kwargs):
     return real_render_template(
         *args,
         **kwargs,
-        cdn_uri=CONFIG.CDN_URI,
+        cdn_uri=CDN_URI,
         login_form=login_form,
         current_time=round(time()),
         notification_counters=get_notification_counters(),
