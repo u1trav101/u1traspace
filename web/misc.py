@@ -13,6 +13,10 @@ import re
 def render_template(*args, **kwargs):
     login_form = forms.login_form()
 
+    CDN_URI = CONFIG.CDN_URI
+    if request.headers.get("X-Chiyo-Legacy") == "true":
+        CDN_URI = CONFIG.INSECURE_CDN_URI
+
     return real_render_template(
         *args,
         **kwargs,
