@@ -9,7 +9,7 @@ import messaging
 
 def direct_message(recipient_id):
     if ("user_id") not in session:
-        return redirect("index")
+        return redirect(url_for("login"))
 
     try:
         int(recipient_id)
