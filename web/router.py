@@ -81,6 +81,10 @@ def declare_routes(app, captcha):
     def notification_poll():
         return get_notification_counters()
 
+    @app.route("/msg/")
+    def message_list():
+        return routes.message_list()
+
     @app.route("/msg/<recipient_id>/", methods=["GET", "POST"])
     def direct_message(recipient_id):
         return routes.direct_message(recipient_id)
