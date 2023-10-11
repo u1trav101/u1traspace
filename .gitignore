@@ -13,3 +13,4 @@ redis.conf
 dump.rdb
 minio
 mc
+*DS_Store*
