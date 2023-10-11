@@ -14,7 +14,10 @@ app.config.from_object(CONFIG)
 # initialising flask extensions
 captcha = CAPTCHA(config=CONFIG.CAPTCHA_CONFIG)
 captcha.init_app(app)
-Misaka(app)
+
+Misaka(app, autolink=True)
+
+
 celery_app = celery_init_app(app)
 
 # declaring jinja filters
