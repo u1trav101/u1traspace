@@ -42,7 +42,8 @@ def get_all_notifications(user_id):
                     "comment": query.get_blogpost_comment(
                         notification["actionuserid"],
                         notification["actioncommentid"],
-                        notification["actionpostid"]
+                        notification["actionpostid"],
+                        session["user_id"]
                     ),
                     "blog": query.get_blogpost(
                         user_id,

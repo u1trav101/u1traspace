@@ -223,7 +223,7 @@ class _Query():
 
         return self.cur.fetchone()
 
-    def get_blogpost_comment(self, author_id, comment_id, blog_id):
+    def get_blogpost_comment(self, author_id, comment_id, blog_id, page_id):
         self.cur.execute("""
             SELECT
                 corpus,
@@ -232,8 +232,9 @@ class _Query():
             WHERE id = ?
             AND blogid = ?
             AND authorid = ?
+            AND pageid = ?
             LIMIT 1;
-        """, [comment_id, blog_id, author_id])
+        """, [comment_id, blog_id, author_id, page_id])
 
         return self.cur.fetchone()
 
