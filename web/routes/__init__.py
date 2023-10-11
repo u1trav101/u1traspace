@@ -18,3 +18,4 @@ from web.routes.add_friend import add_friend
 from web.routes.remove_friend import remove_friend
 from web.routes.konata import konata
 from web.routes.news import news
+from web.routes.message_list import message_list
