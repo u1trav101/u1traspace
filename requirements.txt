@@ -6,6 +6,7 @@ flask-paginate==2022.1.8
 flask-simple-captcha==1.1.1
 flask-wtf==1.1.1
 mariadb==1.1.4
-#pillow==9.4.0 uncomment this if not installing through nix-shell
+pillow==9.4.0 # don't install this dep through pip if you are using a nix shell
 python-magic==0.4.27
 pylibmagic==0.4.0
+werkzeug==2.3.7
