@@ -371,6 +371,21 @@ class _Query():
         """, [user_id, user_id])
 
         return self.cur.fetchall()
+    
+    def get_last_message_in_conversation(self, sender_id, recipient_id):
+        self.cur.execute("""
+            SELECT
+                senderid,
+                corpus,
+                date
+            FROM messages
+            WHERE (senderid = ? AND recipientid = ?)
+            OR (recipientid = ? AND senderid = ?)
+            ORDER BY messageid DESC
+            LIMIT 1;
+        """, [sender_id, recipient_id, sender_id, recipient_id])
+
+        return self.cur.fetchone()
 
     def poll_incoming_messages(self, sender_id, recipient_id, last_message_id):
         self.cur.execute("""

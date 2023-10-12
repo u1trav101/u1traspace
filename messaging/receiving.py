@@ -16,6 +16,25 @@ def get_direct_messages(recipient_id, sender_id):
 
     return res
 
+def get_user_conversations(user_id):
+    query = Query()
+    res = query.get_user_conversations(user_id)
+    print(len(res))
+
+
+    for i in range(len(res)):
+        if int(res[i]["id"]) != int(user_id):
+            message = query.get_last_message_in_conversation(user_id, res[i]["id"])
+
+            res[i].update({
+                "sender_id": message["senderid"],
+                "sender_username": query.get_user_by_id(message["senderid"])["username"],
+                "corpus": message["corpus"],
+                "date": message["date"]
+            })
+
+    return res
+
 
 def poll_incoming_messages(sender_id, recipient_id, last_message_id):
     query = Query()
