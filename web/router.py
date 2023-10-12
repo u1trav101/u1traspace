@@ -12,6 +12,10 @@ def declare_routes(app, captcha):
     @app.route("/")
     def index():
         return routes.index()
+    
+    @app.route("/set-timezone", methods=["POST"])
+    def set_timezone():
+        return routes.set_timezone()
 
     @app.route("/auth/login/", methods=["GET", "POST"])
     def login():
