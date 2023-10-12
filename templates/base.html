@@ -27,6 +27,13 @@
     {%else%}
     <title>ChiyoNET</title>
     {% endif %}
+    {% if 'timezone' not in session %}
+    <script type="text/javascript">
+        // Send browser's timezone to server for displaying dates/times in local timezone.
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        fetch("/set-timezone", {method: 'POST', body: timezone});
+    </script> 
+    {% endif %}
     {% block head %}{% endblock %}
 </head>
 

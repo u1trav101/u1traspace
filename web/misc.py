@@ -1,6 +1,7 @@
 from flask import session, request
 from flask import render_template as real_render_template
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from time import time
 from config import CONFIG
 from db import Query
@@ -39,10 +40,18 @@ def before_request():
 
 # converts unix time to human readable time format
 def unix_to_readable(time, short=False):
-    readable_time = datetime.fromtimestamp(int(time)).strftime("%d/%m/%Y %H:%M:%S")
+    readable_time = ""
 
-    if short:
-        readable_time = datetime.fromtimestamp(int(time)).strftime("%H:%M:%S")
+    if ("timezone") in session:
+        readable_time = datetime.fromtimestamp(int(time), ZoneInfo(session["timezone"])).strftime("%d/%m/%Y %H:%M:%S")
+
+        if short:
+            readable_time = datetime.fromtimestamp(int(time), ZoneInfo(session["timezone"])).strftime("%H:%M:%S")
+    else:
+        readable_time = datetime.fromtimestamp(int(time)).strftime("%d/%m/%Y %H:%M:%S")
+
+        if short:
+            readable_time = datetime.fromtimestamp(int(time)).strftime("%H:%M:%S")
 
     if int(time) <= 0:
         return "never!"
