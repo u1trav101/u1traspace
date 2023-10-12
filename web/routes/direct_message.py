@@ -44,7 +44,7 @@ def direct_message(recipient_id):
         "directmsg.html",
         properties=profile.get_profile_properties(recipient_id),
         messages=messaging.get_direct_messages(recipient_id, session["user_id"]),
-        conversations=query.get_user_conversations(session["user_id"]),
+        conversations=messaging.get_user_conversations(session["user_id"]),
         friends=profile.get_user_friends(session["user_id"]),
         form=message_form
     )
