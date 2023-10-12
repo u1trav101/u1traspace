@@ -13,6 +13,9 @@
     <center>
         <div id="content">
             <div class="mainContent">
+                <div class="newsSubText">
+                    <span>whereya flyin', chiyochan?</span>
+                </div>
                 {% for post in new_posts %}
                 <table class="comment" summary="" cellspacing="" cellpadding="0">
                     <tbody>
@@ -24,9 +27,16 @@
                             </td>
                             <td class="tableRight">
                                 <div>
-                                    <img class="rightSpiral" src="/static/img/spiral_2.gif">
-                                    <h2>{{post['title']}}</h2>
-                                    <p class="comText comInfo">by <a href="/id/{{post['authorid']}}"><b>{{post['username']}}</b></a>
+                                    <a href="/id/{{post['authorid']}}/blog/{{post['id']}}">
+                                        {% if loop.index0 % 2 == 0 %}
+                                        <img class="rightSpiral" src="/static/img/spinner.png">
+                                        {% else %}
+                                        <img class="rightSpiral" src="/static/img/spiral_3.gif">
+                                        {% endif %}
+                                    </a>
+                                    <a href="/id/{{post['authorid']}}/blog/{{post['id']}}"><h2 class="newsPostTitle"><u>{{post['title']}}</u></h2></a>
+                                    <p class="comText comInfo">by <a
+                                            href="/id/{{post['authorid']}}"><b>{{post['username']}}</b></a>
                                         <b>({{time(post['date'])}})</b>
                                     </p>
                                 </div>

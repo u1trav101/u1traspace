@@ -79,7 +79,7 @@
 					<div class="commentbox_top"><small class="commentdate"
 							style="float: right; color: white; position: absolute; right: 2px; top: 0px;">({{time(comment['date'])}})</small>
 					</div><span
-						style="color: white; float: left; margin-left: 4px; margin-top: 0px; position: absolute; left: 66px; top: 24px;">{{comment['corpus']}}</span>
+						style="color: white; float: left; margin-left: 4px; margin-top: 0px; position: absolute; left: 66px; top: 24px;">{{comment['corpus']|escape|regex_replace('javascript:','meowmeow:')|markdown}}</span>
 				</div>{% endfor %}
 				{%else%}
 				<h2 style="color:white;">where'd the comments go?</h2>

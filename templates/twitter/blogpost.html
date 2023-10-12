@@ -373,7 +373,7 @@
                                                     </div>
 
                                                     <p class="blogcomText">
-                                                        {{comment['corpus']}}
+                                                        {{comment['corpus']|escape|regex_replace('javascript:','meowmeow:')|markdown}}
                                                     </p>
 
                                                     <div class="stream-item-footer">

@@ -102,7 +102,7 @@
                         <td class="tableLeft blogAvi">
                             <a href="/id/{{properties['id']}}">
                                 <div></div><img class="comAvatar"
-                                    src="https://sys.chiyo.org/usercontent/img/rsz/100px/{{properties['id']}}.gif"
+                                    src="{{cdn_uri}}/usercontent/img/rsz/100px/{{properties['id']}}.gif"
                                     width="100" height="100">
                             </a>
                         </td>
@@ -169,7 +169,7 @@
                                     src="{{cdn_uri}}/usercontent/img/rsz/100px/{{comment['authorid']}}.gif"></a>
                         </td>
                         <td class="tableRight">
-                            <div>
+                            <div class="comBox">
                                 <p class="comText comInfo"><a
                                         href="/id/{{comment['authorid']}}">{{comment['username']}}</a>
                                     <b>({{time(comment['date'])}})</b>
@@ -179,7 +179,7 @@
                                         <button name="delete" value="{{comment.id}}" type="submit">delete</button>
                                     </form>
                                     {%endif%}
-                                    <br>{{comment['corpus']}}
+                                    {{comment['corpus']|escape|regex_replace('javascript:','meowmeow:')|markdown}}
                                 </p>
 
                             </div>
