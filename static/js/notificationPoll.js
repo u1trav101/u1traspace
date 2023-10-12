@@ -15,8 +15,6 @@ const notificationPoll = async () => {
     const friends = resJSON.friend_request_approval;
     const messages = resJSON.unseen_message;
 
-    console.log(comments, friends, messages);
-
     const counterElements = [
         commentCounter, // 0
         friendCounter, // 1
@@ -39,8 +37,6 @@ const notificationPoll = async () => {
 
             switch (interfaceType) {
                 default:
-                    console.log("iterating");
-
                     counterElements[i - 3].innerHTML = counterString;
                     counterElements[i].style.display = "unset";
                     break;
