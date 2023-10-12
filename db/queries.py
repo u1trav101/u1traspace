@@ -352,7 +352,7 @@ class _Query():
                 ON messages.senderid = users.id
             WHERE (messages.recipientid = ? AND messages.senderid = ?)
             OR (messages.recipientid = ? AND messages.senderid = ?)
-            ORDER BY messages.date DESC;
+            ORDER BY messages.messageid DESC;
         """, [recipient_id, sender_id, sender_id, recipient_id])
 
         return self.cur.fetchall()
@@ -360,14 +360,11 @@ class _Query():
     def get_user_conversations(self, user_id):
         self.cur.execute("""
             SELECT DISTINCT
-                users.id,
-                users.username
-            FROM users
-            LEFT JOIN messages
-                ON users.id = messages.senderid
-            WHERE messages.senderid = ?
-            OR messages.recipientid = ?
-            ORDER BY messages.messageid DESC;
+                senderid,
+                recipientid
+            FROM messages
+            WHERE senderid = ?
+            OR recipientid = ?;
         """, [user_id, user_id])
 
         return self.cur.fetchall()
