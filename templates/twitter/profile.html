@@ -365,7 +365,7 @@
                                                 </a>
                                             </div>
                                             <p class="commentText">
-                                                {{comment['corpus']}}
+                                                {{comment['corpus']|escape|regex_replace('javascript:','meowmeow:')|markdown}}
                                             </p>
                                             <div class="stream-item-footer">
                                                 {% if session['user_id'] == comment['authorid']|string or session['user_id'] == properties['id']|string %}

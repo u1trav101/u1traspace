@@ -165,7 +165,7 @@
                         </td>
                         <td class="tableRight">
                             <div>
-                                <p class="comText comInfo"><a
+                                <span class="comText comInfo"><a
                                         href="/id/{{comment['authorid']}}">{{comment['username']}}</a>
                                     <b>({{time(comment['date'])}})</b>
                                     {% if session['user_id'] == comment['authorid']|string or session['user_id'] == properties['id']|string %}
@@ -174,8 +174,8 @@
                                         <button name="delete" value="{{comment.id}}" type="submit">delete</button>
                                     </form>
                                     {%endif%}
-                                    <br>{{comment['corpus']}}
-                                </p>
+                                    <span>{{comment['corpus']|escape|regex_replace('javascript:','meowmeow:')|markdown}}</span>
+                                </span>
 
                             </div>
                         </td>

@@ -223,7 +223,7 @@
 								<td class="tableRight">
 									<div><b class="date">{{time(comment['date'])}}</b></div>
 									<div>
-										<p>{{comment['corpus']}}</p>
+										<p>{{comment['corpus']|escape|regex_replace('javascript:','meowmeow:')|markdown}}</p>
 									</div>
 									{% if session['user_id'] == comment['authorid']|string or session['user_id'] == properties['id']|string %}
 									<form class="deleteButton" action="" method="post" novalidate>
