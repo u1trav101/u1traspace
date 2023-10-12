@@ -17,7 +17,6 @@
                     <span>recent conversations</span>
                 </div>
                 <br>
-                {{conversations}}
                 {% for conversation in conversations %}
                 {% if not conversation['id'] == session.get('user_id')|int%}
                 {% if conversation['id'] in friends|map(attribute="friend")%}
@@ -40,8 +39,7 @@
                                         {% endif %}
                                     </a>
                                     <a href="/msg/{{conversation['id']}}"><h2 class="newsPostTitle"><u>{{conversation['username']}}</u></h2></a>
-                                    <i>...</i><br>
-                                    <i>Blue Meanie: I am the Blue Meanie</i>
+                                    <i>[{{time(conversation['date'])}}] {{conversation['sender_username']}}: {{conversation['corpus']}}</i>
                                 </div>
                             </td>
                         </tr>

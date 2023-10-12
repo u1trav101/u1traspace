@@ -19,21 +19,38 @@ def get_direct_messages(recipient_id, sender_id):
 def get_user_conversations(user_id):
     query = Query()
     res = query.get_user_conversations(user_id)
-    print(len(res))
+    print(res)
 
+    user_id = int(user_id)
+    other_users = []
+    conversations = []
 
     for i in range(len(res)):
-        if int(res[i]["id"]) != int(user_id):
-            message = query.get_last_message_in_conversation(user_id, res[i]["id"])
+        other_user_id = None
 
-            res[i].update({
+        if (res[i]["senderid"] == user_id) and (res[i]["recipientid"] not in other_users):
+            other_user_id = res[i]["recipientid"]
+
+        elif (res[i]["recipientid"] == user_id) and (res[i]["senderid"] not in other_users):
+            other_user_id = res[i]["senderid"]
+        
+        if other_user_id:
+            other_users.append(other_user_id)
+
+            message = query.get_last_message_in_conversation(user_id, other_user_id)
+
+            conversations.append({
+                "id": other_user_id,
+                "username": query.get_user_by_id(other_user_id)["username"],
                 "sender_id": message["senderid"],
                 "sender_username": query.get_user_by_id(message["senderid"])["username"],
                 "corpus": message["corpus"],
                 "date": message["date"]
             })
+    
+    conversations = sorted(conversations, key=lambda d: d["date"], reverse=True)
 
-    return res
+    return conversations
 
 
 def poll_incoming_messages(sender_id, recipient_id, last_message_id):
