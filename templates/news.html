@@ -14,8 +14,22 @@
         <div id="content">
             <div class="mainContent">
                 <div class="newsSubText">
-                    <span>whereya flyin', chiyochan?</span>
+                    <div class="friendsFilter">
+                        {% if request.args.get('show') == 'friends'%}
+                        <a href="/news"><input type="checkbox" onchange="window.location.href='/news'" class="friendsCheck"
+                                checked></a><small class="friendsText">only show friends posts</small>
+                        {%else%}
+                        <a href="/news?show=friends"><input type="checkbox"
+                                onchange="window.location.href='/news?show=friends'" class="friendsCheck"
+                                unchecked></a><small class="friendsText">only show friends posts</small>
+    
+                        {%endif%}
+                        </div>
+    
                 </div>
+                <br>
+
+                {% if new_posts %}
                 {% for post in new_posts %}
                 <table class="comment" summary="" cellspacing="" cellpadding="0">
                     <tbody>
@@ -46,6 +60,11 @@
                     </tbody>
                 </table>
                 {% endfor %}
+                {%else%}
+                <br>
+                <h2>where'd the posts go?</h2>
+
+                {%endif%}
             </div>
 
         </div>

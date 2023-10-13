@@ -139,6 +139,8 @@
                 <a href="/users?show=online">online users</a>
                 {% if ('user_id') in session %}
                 <a href="/id/{{session.get('user_id')}}/friends">friends</a>
+                <a href="/msg">messages</a>
+
                 {%endif%}
                 <a href="/search">search</a>
                 <span>::</span>
