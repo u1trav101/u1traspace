@@ -10,6 +10,10 @@
 					<font size="-1" face="Comic Sans MS" color="#ffffff">
 						<span style="font-size:12"><a style="color: #ffffff"
 								href="/id/{{session.get('user_id')}}">profile</a></span></font>
+					<font size="-1" face="Comic Sans MS" color="#ffffff">
+						<span style="font-size:12"><a style="color: #ffffff"
+								href="/msg">messages</a></span></font>
+
 					{%else%}
 					<font size="-1" face="Comic Sans MS" color="#ffffff">
 						<span style="font-size:12"><a style="color: #ffffff" href="/">homepage</a></span></font>
@@ -56,35 +60,35 @@
 					</style>
 					{%endif %}
 					<a id="friend-counter-a" class="notif frNotif" href="/notifications"><small class="frNotif"
-                        id="friend-counter">
-                        {% if notification_counters %}
-                        {% if notification_counters['friend_request_approval']%}
-                        {{notification_counters['friend_request_approval']}} new
-                        friend{%if notification_counters['friend_request_approval'] == 1 %}{%else%}s{%endif%}!!
-                        {%endif%}
-                        {%endif%}
-                    </small></a>
+							id="friend-counter">
+							{% if notification_counters %}
+							{% if notification_counters['friend_request_approval']%}
+							{{notification_counters['friend_request_approval']}} new
+							friend{%if notification_counters['friend_request_approval'] == 1 %}{%else%}s{%endif%}!!
+							{%endif%}
+							{%endif%}
+						</small></a>
 
-					<a id="comment-counter-a" class="notif comNotif" href="/notifications"><small
-                        class="comNotif" id="comment-counter">
-                        {% if notification_counters %}
-                        {% if notification_counters['blog_comment_approval'] or notification_counters['profile_comment_approval']%}
-                        {{notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval']}}
-                        new
-                        comment{%if notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval'] == 1 %}{%else%}s{%endif%}!!
-                        {%endif%}
-                        {%endif%}
-                    </small></a>
+					<a id="comment-counter-a" class="notif comNotif" href="/notifications"><small class="comNotif"
+							id="comment-counter">
+							{% if notification_counters %}
+							{% if notification_counters['blog_comment_approval'] or notification_counters['profile_comment_approval']%}
+							{{notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval']}}
+							new
+							comment{%if notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval'] == 1 %}{%else%}s{%endif%}!!
+							{%endif%}
+							{%endif%}
+						</small></a>
 
-					<a id="message-counter-a" class="notif msgNotif" href="/notifications"><small
-                        class="msgNotif" id="message-counter">
-                        {% if notification_counters %}
-                        {% if notification_counters['unseen_message']%}
-                        {{notification_counters['unseen_message']}} new
-                        message{%if notification_counters['unseen_message'] == 1 %}{%else%}s{%endif%}!!
-                        {%endif%}
-                        {%endif%}
-                    </small></a>
+					<a id="message-counter-a" class="notif msgNotif" href="/notifications"><small class="msgNotif"
+							id="message-counter">
+							{% if notification_counters %}
+							{% if notification_counters['unseen_message']%}
+							{{notification_counters['unseen_message']}} new
+							message{%if notification_counters['unseen_message'] == 1 %}{%else%}s{%endif%}!!
+							{%endif%}
+							{%endif%}
+						</small></a>
 
 
 

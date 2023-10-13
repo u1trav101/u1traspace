@@ -71,7 +71,7 @@
 			{%endif%}
 		</div>
 		<div id="hSub">
-			<a href="/">Home</a> | <a href="/users">All <span class="sep">Fwiends</span></a> | {%if ('user_id') in session%}<a href="/id/{{session.get('user_id')}}/friends">My Fwiends</span></a> |{%endif%} <a
+			<a href="/">Home</a> | <a href="/users">All <span class="sep">Fwiends</span></a> | {%if ('user_id') in session%}<a href="/id/{{session.get('user_id')}}/friends">My Fwiends</span></a> | <a href="/msg">Messages</span></a> |{%endif%} <a
 				href="/users/random">Rand<span class="sep">om</span></a> | <a href="/users?show=online">Online</a> | <a
 				href="/id/{{properties['id']}}/blog">Blog</a> </span> | <a href="/search">Search</a>
 		</div>
