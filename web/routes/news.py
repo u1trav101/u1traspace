@@ -11,7 +11,7 @@ def news():
         if ("user_id") not in session:
             return redirect(url_for("news"))
         
-        blogs = query.get_all_friend_blogposts(session["user_id"])
+        blogs = query.get_all_friend_blogposts(session["user_id"], 20)
     else:
         blogs = query.get_all_blogposts(20)
     
