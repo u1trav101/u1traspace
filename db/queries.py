@@ -184,10 +184,16 @@ class _Query():
             FROM blogs
             LEFT JOIN users
                 ON users.id = blogs.authorid
-            WHERE blogs.state = 1
+            LEFT JOIN friends
+                ON friends.friend = blogs.authorid
+            WHERE friends.id = ?
+            AND friends.state = 1
+            AND blogs.state = 1
             ORDER BY blogs.date DESC 
             LIMIT ?; 
-        """)
+        """, [user_id, limit])
+
+        return self.cur.fetchall()
 
     def get_all_blogposts(self, limit=999999999999):
         self.cur.execute("""
