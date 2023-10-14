@@ -1,5 +1,6 @@
 boto3==1.26.102
 celery[redis]==5.2.7
+feedgen==0.9.0
 flask==2.3.2
 flask-misaka==1.0.0
 flask-paginate==2022.1.8
