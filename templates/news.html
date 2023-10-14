@@ -14,6 +14,7 @@
         <div id="content">
             <div class="mainContent">
                 <div class="newsSubText">
+                    {%if ('user_id') in session %}
                     <div class="friendsFilter">
                         {% if request.args.get('show') == 'friends'%}
                         <a href="/news"><input type="checkbox" onchange="window.location.href='/news'" class="friendsCheck"
@@ -25,7 +26,9 @@
     
                         {%endif%}
                         </div>
-    
+                        {%else%}
+                        where'ya flyin', chiyochan?
+                        {%endif%}
                 </div>
                 <br>
 
