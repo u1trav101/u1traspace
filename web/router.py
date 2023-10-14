@@ -108,3 +108,7 @@ def declare_routes(app, captcha):
     @app.route("/rss/<req_str>")
     def rss(req_str):
         return routes.rss(req_str)
+    
+    @app.route("/faq/")
+    def faq():
+        return routes.faq()
