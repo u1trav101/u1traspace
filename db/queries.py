@@ -335,6 +335,28 @@ class _Query():
             AND type = 'unseen_message';
         """, [recipient_id, user_id])
 
+    def resolve_conflicting_friend_requests(self, user_id, friend_id):
+        self.cur.execute("""
+            UPDATE friends
+            SET state = 1
+            WHERE id = ?
+            AND friend = ?
+            LIMIT 1;
+        """, [friend_id, user_id])
+
+        self.cur.execute("""
+            INSERT INTO friends (id, friend, state)
+            VALUES (?, ?, 1);
+        """, [user_id, friend_id])
+
+        self.cur.execute("""
+            DELETE FROM notifications
+            WHERE type = 'friend_request_approval'
+            AND userid = ?
+            AND actionuserid = ?
+            LIMIT 1;
+        """, [user_id, friend_id])
+
     def get_message_senders(self, recipient_id):
         self.cur.execute("""
             SELECT
@@ -637,6 +659,17 @@ class _Query():
             return True
 
         return False
+    
+    def get_friend_requests(self, user_id, friend_id):
+        self.cur.execute("""
+            SELECT id
+            FROM friends
+            WHERE friend = ?
+            AND id = ?
+            AND state = 0;
+        """, [user_id, friend_id])
+
+        return self.cur.fetchall()
 
     def friend_approve_action(self, user_id, friend_id):
         self.cur.execute("""
