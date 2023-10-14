@@ -6,7 +6,7 @@ from db import Query
 
 def rss(req_str):
     fg = FeedGenerator()
-    fg.logo("https://sys.chiyo.org/static/img/chiyo.png")
+    fg.logo("http://sys.chiyo.org/static/img/chiyo_small.png")
     query = Query()
     posts = None
     author = None
@@ -21,10 +21,10 @@ def rss(req_str):
         posts = query.get_all_blogposts()
 
         fg.id(url_for("news", _external=True))
-        fg.title("All blogs on ChiyoNETOnline")
+        fg.title("ms.chiyo.org news!!")
         fg.link(href = url_for("news", _external=True))
-        fg.author(name = "The cool users of ChiyoNETOnline", email = "noreply@chiyo.org")
-        fg.description("A collection of all blogs posted by all the users of ChiyoNETOnline")
+        fg.author(name = "everynyan at ms.chiyo.org", email = "noreply@chiyo.org")
+        fg.description("alloftheposts in your rss reader...")
     
     else:
         posts = query.get_all_user_blogposts(req_str)
@@ -33,10 +33,10 @@ def rss(req_str):
             user = query.get_user_by_id(req_str)
             author = user["username"]
             fg.id(url_for("user_profile", user_id=req_str, _external=True))
-            fg.title(f"{author} [{user['id']}] blogs on ChiyoNETOnline")
+            fg.title(f"{author} [{user['id']}]'s blog @ ms.chiyo.org")
             fg.link(href = url_for("blog_list", user_id=req_str, _external=True))
-            fg.author(name = author, email = "noreply@chiyo.org")
-            fg.description(f"A collection of all blogs posted by {author} on ChiyoNETOnline")
+            fg.author(name = author, email = "rss@chiyo.org")
+            fg.description(f"all of {author}'s posts @ ms.chiyo.org")
     
     if len(posts) == 0:
         return "Invalid RSS request"
@@ -50,11 +50,11 @@ def rss(req_str):
         fe.enclosure(url = f"http://sys.chiyo.org/usercontent/img/rsz/200px/{post['authorid']}.gif", type = "image/gif")
         
         if req_str == "all":
-            fe.author(name = f"{post['username']} [{post['authorid']}]", email = "noreply@chiyo.org")
+            fe.author(name = f"{post['username']} [{post['authorid']}]", email = "rss@chiyo.org")
             fe.title(post['title'])
 
         else:
-            fe.author(name = f"{author} [{post['authorid']}]", email = "noreply@chiyo.org")
+            fe.author(name = f"{author} [{post['authorid']}]", email = "rss@chiyo.org")
             fe.title(post['title'])
 
         if ("timezone") in session:
