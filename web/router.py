@@ -104,3 +104,7 @@ def declare_routes(app, captcha):
     @app.route("/konata/")
     def konata():
         return routes.konata()
+    
+    @app.route("/rss/<req_str>")
+    def rss(req_str):
+        return routes.rss(req_str)

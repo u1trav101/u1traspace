@@ -162,6 +162,7 @@ class _Query():
         self.cur.execute("""
             SELECT
                 id,
+                authorid,
                 title,
                 corpus,
                 date
@@ -180,6 +181,7 @@ class _Query():
                 blogs.id,
                 blogs.title,
                 blogs.date,
+                blogs.corpus,
                 users.username
             FROM blogs
             LEFT JOIN users
@@ -202,6 +204,7 @@ class _Query():
                 blogs.id,
                 blogs.title,
                 blogs.date,
+                blogs.corpus,
                 users.username
             FROM blogs
             LEFT JOIN users
