@@ -5,6 +5,7 @@ db_*/
 .tmp/
 .nix-shell/
 usercontent/
+.Trash-1000
 
 config.py
 chiyo.ini
