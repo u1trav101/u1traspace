@@ -11,8 +11,10 @@
 						<span style="font-size:12"><a style="color: #ffffff"
 								href="/id/{{session.get('user_id')}}">profile</a></span></font>
 					<font size="-1" face="Comic Sans MS" color="#ffffff">
-						<span style="font-size:12"><a style="color: #ffffff"
-								href="/msg">messages</a></span></font>
+						<span style="font-size:12"><a style="color: #ffffff" href="/msg">messages</a></span></font>
+					<font size="-1" face="Comic Sans MS" color="#ffffff">
+						<span style="font-size:12"><a style="color: #ffffff" href="/id/{{session.get('user_id')}}/friends">friends</a></span></font>
+
 
 					{%else%}
 					<font size="-1" face="Comic Sans MS" color="#ffffff">
