@@ -67,6 +67,14 @@
                             </li>
                         </ul>
 
+                        <ul class="nav">
+                            <li class="">
+                                <a class="dropdown-toggle dropdown-signin" href="/news">
+                                    News
+                                </a>
+                            </li>
+                        </ul>
+
 
                         <div class="pull-right">
 
@@ -212,9 +220,10 @@
                                 <div class="module-header">
                                     <h2 class="modulePosts">Posts</h2>
                                     {%if session.get('user_id')|int == properties['id']%}
-                                     <a class="newPost_a" href="/id/{{properties['id']}}/blog/new"><small class="newPostTxt">new blogpost</small></a>
+                                    <a class="newPost_a" href="/id/{{properties['id']}}/blog/new"><small
+                                            class="newPostTxt">new blogpost</small></a>
                                     {%endif%}
-    
+
                                 </div>
                                 {% for post in blogposts %}
                                 <li class="">
