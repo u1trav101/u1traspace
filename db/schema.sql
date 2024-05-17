@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS users (
     `email` varchar(100) UNIQUE NOT NULL,
     `username` varchar(30) NOT NULL,
     `password` varchar(162) UNIQUE NOT NULL,
-    `join_date` int NOT NULL,
-    `last_seen` int NOT NULL,
+    `join_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `last_seen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `page_views` int NOT NULL DEFAULT 0,
     `visible` bool NOT NULL DEFAULT TRUE,
     `private` bool NOT NULL DEFAULT FALSE,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS page_comments (
     `page_id` int NOT NULL REFERENCES users (`user_id`) ON UPDATE CASCADE,
     `author_id` int NOT NULL REFERENCES users(`user_id`) ON UPDATE CASCADE,
     `corpus` varchar(1024) NOT NULL,
-    `date` int NOT NULL,
+    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `visible` bool NOT NULL DEFAULT TRUE,
     `approved` bool NOT NULL DEFAULT TRUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS blogs (
     `author_id` int NOT NULL REFERENCES users (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     `title` varchar(60) NOT NULL,
     `corpus` varchar(4096) NOT NULL,
-    `date` int NOT NULL,
+    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `visible` bool NOT NULL DEFAULT TRUE,
     FULLTEXT KEY `title` (`title`, `corpus`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS blog_comments (
     `blog_id` int NOT NULL REFERENCES blogs (`blog_id`) ON UPDATE CASCADE,
     `author_id` int NOT NULL,
     `corpus` varchar(1024) NOT NULL,
-    `date` int NOT NULL,
+    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `visible` bool NOT NULL DEFAULT TRUE,
     `approved` bool NOT NULL DEFAULT TRUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS friends (
     `relationship_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `sender_id` int NOT NULL REFERENCES users (`user_id`) ON UPDATE CASCADE,
     `recipient_id` int NOT NULL REFERENCES users(`user_id`) ON UPDATE CASCADE,
-    `date` int NOT NULL,
+    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `approved` bool NOT NULL DEFAULT FALSE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS messages (
     `message_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `sender_id` int NOT NULL REFERENCES users (`user_id`) ON UPDATE CASCADE,
     `recipient_id` int NOT NULL REFERENCES users (`user_id`) ON UPDATE CASCADE,
-    `date` int NOT NULL,
+    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `corpus` varchar(2048) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
