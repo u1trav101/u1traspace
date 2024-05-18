@@ -1,1 +1,1 @@
-pre-build: sudo apt install -y mariadb-dev-compat
+pre-build: apt install mariadb-dev-compat
