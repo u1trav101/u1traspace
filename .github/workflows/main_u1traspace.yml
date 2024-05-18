@@ -20,8 +20,8 @@ jobs:
       - name: Install build dependencies
         run: sudo apt install -y libmariadb-dev-compat
 
-      - name: Install runtime dependencies
-        run: sudo apt install -y libjpeg-dev zlib1g-dev mariadb-server ffmpeg redis
+      # - name: Install runtime dependencies
+      #   run: sudo apt install -y libjpeg-dev zlib1g-dev mariadb-server ffmpeg redis
 
       - name: Set up Python version
         uses: actions/setup-python@v1
