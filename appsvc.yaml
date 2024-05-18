@@ -1,1 +1,0 @@
-pre-build: apt-get install libmariadb-dev-compat
