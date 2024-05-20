@@ -4,7 +4,7 @@ import web.routes as routes
 from profile import get_notification_counters
 
 
-def declare_routes(app, captcha):
+def declare_routes(app):
     @app.before_request
     def before_request():
         return misc.before_request()
@@ -26,8 +26,8 @@ def declare_routes(app, captcha):
         return routes.logout()
 
     @app.route("/auth/register/", methods=["GET", "POST"])
-    def register(captcha=captcha):
-        return routes.register(captcha)
+    def register():
+        return routes.register()
 
     @app.route("/users/")
     def user_list():
