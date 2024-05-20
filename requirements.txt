@@ -7,6 +7,7 @@ flask-misaka==1.0.0
 flask-paginate==2022.1.8
 flask-simple-captcha==1.1.1
 flask-wtf==1.2.1
+gunicorn==22.0.0
 mariadb==1.1.4
 pillow==10.3.0 # don't install this dep through pip if you are using a nix shell
 python-magic==0.4.27
