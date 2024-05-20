@@ -5,9 +5,9 @@ db_*/
 .tmp/
 .nix-shell/
 usercontent/
-.Trash-1000
+.Trash-1000/
 
-config.py
+.bitwarden-access-token
 chiyo.ini
 todo.md
 redis.conf

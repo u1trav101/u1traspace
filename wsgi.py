@@ -1,3 +1,4 @@
+import mariadb
 from flask import Flask
 from flask_simple_captcha import CAPTCHA
 from flask_misaka import Misaka
@@ -6,7 +7,7 @@ from web import declare_routes, regex_replace
 from config import CONFIG
 
 
-app = Flask("chiyoNET")
+app = Flask("u1traspace")
 
 # applying configs from config class
 app.config.from_object(CONFIG)
@@ -16,7 +17,6 @@ captcha = CAPTCHA(config=CONFIG.CAPTCHA_CONFIG)
 captcha.init_app(app)
 
 Misaka(app, autolink=True)
-
 
 celery_app = celery_init_app(app)
 
