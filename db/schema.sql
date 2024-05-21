@@ -59,15 +59,34 @@ CREATE TABLE IF NOT EXISTS messages (
     `sender_id` int NOT NULL REFERENCES users (`user_id`) ON UPDATE CASCADE,
     `recipient_id` int NOT NULL REFERENCES users (`user_id`) ON UPDATE CASCADE,
     `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `corpus` varchar(2048) NOT NULL
+    `corpus` varchar(2048) NOT NULL,
+    `read` bool NOT NULL DEFAULT FALSE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DELIMITER //
+
+CREATE PROCEDURE IF NOT EXISTS update_last_seen(parameter_user_id int)
+    MODIFIES SQL DATA
+    UPDATE users
+    SET last_seen = CURRENT_TIMESTAMP
+    WHERE user_id = parameter_user_id;
+//
+
+CREATE PROCEDURE IF NOT EXISTS increase_page_views(parameter_user_id int)
+    MODIFIES SQL DATA
+    UPDATE users
+    SET page_views = page_views + 1
+    WHERE user_id = parameter_user_id
+//
+
+DELIMITER ;
 
 CREATE USER IF NOT EXISTS 'backend'@'localhost' IDENTIFIED WITH mysql_native_password AS '*42FCEC4876A794A22B58238AEFC8E182E1899739';
 CREATE USER IF NOT EXISTS 'backend'@'127.0.0.1' IDENTIFIED WITH mysql_native_password AS '*42FCEC4876A794A22B58238AEFC8E182E1899739';
 CREATE USER IF NOT EXISTS 'backend'@'%' IDENTIFIED WITH mysql_native_password AS '*42FCEC4876A794A22B58238AEFC8E182E1899739';
 
-GRANT INSERT, SELECT, DELETE, UPDATE ON u1traspace.* TO 'backend'@'localhost';
-GRANT INSERT, SELECT, DELETE, UPDATE ON u1traspace.* TO 'backend'@'127.0.0.1';
-GRANT INSERT, SELECT, DELETE, UPDATE ON u1traspace.* TO 'backend'@'%';
+GRANT INSERT, SELECT, DELETE, UPDATE, EXECUTE ON u1traspace.* TO 'backend'@'localhost';
+GRANT INSERT, SELECT, DELETE, UPDATE, EXECUTE ON u1traspace.* TO 'backend'@'127.0.0.1';
+GRANT INSERT, SELECT, DELETE, UPDATE, EXECUTE ON u1traspace.* TO 'backend'@'%';
 
 FLUSH PRIVILEGES;

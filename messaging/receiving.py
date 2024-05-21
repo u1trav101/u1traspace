@@ -18,8 +18,7 @@ def get_direct_messages(recipient_id, sender_id):
 
 def get_user_conversations(user_id):
     query = Query()
-    res = query.get_user_conversations(user_id)
-    print(res)
+    res = query.select_user_conversations(user_id)
 
     user_id = int(user_id)
     other_users = []
@@ -37,7 +36,7 @@ def get_user_conversations(user_id):
         if other_user_id:
             other_users.append(other_user_id)
 
-            message = query.get_last_message_in_conversation(user_id, other_user_id)
+            message = query.select_messages(limit=1, sender_id=user_id, recipient_id=other_user_id)
 
             conversations.append({
                 "id": other_user_id,

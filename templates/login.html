@@ -20,10 +20,10 @@
                             <td class="tableLeft loginLeft">
                                 <img class="loginImg" src="{{cdn_uri}}/static/img/login.jpg">
                                 <form action="" method="post" novalidate="">
-                                    {{login_form.hidden_tag()}}
-                                    {{login_form.id(type='number', placeholder='user id')}}
-                                    {{login_form.password(placeholder='password')}}
-                                    {{login_form.submit}}
+                                    {{ login_form.hidden_tag() }}
+                                    {{ login_form.email(placeholder="email") }}
+                                    {{ login_form.password(placeholder='password') }}
+                                    {{ login_form.submit }}
                                 </form>
                                 <span>⑨ <span class="loginNote">please login with your user id, not your username. thank you:)</span>
                                 </td>

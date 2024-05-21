@@ -42,10 +42,10 @@ def user_profile(user_id):
             return redirect(url_for("user_profile", user_id=user_id))
 
 
-    query.update_page_views(user_id)
+    query.increase_page_views(user_id)
 
     template = "profile.html"
-    match properties["interface"]:
+    match properties["layout"]:
         case "twitter":
             template = "twitter/profile.html"
         case "classic":

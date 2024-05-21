@@ -116,8 +116,7 @@
                                 </u>
                                 <form action="/auth/login" method="post" novalidate>
                                     {{ login_form.hidden_tag() }}
-                                    <small>please login with your user id!!</small>
-                                    {{ login_form.id(placeholder='user id') }}
+                                    {{ login_form.email(placeholder='email') }}
                                     <br>
                                     {{ login_form.password(placeholder='password') }}
                                     <br>

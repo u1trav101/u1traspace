@@ -23,6 +23,7 @@
                                 </u>
                                 <form action="/auth/register" method="post" novalidate>
                                     {{ form.hidden_tag() }}
+                                    {{ form.email(placeholder='email') }}
                                     {{ form.username(placeholder='username') }}
                                     {{ form.password(placeholder='password') }}
                                     <p></p>
