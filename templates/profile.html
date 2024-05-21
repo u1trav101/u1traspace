@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
 <link rel="stylesheet" href="{{cdn_uri}}/static/css/profile.css">
-<link rel="stylesheet" href="{{cdn_uri}}/usercontent/css/{{properties['id']}}.css?q={{ request.args.get('i') }}">
+<link rel="stylesheet" href="{{cdn_uri}}/usercontent/css/{{properties['user_id']}}.css?q={{ request.args.get('i') }}">
 <title>{{properties['username']}} @ ChiyoNET Online!!</title>
 {% endblock %}
 {% block body %}
@@ -38,12 +38,12 @@
         </div>
         <div class="relatedLinks">
             <h3>{{ properties['username'] }}'s Blog Posts</h3>
-            {%if session.get('user_id')|int == properties['id']%}
-                <a class="newPost_a" href="/id/{{properties['id']}}/blog/new"><small class="newPostTxt">new blogpost</small></a>
+            {%if session.get('user_id')|int == properties['user_id']%}
+                <a class="newPost_a" href="/id/{{properties['user_id']}}/blog/new"><small class="newPostTxt">new blogpost</small></a>
             {%endif%}
             {% for post in blogposts %}
             <a
-                href="{{url_for('blog', user_id=properties['id'], post_id=post['id'])}}">{{post['title']}}</a><small>({{time(post['date'])}})</small>
+                href="{{url_for('blog', user_id=properties['user_id'], post_id=post['id'])}}">{{post['title']}}</a><small>({{time(post['date'])}})</small>
             {% endfor %}
 
         </div>
@@ -51,17 +51,17 @@
 
         <div class="relatedLinks">
             <h3>Interact with {{ properties['username'] }}</h3>
-            {% if not session.get('user_id')|int == properties['id']%}
+            {% if not session.get('user_id')|int == properties['user_id']%}
             {% if not session.get('user_id')|int in friends|map(attribute="friend")%}
-            <form action="/id/{{properties['id']}}/add-friend" method="post" novalidate>
+            <form action="/id/{{properties['user_id']}}/add-friend" method="post" novalidate>
                 {{friend_form.hidden_tag()}}
                 <input id="friend" name="friend" type="submit" value="add as friend!!">
             </form>
             {%else%}
-            <a href="/msg/{{properties['id']}}"><button class="pmUser">PM user</button></a>
+            <a href="/msg/{{properties['user_id']}}"><button class="pmUser">PM user</button></a>
             {%endif%}
             {%endif%}
-            <a href="{{url_for('blog_list', user_id=properties['id'])}}">View all Blog Posts</a>
+            <a href="{{url_for('blog_list', user_id=properties['user_id'])}}">View all Blog Posts</a>
             <a href="mailto:admin@chiyo.org">Report user</a>
         </div>
 
@@ -69,12 +69,12 @@
             <div class="songName">
                 <b>Song:</b>
                 <span class="songTitle"></span>
-                <a href="{{cdn_uri}}/usercontent/audio/{{properties['id']}}.ogg"
+                <a href="{{cdn_uri}}/usercontent/audio/{{properties['user_id']}}.ogg"
                     download="{{properties['username']}}.ogg"><img class="downloadSvg"
                         style="height: 15px; float: right; padding-right: 2px" src="{{cdn_uri}}/static/download.svg"></a>
             </div>
             <audio controls="" autoplay="true"
-                src="{{cdn_uri}}/usercontent/audio/{{properties['id']}}.ogg"></audio>
+                src="{{cdn_uri}}/usercontent/audio/{{properties['user_id']}}.ogg"></audio>
         </div>
         <div class="relatedLinks topBorder">
             <h3>{{ properties['username'] }}'s friends</h3>
@@ -83,12 +83,12 @@
                     title="{{friend['username']}}" style="width: 32px; height: 32px; border: 1px white solid;"
                     src="{{cdn_uri}}/usercontent/img/rsz/32px/{{friend['friend']}}.gif"></a>
             {%endfor%}
-            <a href="/id/{{properties['id']}}/friends">View all friends</a>
+            <a href="/id/{{properties['user_id']}}/friends">View all friends</a>
         </div>
     </div>
     <div id="content">
         <div id="breadCrumb">
-            <p><a href="/users">Users</a> / <a href="/id/{{properties['id']}}">{{ properties['username'] }}</a> /
+            <p><a href="/users">Users</a> / <a href="/id/{{properties['user_id']}}">{{ properties['username'] }}</a> /
             </p>
         </div>
         <div class="mainContent">
@@ -98,19 +98,19 @@
                     </tr>
                     <tr>
                         <td class="tableLeft mcLeft">
-                            <a href="{{cdn_uri}}/usercontent/img/raw/{{properties['id']}}.gif">
+                            <a href="{{cdn_uri}}/usercontent/img/raw/{{properties['user_id']}}.gif">
                                 <div></div><img class="comAvatar"
-                                    src="{{cdn_uri}}/usercontent/img/raw/{{properties['id']}}.gif" width="200"
+                                    src="{{cdn_uri}}/usercontent/img/raw/{{properties['user_id']}}.gif" width="200"
                                     height="auto">
                             </a>
                         </td>
                         <td class="tableRight mcRight">
-                            {%if session.get('user_id')|int == properties['id']%}
+                            {%if session.get('user_id')|int == properties['user_id']%}
                                 <a href="/preferences"><small class="prefsTxt">edit profile</small></a>
                             {%endif%}
                             <div>
                                 <h3 class="mcUsername">{{properties['username']}}</h3>
-                                {% if current_time - properties['lastseen']|int < 300 %}
+                                {% if current_time - properties['last_seen']|int < 300 %}
                                 <img class="onlineIndicator" src="{{cdn_uri}}/static/img/online.gif">
                                 {%else%}
                                 <img class="onlineIndicator" src="{{cdn_uri}}/static/img/offline.gif">
@@ -118,9 +118,9 @@
     
                                 <br> 
                                     <span class="subText">UserID:
-                                    <strong>{{ properties['id'] }}</strong> // Page Views:
-                                    <strong>{{properties['pagecount']}}</strong> // Last Seen:
-                                    <strong>{{time(properties['lastseen'])}}</strong></span>
+                                    <strong>{{ properties['user_id'] }}</strong> // Page Views:
+                                    <strong>{{properties['page_views']}}</strong> // Last Seen:
+                                    <strong>{{time(properties['last_seen'])}}</strong></span>
 
                                 <h2>About {{ properties['username'] }}:</h2>
 				<div class="abtText">
@@ -168,7 +168,7 @@
                                 <span class="comText comInfo"><a
                                         href="/id/{{comment['authorid']}}">{{comment['username']}}</a>
                                     <b>({{time(comment['date'])}})</b>
-                                    {% if session['user_id'] == comment['authorid']|string or session['user_id'] == properties['id']|string %}
+                                    {% if session['user_id'] == comment['authorid']|string or session['user_id'] == properties['user_id']|string %}
                                     <form class="deleteButton" action="" method="post" novalidate>
                                         {{delete_form.hidden_tag()}}
                                         <button name="delete" value="{{comment.id}}" type="submit">delete</button>

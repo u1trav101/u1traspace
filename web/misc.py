@@ -40,21 +40,17 @@ def before_request():
 
 # converts unix time to human readable time format
 def unix_to_readable(time, short=False):
-    readable_time = ""
-
-    if ("timezone") in session:
-        readable_time = datetime.fromtimestamp(int(time), ZoneInfo(session["timezone"])).strftime("%d/%m/%Y %H:%M:%S")
-
-        if short:
-            readable_time = datetime.fromtimestamp(int(time), ZoneInfo(session["timezone"])).strftime("%H:%M:%S")
-    else:
-        readable_time = datetime.fromtimestamp(int(time)).strftime("%d/%m/%Y %H:%M:%S")
-
-        if short:
-            readable_time = datetime.fromtimestamp(int(time)).strftime("%H:%M:%S")
-
-    if int(time) <= 0:
-        return "never!"
+    strf = "%H:%M:%S" if short else "%d/%m/%Y %H:%M:%S"
+    readable_time = datetime(
+        time.year,
+        time.month,
+        time.day,
+        time.hour,
+        time.minute,
+        time.second,
+        time.microsecond,
+        tzinfo=ZoneInfo(session["timezone"] if ("timezone") in session else None)
+    ).strftime(strf)
 
     return readable_time
 

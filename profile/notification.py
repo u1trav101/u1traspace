@@ -5,23 +5,15 @@ from db import Query
 def get_notification_counters():
     if ("user_id") not in session:
         return redirect(url_for("login"))
+    
+    query = Query()
 
-    notifications = None
-    if ("user_id") in session:
-        query = Query()
-        notifications = query.get_user_notification_types(session["user_id"])
-
-    notification_counters = {
-        "profile_comment_approval": 0,
-        "blog_comment_approval": 0,
-        "friend_request_approval": 0,
-        "unseen_message": 0
+    return {
+        "profile_comment_approval": query.select_page_comments(count=True, approved=False, page_id=session["user_id"])[0]["COUNT(*)"],
+        "blog_comment_approval": query.select_pending_blog_comments(count=True, author_id=session["user_id"])[0]["COUNT(*)"],
+        "friend_request_approval": query.select_friends(count=True, approved=False, recipient_id=session["user_id"])[0]["COUNT(*)"],
+        "unseen_message": query.select_messages(count=True, read=False, recipient_id=session["user_id"])[0]["COUNT(*)"]
     }
-    for notification in notifications:
-        notification_counters[notification["type"]] += 1
-
-    return notification_counters
-
 
 def get_all_notifications(user_id):
     query = Query()

@@ -1,4 +1,4 @@
-from flask import redirect, request, session, url_for
+from flask import redirect, session, url_for
 from cdn import copy_default_avatar
 from web.misc import render_template
 import web.forms as forms
@@ -13,7 +13,11 @@ def register():
 
     if register_form.validate_on_submit():
         # registration successful
-        user_id = auth.register_user(register_form.username.data, register_form.password.data)
+        user_id = auth.register_user(
+            register_form.email.data,
+            register_form.username.data, 
+            register_form.password.data
+        )
 
         copy_default_avatar.delay(user_id)
 

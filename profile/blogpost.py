@@ -21,8 +21,8 @@ def get_blogpost_comments(user_id, post_id):
     return res
 
 
-def get_all_user_blogposts(user_id):
+def get_all_user_blogposts(author_id):
     query = Query()
-    res = query.get_all_user_blogposts(user_id)
+    res = query.select_blogs(author_id=author_id)
 
     return res

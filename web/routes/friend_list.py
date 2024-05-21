@@ -14,7 +14,7 @@ def friend_list(user_id):
     friend_form = forms.friend_form()
 
     template = "friends.html"
-    match properties["interface"]:
+    match properties["layout"]:
         case "twitter":
             template = "twitter/friends.html"
         case "myspace":

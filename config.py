@@ -17,7 +17,7 @@ client.access_token_login(open(".bitwarden-access-token", "r").readline())
 
 
 class CONFIG:
-    DEBUG = False
+    DEBUG = True
     PORT = 5000
 
     MARIADB_HOST = "127.0.0.1"
@@ -26,6 +26,7 @@ class CONFIG:
     MARIADB_PASSWORD = client.secrets().get("bf0630d0-d130-479c-b8c4-b173001c9148").data.value
     MARIADB_ROOT_PASSWORD = client.secrets().get("e653a440-6388-4406-bd72-b17101589fe1").data.value
     MARIADB_DATABASE = "u1traspace"
+    SELECT_LIMIT = 999
 
     CDN_URI = ""
     INSECURE_CDN_URI = ""
