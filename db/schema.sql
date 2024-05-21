@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS page_comments (
     `corpus` varchar(1024) NOT NULL,
     `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `visible` bool NOT NULL DEFAULT TRUE,
-    `approved` bool NOT NULL DEFAULT TRUE
+    `approved` bool NOT NULL DEFAULT FALSE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS blogs (
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS blog_comments (
     `corpus` varchar(1024) NOT NULL,
     `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `visible` bool NOT NULL DEFAULT TRUE,
-    `approved` bool NOT NULL DEFAULT TRUE
+    `approved` bool NOT NULL DEFAULT FALSE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS friends (
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS messages (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DELIMITER //
-
+DROP PROCEDURE IF EXISTS update_last_seen;
 CREATE PROCEDURE IF NOT EXISTS update_last_seen(parameter_user_id int)
     MODIFIES SQL DATA
     UPDATE users
@@ -72,13 +72,53 @@ CREATE PROCEDURE IF NOT EXISTS update_last_seen(parameter_user_id int)
     WHERE user_id = parameter_user_id;
 //
 
-CREATE PROCEDURE IF NOT EXISTS increase_page_views(parameter_user_id int)
+DROP PROCEDURE IF EXISTS increase_page_views;
+CREATE PROCEDURE increase_page_views(parameter_user_id int)
     MODIFIES SQL DATA
     UPDATE users
     SET page_views = page_views + 1
     WHERE user_id = parameter_user_id
 //
 
+DROP TRIGGER IF EXISTS set_page_comment_approval;
+CREATE TRIGGER set_page_comment_approval
+BEFORE INSERT ON page_comments FOR EACH ROW
+BEGIN
+    DECLARE is_private bool;
+    SET is_private = (
+        SELECT private
+        FROM users
+        WHERE user_id = NEW.page_id
+        LIMIT 1
+    );
+
+    SET NEW.approved = CASE is_private
+        WHEN 0 THEN 1
+    END;
+END;
+//
+
+DROP TRIGGER IF EXISTS set_blog_comment_approval;
+CREATE TRIGGER set_blog_comment_approval
+BEFORE INSERT ON blog_comments FOR EACH ROW
+BEGIN
+    DECLARE is_private bool;
+    SET is_private = (
+        SELECT private
+        FROM users
+        WHERE user_id = (
+            SELECT author_id
+            FROM blogs
+            WHERE blog_id = NEW.blog_id
+        )
+        LIMIT 1
+    );
+
+    SET NEW.approved = CASE is_private
+        WHEN 0 THEN 1
+    END;
+END;
+//
 DELIMITER ;
 
 CREATE USER IF NOT EXISTS 'backend'@'localhost' IDENTIFIED WITH mysql_native_password AS '*42FCEC4876A794A22B58238AEFC8E182E1899739';
