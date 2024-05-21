@@ -1,6 +1,3 @@
-from time import time
-
-
 def select_users(cur, count, online, start, visible, order, limit, email, user_id):
     select = "COUNT(*)" if count else "*"
 
@@ -27,6 +24,16 @@ def select_users(cur, count, online, start, visible, order, limit, email, user_i
     """, params)
 
     return cur.fetchone()["COUNT(*)"] if count else cur.fetchall()
+
+def search_users(cur, search_term):
+    cur.execute("""
+        SELECT *
+        FROM users
+        WHERE MATCH(username) AGAINST (?)
+        AND visible = 1;
+    """, [search_term])
+
+    return cur.fetchall()
     
 def insert_user(cur, email, username, password):
     cur.execute("""

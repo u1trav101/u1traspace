@@ -19,3 +19,21 @@ def select_blogs(cur, count, visible, order, limit, blog_id, author_id):
     """, params)
 
     return cur.fetchall()
+
+def search_blogs(cur, search_term):
+    cur.execute("""
+        SELECT *
+        FROM blogs
+        LEFT JOIN users
+        ON blogs.author_id = users.user_id
+        WHERE MATCH(blogs.title, blogs.corpus) AGAINST (?)
+        AND blogs.visible = 1;
+    """, [search_term])
+
+    return cur.fetchall()
+
+def insert_blog(cur, author_id, title, corpus):
+    cur.execute("""
+        INSERT INTO blogs (author_id, title, corpus)
+        VALUES (?, ?, ?);
+    """, [author_id, title, corpus])
