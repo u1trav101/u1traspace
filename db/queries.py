@@ -30,6 +30,12 @@ class _Query():
             user_id=user_id
         )
     
+    def search_users(self, search_term):
+        return users.search_users(
+            self.cur,
+            search_term=search_term
+        )
+    
     def insert_user(self, email, username, password):
         users.insert_user(
             self.cur,
@@ -57,6 +63,14 @@ class _Query():
             page_id=page_id,
             author_id=author_id
         )
+    
+    def insert_page_comment(self, page_id, author_id, corpus):
+        page_comments.insert_page_comment(
+            self.cur,
+            page_id=page_id,
+            author_id=author_id,
+            corpus=corpus
+        )
 
     # works on blogs table
     def select_blogs(self, count=False, visible=True, order="DESC", limit=CONFIG.SELECT_LIMIT, blog_id=None, author_id=None):
@@ -70,9 +84,23 @@ class _Query():
             author_id=author_id
         )
     
+    def search_blogs(self, search_term):
+        return blogs.search_blogs(
+            self.cur,
+            search_term=search_term
+        )
+    
+    def insert_blog(self, author_id, title, corpus):
+        blogs.insert_blog(
+            self.cur,
+            author_id=author_id,
+            title=title,
+            corpus=corpus
+        )
+    
     # works on blog_comments table
     def select_blog_comments(self, count=False, visible=True, approved=True, order="DESC", limit=CONFIG.SELECT_LIMIT, comment_id=None, blog_id=None, author_id=None):
-        return blog_comments.select_blogs(
+        return blog_comments.select_blog_comments(
             self.cur,
             count=count,
             visible=visible,
@@ -95,6 +123,14 @@ class _Query():
             author_id=author_id
         )
     
+    def insert_blog_comment(self, blog_id, author_id, corpus):
+        blog_comments.insert_blog_comment(
+            self.cur,
+            blog_id=blog_id,
+            author_id=author_id,
+            corpus=corpus
+        )
+    
     # works on friends table
     def select_friends(self, count=False, approved=True, order="ASC", limit=CONFIG.SELECT_LIMIT, sender_id=None, recipient_id=None):
         return friends.select_friends(
@@ -108,10 +144,11 @@ class _Query():
         )
     
     # works on messages table
-    def select_messages(self, count=False, read=None, order="DESC", limit=CONFIG.SELECT_LIMIT, message_id=None, sender_id=None, recipient_id=None):
+    def select_messages(self, count=False, start=None, read=None, order="DESC", limit=CONFIG.SELECT_LIMIT, message_id=None, sender_id=None, recipient_id=None):
         return messages.select_messages(
             self.cur,
             count=count,
+            start=start,
             read=None,
             order=order,
             limit=limit,
@@ -127,4 +164,12 @@ class _Query():
             count=count,
             order=order,
             limit=limit
+        )
+    
+    def insert_message(self, sender_id, recipient_id, corpus):
+        messages.insert_message(
+            self.cur,
+            sender_id=sender_id,
+            recipient_id=recipient_id,
+            corpus=corpus
         )

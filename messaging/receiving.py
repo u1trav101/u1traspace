@@ -5,14 +5,14 @@ from web.misc import unix_to_readable
 
 def get_incoming_senders(recipient_id):
     query = Query()
-    res = query.get_message_senders(recipient_id)
+    res = query.select_messages(recipient_id=recipient_id, order="ASC")
 
     return res
 
 
 def get_direct_messages(recipient_id, sender_id):
     query = Query()
-    res = query.get_all_user_messages(recipient_id, sender_id)
+    res = query.select_messages(recipient_id=recipient_id, sender_id=sender_id)
 
     return res
 
@@ -54,7 +54,7 @@ def get_user_conversations(user_id):
 
 def poll_incoming_messages(sender_id, recipient_id, last_message_id):
     query = Query()
-    res = query.poll_incoming_messages(sender_id, recipient_id, last_message_id)
+    res = query.select_messages(start=last_message_id, sender_id=sender_id, recipient_id=recipient_id)
 
     if not res:
         return [False]

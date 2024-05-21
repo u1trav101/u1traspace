@@ -3,7 +3,7 @@ from random import randint
 
 def random():
     query = Query()
-    number_of_users = query.select_users(order="DESC", limit=1)[0]["user_id"] - 1
+    number_of_users = query.select_users(order="DESC", limit=1)[0]["user_id"]
 
     loops = 0
     while loops < 100:

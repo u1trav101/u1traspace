@@ -2,7 +2,7 @@ from db import Query
 
 
 # returns an array of dictionaries containing items related to the input
-def search(search_text):
+def search(search_term):
     query = Query()
     search_results = {
         "users": None,
@@ -10,13 +10,13 @@ def search(search_text):
     }
 
     # checks if input is similar to any usernames in 'users'
-    res2 = query.search_usernames(search_text)
-    if res2:
-        search_results["users"] = res2
+    users = query.search_users(search_term=search_term)
+    if users:
+        search_results["users"] = users
 
     # checks if input is similar to any to blog titles or corpi in 'blogs'
-    res3 = query.search_blogs(search_text)
-    if res3:
-        search_results["blogs"] = res3
+    blogs = query.search_blogs(search_term=search_term)
+    if blogs:
+        search_results["blogs"] = blogs
 
     return search_results

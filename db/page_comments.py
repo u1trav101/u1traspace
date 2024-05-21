@@ -23,3 +23,9 @@ def select_page_comments(cur, count, visible, approved, order, limit, comment_id
     """, params)
 
     return cur.fetchall()
+
+def insert_page_comment(cur, page_id, author_id, corpus):
+    cur.execute("""
+        INSERT INTO page_comments (page_id, author_id, corpus)
+        VALUES (?, ?, ?);
+    """, [page_id, author_id, corpus])

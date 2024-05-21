@@ -28,7 +28,7 @@ def blog(user_id, post_id):
     if ("user_id") in session:
         if comment_form.validate_on_submit():
             messaging.send_blog_comment(
-                session["user_id"], user_id, post_id, comment_form.corpus.data)
+                session["user_id"], post_id, comment_form.corpus.data)
 
         elif delete_form.validate_on_submit():
             delete_value = request.form.get("delete")
@@ -59,7 +59,7 @@ def blog(user_id, post_id):
 
     properties = profile.get_profile_properties(user_id)
     template = "blogpost.html"
-    match properties["interface"]:
+    match properties["layout"]:
         case "twitter":
             template = "twitter/blogpost.html"
         case "classic":
@@ -72,7 +72,7 @@ def blog(user_id, post_id):
         properties=properties,
         blogpost=blogpost,
         blogposts=profile.get_all_user_blogposts(user_id),
-        comments=profile.get_blogpost_comments(user_id, post_id),
+        comments=profile.get_blogpost_comments(post_id),
         friends=profile.get_user_friends(user_id),
         comment_form=comment_form,
         delete_form=delete_form,

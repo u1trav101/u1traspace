@@ -1,5 +1,7 @@
-def select_messages(cur, count, read, order, limit, message_id, sender_id, recipient_id):
+def select_messages(cur, count, start, read, order, limit, message_id, sender_id, recipient_id):
     params = []
+    if start:
+        params.append(start)
     if read is not None:
         params.append(read)
     if message_id:
@@ -15,6 +17,7 @@ def select_messages(cur, count, read, order, limit, message_id, sender_id, recip
         FROM messages
         LEFT JOIN users ON messages.sender_id = users.user_id
         WHERE 1 = 1
+        {"AND messages.message_id > ?" if start else ""}
         {"AND messages.read = ?" if read is not None else ""}
         {"AND messages.message_id = ?" if message_id else ""}
         {"AND messages.sender_id = ?" if sender_id else ""}
@@ -34,3 +37,9 @@ def select_user_conversations(cur, user_id, count, order, limit):
     """, [user_id, user_id])
 
     return cur.fetchall()
+
+def insert_message(cur, sender_id, recipient_id, corpus):
+    cur.execute("""
+        INSERT INTO messages (sender_id, recipient_id, corpus)
+        VALUES (?, ?, ?);
+    """, [sender_id, recipient_id, corpus])

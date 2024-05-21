@@ -19,7 +19,7 @@ def select_blog_comments(cur, count, visible, approved, order, limit, comment_id
         {"AND blog_comments.author_id = ?" if author_id else ""}
         ORDER BY blog_comments.comment_id {order}
         LIMIT ?;
-    """, limit)
+    """, params)
 
     return cur.fetchall()
 
@@ -44,3 +44,9 @@ def select_pending_blog_comments(cur, count, visible, order, limit, blog_id, aut
     """, params)
 
     return cur.fetchall()
+
+def insert_blog_comment(cur, blog_id, author_id, corpus):
+    cur.execute("""
+        INSERT INTO blog_comments (blog_id, author_id, corpus)
+        VALUES (?, ?, ?);
+    """, [blog_id, author_id, corpus])

@@ -19,11 +19,8 @@ def new_blog(user_id):
     form = new_blog_form()
     if form.validate_on_submit():
         query = Query()
-        blog_id = query.add_blogpost(
-            user_id,
-            form.title.data,
-            form.corpus.data
-        )
+        query.insert_blog(user_id, form.title.data, form.corpus.data)
+        blog_id = query.select_blogs(limit=1, author_id=user_id)[0]["blog_id"]
 
         return redirect(url_for("blog", user_id=user_id, post_id=blog_id))
 

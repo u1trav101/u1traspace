@@ -17,44 +17,10 @@ def get_notification_counters():
 
 def get_all_notifications(user_id):
     query = Query()
-    notifications = query.get_user_notifications(user_id)
 
-    for notification in notifications:
-        match notification["type"]:
-            case "profile_comment_approval":
-                notification.update({
-                    "comment": query.get_user_comment(
-                        notification["actioncommentid"],
-                        user_id
-                    )
-                })
+    profile_comment_approvals = query.select_page_comments(approved=False, page_id=user_id)
+    blog_comment_approvals = query.select_pending_blog_comments(author_id=user_id)
+    friend_request_approvals = query.select_friends(approved=False, recipient_id=user_id)
+    unseen_messages = query.select_messages(read=False, recipient_id=user_id)
 
-            case "blog_comment_approval":
-                notification.update({
-                    "comment": query.get_blogpost_comment(
-                        notification["actionuserid"],
-                        notification["actioncommentid"],
-                        notification["actionpostid"],
-                        session["user_id"]
-                    ),
-                    "blog": query.get_blogpost(
-                        user_id,
-                        notification["actionpostid"]
-                    )
-                })
-
-            case "friend_request_approval":
-                notification.update({
-                    "username": query.get_user_by_id(
-                        notification["actionuserid"]
-                    )["username"]
-                })
-
-            case "unseen_message":
-                notification.update({
-                    "username": query.get_user_by_id(
-                        notification["actionuserid"]
-                    )["username"]
-                })
-
-    return notifications
+    return profile_comment_approvals + blog_comment_approvals + friend_request_approvals + unseen_messages
