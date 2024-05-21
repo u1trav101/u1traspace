@@ -15,16 +15,16 @@ client = session.client(
 @shared_task
 def copy_default_avatar(user_id):
     client.copy_object(
-        CopySource="chiyo-cdn/usercontent/img/raw/default.gif",
-        Bucket="chiyo-cdn",
+        CopySource=f"{CONFIG.S3_ACCESS_ID}/usercontent/img/raw/default.gif",
+        Bucket=CONFIG.S3_ACCESS_ID,
         Key=f"usercontent/img/raw/{user_id}.gif",
         ACL="public-read",
         ContentType="image/gif"
     )
     for size in ["32px", "100px", "200px"]:
         client.copy_object(
-            CopySource=f"chiyo-cdn/usercontent/img/rsz/{size}/default.gif",
-            Bucket="chiyo-cdn",
+            CopySource=f"{CONFIG.S3_ACCESS_ID}/usercontent/img/rsz/{size}/default.gif",
+            Bucket=CONFIG.S3_ACCESS_ID,
             Key=f"usercontent/img/rsz/{size}/{user_id}.gif",
             ACL="public-read",
             ContentType="image/gif"
