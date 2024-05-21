@@ -8,12 +8,15 @@ def get_notification_counters():
     
     query = Query()
 
-    return {
+    notification_counters = {
         "profile_comment_approval": query.select_page_comments(count=True, approved=False, page_id=session["user_id"])[0]["COUNT(*)"],
         "blog_comment_approval": query.select_pending_blog_comments(count=True, author_id=session["user_id"])[0]["COUNT(*)"],
         "friend_request_approval": query.select_friends(count=True, approved=False, recipient_id=session["user_id"])[0]["COUNT(*)"],
-        "unseen_message": query.select_messages(count=True, read=False, recipient_id=session["user_id"])[0]["COUNT(*)"]
+        "unseen_message": query.select_messages(count=True, read=False, recipient_id=session["user_id"])[0]["COUNT(*)"],
     }
+    notification_counters.update({
+        "total_notifications": notification_counters["profile_comment_approval"] + notification_counters["blog_comment_approval"] + notification_counters["friend_request_approval"] + notification_counters["unseen_message"]
+    })
 
 def get_all_notifications(user_id):
     query = Query()
