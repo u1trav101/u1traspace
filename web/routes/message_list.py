@@ -11,4 +11,4 @@ def message_list():
         "messagelist.html",
         conversations=messaging.get_user_conversations(session["user_id"]),
         friends=profile.get_user_friends(session["user_id"])
-        )
+    )

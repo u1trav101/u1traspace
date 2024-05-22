@@ -5,64 +5,25 @@ from db import Query
 def get_notification_counters():
     if ("user_id") not in session:
         return redirect(url_for("login"))
-
-    notifications = None
-    if ("user_id") in session:
-        query = Query()
-        notifications = query.get_user_notification_types(session["user_id"])
+    
+    query = Query()
 
     notification_counters = {
-        "profile_comment_approval": 0,
-        "blog_comment_approval": 0,
-        "friend_request_approval": 0,
-        "unseen_message": 0
+        "profile_comment_approval": query.select_page_comments(count=True, approved=False, page_id=session["user_id"])[0]["COUNT(*)"],
+        "blog_comment_approval": query.select_pending_blog_comments(count=True, author_id=session["user_id"])[0]["COUNT(*)"],
+        "friend_request_approval": query.select_friends(count=True, approved=False, recipient_id=session["user_id"])[0]["COUNT(*)"],
+        "unseen_message": query.select_messages(count=True, read=False, recipient_id=session["user_id"])[0]["COUNT(*)"],
     }
-    for notification in notifications:
-        notification_counters[notification["type"]] += 1
-
-    return notification_counters
-
+    notification_counters.update({
+        "total_notifications": notification_counters["profile_comment_approval"] + notification_counters["blog_comment_approval"] + notification_counters["friend_request_approval"] + notification_counters["unseen_message"]
+    })
 
 def get_all_notifications(user_id):
     query = Query()
-    notifications = query.get_user_notifications(user_id)
 
-    for notification in notifications:
-        match notification["type"]:
-            case "profile_comment_approval":
-                notification.update({
-                    "comment": query.get_user_comment(
-                        notification["actioncommentid"],
-                        user_id
-                    )
-                })
+    profile_comment_approvals = query.select_page_comments(approved=False, page_id=user_id)
+    blog_comment_approvals = query.select_pending_blog_comments(author_id=user_id)
+    friend_request_approvals = query.select_friends(approved=False, recipient_id=user_id)
+    unseen_messages = query.select_messages(read=False, recipient_id=user_id)
 
-            case "blog_comment_approval":
-                notification.update({
-                    "comment": query.get_blogpost_comment(
-                        notification["actionuserid"],
-                        notification["actioncommentid"],
-                        notification["actionpostid"],
-                        session["user_id"]
-                    ),
-                    "blog": query.get_blogpost(
-                        user_id,
-                        notification["actionpostid"]
-                    )
-                })
-
-            case "friend_request_approval":
-                notification.update({
-                    "username": query.get_user_by_id(
-                        notification["actionuserid"]
-                    )["username"]
-                })
-
-            case "unseen_message":
-                notification.update({
-                    "username": query.get_user_by_id(
-                        notification["actionuserid"]
-                    )["username"]
-                })
-
-    return notifications
+    return profile_comment_approvals + blog_comment_approvals + friend_request_approvals + unseen_messages

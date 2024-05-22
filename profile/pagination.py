@@ -6,16 +6,14 @@ from db import Query
 def users_paginator():
     query = Query()
 
-    filter_online = False
-    if request.args.get("show") == "online":
-        filter_online = True
+    filter_online = True if request.args.get("show") == "online" else False
 
-    number_of_users = query.get_number_of_users(filter_online)
+    number_of_users = query.select_users(count=True)
 
     page_number = get_page_args(page_parameter="page")[0]
     users_per_page = 15
     offset = (page_number * 15) - 15
-    users = query.get_list_of_users(offset, filter_online)
+    users = query.select_users(online=filter_online, start=offset)
 
     pagination = Pagination(
         page=page_number,

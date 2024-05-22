@@ -15,7 +15,7 @@ client = session.client(
 def upload_image(file_path, destination):
     client.upload_file(
         file_path,
-        "chiyo-cdn",
+        CONFIG.S3_ACCESS_ID,
         destination,
         ExtraArgs={
             "ACL": "public-read",
@@ -27,7 +27,7 @@ def upload_image(file_path, destination):
 def upload_audio(file_path, destination):
     client.upload_file(
         file_path,
-        "chiyo-cdn",
+        CONFIG.S3_ACCESS_ID,
         destination,
         ExtraArgs={
             "ACL": "public-read",
@@ -39,7 +39,7 @@ def upload_audio(file_path, destination):
 def upload_css(file_path, destination):
     client.upload_file(
         file_path,
-        "chiyo-cdn",
+        CONFIG.S3_ACCESS_ID,
         destination,
         ExtraArgs={
             "ACL": "public-read",

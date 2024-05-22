@@ -1,63 +1,48 @@
 @font-face {
-    font-family: 'Helvetica';
-    src: url('https://sys.chiyo.org/static/etc/h_regular.woff2') format('woff2'),
-        url('https://sys.chiyo.org/static/etc/h_regular.woff') format('woff');
-}
-
-* {
-    image-rendering: crisp-edges;
-    image-rendering: pixelated;
+    font-family: "merchant-copy";
+    src: url("../font/merchant_copy.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Helvetica';
-    src: url('https://sys.chiyo.org/static/etc/h_bold.woff2') format('woff2'),
-        url('https://sys.chiyo.org/static/etc/h_bold.woff') format('woff');
-    font-style: Bold;
+    font-family: "apple-garamond";
+    src: url("../font/apple_garamond.ttf") format("truetype");
 }
 
-#content {
-    border: none;
+html, body {
     margin: 0;
+    padding: 0;
+
+    background-color: #18012D;
+    color: #fefefe;
+    font-family: "merchant-copy";
 }
 
-.tinylogin {
-    width:  195px!important;  
-    text-align:center;
-    top: 31px;
-    left: 644px;
-}
-.tinylogin input {
-   width: 185px!important;  
+body {
+    font-size: 2rem;
+    min-height: 100vh;
 }
 
-
-.tinylogin small {
-    color: red!important;
-    display: unset !important;
-    float: unset !important;
-    padding: unset !important;
+a {
+    all: unset;
+    cursor: pointer;
+    border-bottom: 1px solid #fefefe;
 }
 
-
-.tinylogin {
-  position: fixed;
-  z-index: 2;
-  border: 1px solid #281d3b !important;
-  background-image: url("https://sys.chiyo.org/static/img/blinky.gif");
+main {
+    margin: 5% 5% 0;
 }
 
+.glNav {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-size: 2.5rem;
 
-@font-face {
-    font-family: Konatu;
-    src: url('https://sys.chiyo.org/static/etc/Konatu.ttf');
+    border: 2px solid grey;
+    background-image: url("/static/img/vortex.gif");
 }
 
-@font-face {
-    font-family: Konatu;
-    src: url('https://sys.chiyo.org/static/etc/Konatu.ttf');
-}
-@font-face {
-    font-family: battlenet;
-    src: url('https://sys.chiyo.org/static/etc/battlenet.ttf');
+.nav-top {
+    display: flex;
+    justify-content: space-between;
 }

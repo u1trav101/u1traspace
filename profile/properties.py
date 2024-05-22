@@ -2,19 +2,16 @@ from db import Query
 import os
 
 
-def get_profile_properties(id):
+def get_profile_properties(user_id):
     query = Query()
-    res = query.get_user_profile(id)
-
-    if res:
-        res["private"] = int.from_bytes(res["private"], "big")
+    res = query.select_users(user_id=user_id, limit=1)[0]
 
     return res
 
 
 def get_profile_comments(page_id):
     query = Query()
-    res = query.get_user_comments(page_id)
+    res = query.select_page_comments(page_id=page_id)
 
     return res
 
@@ -32,6 +29,6 @@ def get_profile_css(user_id):
 
 def get_user_friends(user_id):
     query = Query()
-    res = query.get_user_friends(user_id)
+    res = query.select_friends(recipient_id=user_id)
 
     return res

@@ -5,21 +5,20 @@ from web.misc import unix_to_readable
 
 def get_incoming_senders(recipient_id):
     query = Query()
-    res = query.get_message_senders(recipient_id)
+    res = query.select_messages(recipient_id=recipient_id, order="ASC")
 
     return res
 
 
 def get_direct_messages(recipient_id, sender_id):
     query = Query()
-    res = query.get_all_user_messages(recipient_id, sender_id)
+    res = query.select_messages(recipient_id=recipient_id, sender_id=sender_id)
 
     return res
 
 def get_user_conversations(user_id):
     query = Query()
-    res = query.get_user_conversations(user_id)
-    print(res)
+    res = query.select_user_conversations(user_id)
 
     user_id = int(user_id)
     other_users = []
@@ -37,7 +36,7 @@ def get_user_conversations(user_id):
         if other_user_id:
             other_users.append(other_user_id)
 
-            message = query.get_last_message_in_conversation(user_id, other_user_id)
+            message = query.select_messages(limit=1, sender_id=user_id, recipient_id=other_user_id)
 
             conversations.append({
                 "id": other_user_id,
@@ -55,7 +54,7 @@ def get_user_conversations(user_id):
 
 def poll_incoming_messages(sender_id, recipient_id, last_message_id):
     query = Query()
-    res = query.poll_incoming_messages(sender_id, recipient_id, last_message_id)
+    res = query.select_messages(start=last_message_id, sender_id=sender_id, recipient_id=recipient_id)
 
     if not res:
         return [False]

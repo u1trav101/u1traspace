@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+                            __   _                         
+ _    ___    ___    __ ____/ /  (_)_ _____   ___  _______ _
+| |/|/ / |/|/ / |/|/ // __/ _ \/ / // / _ \_/ _ \/ __/ _ `/
+|__,__/|__,__/|__,__(_)__/_//_/_/\_, /\___(_)___/_/  \_, / 
+                                /___/               /___/  
+
+ PROBABLY THE COOLEST WEBSITE ON THE INTERNET (9)
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="interface-type" value="default">
+    <link rel="stylesheet" href="{{cdn_uri}}/static/css/base.css">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/notificationPoll.js') }}"></script>
+    <link rel="stylesheet" href="{{cdn_uri}}/static/css/base_tpl.css">
+    <link rel="icon" href="{{cdn_uri}}/static/img/favicon.gif">
+    <link rel="stylesheet" href="{{cdn_uri}}/static/css/navbar.css">
+    {% if ('user_id') in session and notification_counters %}
+    <title>
+        [{{notification_counters['profile_comment_approval'] + notification_counters['blog_comment_approval'] + notification_counters['friend_request_approval'] + notification_counters['unseen_message']}}]
+        ChiyoNET</title>
+    {%else%}
+    <title>ChiyoNET</title>
+    {% endif %}
+    {% if 'timezone' not in session %}
+    <script type="text/javascript">
+        // Send browser's timezone to server for displaying dates/times in local timezone.
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        fetch("/set-timezone", {method: 'POST', body: timezone});
+    </script> 
+    {% endif %}
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <div id="head1">
+
+        <header>
+            <div class="navbar glNav">
+                <a class="nav0" href="https://chiyo.org">ChiyoNET<i>Online</i></a>
+                </span>
+                <a href="/">index</a>
+                <a href="/news">news</a>
+
+
+                {% if ('user_id') in session %}
+                <a class="nav_right" href="/auth/logout">logout</a>
+                <a class="nav_right" href="/preferences">prefs</a>
+
+                {% if notification_counters %}
+                {% if notification_counters['blog_comment_approval'] or notification_counters['profile_comment_approval'] %}
+                <style>
+                    .notif_comment {
+                        display: unset;
+                    }
+                </style>
+                {%endif %}
+                {% if notification_counters['friend_request_approval'] %}
+                <style>
+                    .notif_friend {
+                        display: unset;
+                    }
+                </style>
+                {%endif %}
+                {% if notification_counters['unseen_message'] %}
+                <style>
+                    .notif_msg {
+                        display: unset;
+                    }
+                </style>
+                {%endif %}
+                {%endif %}
+                <a id="comment-counter-a" class="nav_right notif_comment" href="/notifications"><small
+                        class="newComments" id="comment-counter">
+                        {% if notification_counters %}
+                        {% if notification_counters['blog_comment_approval'] or notification_counters['profile_comment_approval']%}
+                        {{notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval']}}
+                        new
+                        comment{%if notification_counters['blog_comment_approval'] + notification_counters['profile_comment_approval'] == 1 %}{%else%}s{%endif%}!!
+                        {%endif%}
+                        {%endif%}
+                    </small></a>
+
+                <a id="friend-counter-a" class="nav_right notif_friend" href="/notifications"><small class="newFriends"
+                        id="friend-counter">
+                        {% if notification_counters %}
+                        {% if notification_counters['friend_request_approval']%}
+                        {{notification_counters['friend_request_approval']}} new
+                        friend{%if notification_counters['friend_request_approval'] == 1 %}{%else%}s{%endif%}!!
+                        {%endif%}
+                        {%endif%}
+                    </small></a>
+                <a id="message-counter-a" class="nav_right notif_msg" href="/notifications"><small class="newMessages"
+                        id="message-counter">
+                        {% if notification_counters %}
+                        {% if notification_counters['unseen_message']%}
+                        {{notification_counters['unseen_message']}} new
+                        message{%if notification_counters['unseen_message'] == 1 %}{%else%}s{%endif%}!!
+                        {%endif%}
+                        {%endif%}
+                    </small></a>
+
+                {% else %}
+                <a class="nav_right" href="/auth/register">register</a>
+                <details>
+                    <summary><span class="nav_right" href="/auth/login">login</span></summary>
+                    <dialog class="tinylogin" open>
+                        <div>
+                            <center><u>
+                                    <h1>loggin' on, to the 'net</h1>
+                                </u>
+                                <form action="/auth/login" method="post" novalidate>
+                                    {{ login_form.hidden_tag() }}
+                                    {{ login_form.email(placeholder='email') }}
+                                    <br>
+                                    {{ login_form.password(placeholder='password') }}
+                                    <br>
+                                    {{ login_form.submit }}
+                                    <br>
+                                </form>
+                            </center>
+                        </div>
+                    </dialog>
+                </details>
+                {% endif %}
+
+            </div>
+            <div class="navbar subNav">
+                <span>::</span>
+                {% if ('user_id') in session %}
+                <a href="/id/{{session['user_id']}}">profile</a>
+                {%endif%}
+                <a href="/users">users</a>
+                <a href="/users/random">random</a>
+                <a href="/users?show=online">online users</a>
+                {% if ('user_id') in session %}
+                <a href="/id/{{session.get('user_id')}}/friends">friends</a>
+                <a href="/msg">messages</a>
+
+                {%endif%}
+                <a href="/search">search</a>
+                <span>::</span>
+
+            </div>
+
+        </header>
+    </div>
+
+    {% block body %}{% endblock %}
+</body>
+{% block script %}
+{% endblock %}
+
+</html>

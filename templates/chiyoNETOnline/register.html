@@ -23,13 +23,10 @@
                                 </u>
                                 <form action="/auth/register" method="post" novalidate>
                                     {{ form.hidden_tag() }}
+                                    {{ form.email(placeholder='email') }}
                                     {{ form.username(placeholder='username') }}
                                     {{ form.password(placeholder='password') }}
                                     <p></p>
-                                    <img class="captcha-img" src="data:image/png;base64, {{captcha['img']}}" />
-                                    <input type="text" placeholder='solve captcha' class="captcha-text"
-                                        name="captcha-text">
-                                    <input type="hidden" name="captcha-hash" value="{{captcha['hash']}}">
                                     {{ form.submit() }}
                                 </form>
                                 ⑨ please read chiyo <a href="/faq">rules</a> before registering.
