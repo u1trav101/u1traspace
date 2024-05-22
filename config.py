@@ -28,8 +28,8 @@ class CONFIG:
     MARIADB_DATABASE = "u1traspace"
     SELECT_LIMIT = 999
 
-    CDN_URI = ""
-    INSECURE_CDN_URI = ""
+    CDN_URI = "https://cdn.u1trav101.net/u1traspace"
+    INSECURE_CDN_URI = "http://cdn.u1trav101.net/ultraspace"
 
     MAX_CONTENT_LENGTH = 8 * 1000 * 1000
 

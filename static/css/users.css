@@ -1,0 +1,21 @@
+.user {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+
+    background-image: url("/static/img/stars.gif");
+    border: 1px solid #fefefe;
+}
+
+.user img {
+    width: 200px;
+    height: 200px;
+
+    border: 1px solid gray;
+}
+
+.user span {
+    margin-top: 20px;
+    text-align: center;
+}
