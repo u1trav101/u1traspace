@@ -27,8 +27,8 @@ def transcode_and_upload_images(file_path, usercontent_dir, user_id):
 
 @shared_task()
 def transcode_and_upload_audio(file_path, usercontent_dir, user_id):
-    os.system(f"ffmpeg -loglevel error -i {file_path} -y {usercontent_dir}audio/{user_id}.ogg")
+    os.system(f"ffmpeg -loglevel error -i {file_path} -y {usercontent_dir}audio/{user_id}.mp3")
     cdn.upload_audio(
-        f"{usercontent_dir}audio/{user_id}.ogg",
-        f"usercontent/audio/{user_id}.ogg"
+        f"{usercontent_dir}audio/{user_id}.mp3",
+        f"usercontent/audio/{user_id}.mp3"
     )
