@@ -1,0 +1,60 @@
+{% extends "components/page.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/components/page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/blogpost.css') }}">
+    {% if ("user_id") in session and notification_counters %}
+        <title>[{{ notification_counters["total_notifications"] }}] u1traspace - {{ blogpost["title"] }}</title>
+    {% else %}
+        <title>u1traspace - {{ blogpost["title"] }}</title>
+    {% endif %}
+{% endblock %}
+{% block main %}
+    <section class="blogContent blog-content">
+        <div class="blog-header">
+            {{ blogpost["title"] }}&nbsp- {{blogpost["date"]}}
+        </div>
+        <div class="comText">
+            {% for line in blogpost['corpus'].split('\n') %}
+                <span>{{ line | escape | regex_replace("javascript:", "javashcript:") | markdown}}</span><br>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="comments">
+        <div class="commentForm comment-form">
+            <div class="boxHead">
+                <b>Leave a comment</b>
+            </div>
+            <form action="" method="post" novalidate>
+                {%if ('user_id') in session%}
+                    {{ comment_form.hidden_tag() }}
+                    {{ comment_form.corpus(placeholder="leave a comment...", class="comment-input", oninput="textAreaAdjust(this)") }}
+                    {{ comment_form.submit(class="commentPost comment-post", value=" ") }}
+                {%else%}
+                    <textarea disabled placeholder="please login to leave a comment"></textarea>
+                    <input type="submit" value="&nbsp" disabled>
+                {%endif%}
+            </form>
+        </div>
+        {% for comment in comments %}
+            <div class="comment-container">
+                <div class="comment-top">
+                    <a href="{{ url_for('user_profile', user_id=comment['author_id']) }}">
+                        <h5>{{ comment["username"] }}</h5>
+                    </a>
+                    <span>{{ time(comment["date"]) }}</span>
+                    {% if session["user_id"] == comment["author_id"] | string or session["user_id"] == properties["user_id"] | string %}
+                        <form class="deleteButton delete-button" action="" method="post" novalidate>
+                            {{delete_form.hidden_tag()}}
+                            <button name="delete" value="{{comment.id}}" type="submit">delete</button>
+                        </form>
+                    {%endif%}
+                </div>
+                <div class="comment-corpus">
+                    <p>
+                        {{ comment["corpus"] | escape | regex_replace('javascript:','javashcript:') | markdown }}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}

@@ -1,37 +1,3 @@
-main {
-    background-color: rgba(0,0,0,0.2);
-}
-
-.breadCrumb {
-    display: flex;
-    margin-top: 0;
-}
-
-.container {
-    border: 1px solid grey;
-}
-
-.container img {
-    border: 1px solid #fefefe;
-    margin-right: 30px;
-}
-
-.profile-top {
-    padding: 30px;
-    display: flex;
-
-    background-image: url("http://cdn.u1trav101.net/u1traspace/static/img/stars.gif");
-    border-bottom: 1px solid grey;
-}
-
-.profile-top h4 {
-    margin: 0;
-}
-
-.profile-top h4 span, .about h3, .number-of-comments {
-    font-family: "apple-garamond";
-}
-
 .about {
     font-family: "lotion";
 }
@@ -39,23 +5,6 @@ main {
 .about h3 {
     margin-top: 0;
     padding-top: 30px;
-}
-
-.breadCrumb {
-    margin: 0 0 20px;
-}
-
-.breadCrumb .user {
-    color: #d9ca00;
-}
-
-.breadCrumb .user:hover {
-    color: #aba002;
-}
-
-.breadCrumb .end {
-    display: flex;
-    flex-direction: column;
 }
 
 .about {
@@ -69,105 +18,6 @@ main {
     border: none;
 }
 
-.settings {
-    border: none;
-    margin-left: auto;
-    height: fit-content;
-}
-
-.settings img {
-    border: none;
-    transform: scaleX(-1);
-}
-
-.comments {
-    display: flex;
-    flex-direction: column;
-}
-
-.comments h3, .comments h4 {
-    margin-top: 0;
-}
-
-.comments img {
-    width: 100px;
-    height: 100px;
-}
-
-.commentForm form {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-}
-
-.commentForm input[type=submit] {
-    margin: 0;
-    height: 80px;
-    width: 80px;
-
-    border: 1px solid grey;
-    background-image: url("http://cdn.u1trav101.net/u1traspace/static/img/send.svg");
-    background-size: 50px;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.comment-input {
-    width: 100%;
-    margin-bottom: 0;
-}
-
-.comment {
-    display: flex;
-    align-items: start;
-    border: 1px solid grey;
-}
-
-.comment-container {
-    width: 100%;
-}
-
-.comment a {
-    border: none;
-    width: fit-content;
-    margin: 20px 0 20px 20px;
-}
-
-.comment h5 {
-    margin: 0;
-}
-
-.comment-corpus {
-    font-size: smaller;
-
-    font-family: "lotion";
-}
-
-.comment-top {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.comment-top a {
-    margin: 0 30px 0 0;
-
-    border-bottom: 1px solid #fefefe;
-}
-
-.comment-top button {
-    all: unset;
-
-    background-color: rgba(0,0,0,0.2);
-    border: 1px solid grey;
-    cursor: pointer;
-}
-
-.deleteButton {
-    margin: 0 20px 0 auto;
-}
-
 .profile-bottom {
     display: flex;
     justify-content: space-around;
@@ -176,22 +26,24 @@ main {
 
 .profile-bottom section {
     width: 50%;
-    padding: 30px;
 }
 
-.profile-bottom-right {
+.profile-bottom-right .top {
     height: fit-content;
 
-    border: 1px solid grey;
-    border-top: none;
-    border-right: none;
     background-color: rgba(0,0,0,0.2);
 }
-
 .profile-bottom-right h4 {
     margin-bottom: 20px;
 
     font-family: "apple-garamond";
+}
+
+.profile-bottom-right .top {
+    padding: 30px;
+
+    border-bottom: 1px solid grey;
+    border-left: 1px solid grey;
 }
 
 .interaction {
@@ -225,4 +77,21 @@ main {
 
 .songName h4 {
     margin-top: 0;
+}
+
+.blogs {
+    padding: 0 30px;
+}
+
+.blogs h4 {
+    margin: 30px 0;
+}
+
+.blog-preview{
+    display: flex;
+    width: fit-content;
+}
+
+.blog-preview h5 {
+    margin: 0;
 }

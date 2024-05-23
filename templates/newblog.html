@@ -1,0 +1,22 @@
+{% extends "components/page.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/newblog.css') }}">
+    <title>[{{ notification_counters["total_notifications"] }}] u1traspace - new blog</title>
+{% endblock %}
+{% block main %}
+    <section class="new-blog">
+        <h3>new blog:</h3>
+        <form action="" method="post" novalidate>
+            {{ form.title(placeholder="title") }}
+            {% for error in form.title.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ form.corpus(placeholder="write your blog here...", oninput="textAreaAdjust(this)", class="comment-input") }}
+            {% for error in form.corpus.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+            {{ form.submit() }}
+        </form>
+    </section>
+{% endblock %}
