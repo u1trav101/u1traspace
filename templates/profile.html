@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    {% if ("user_id") in session and notification_counters %}
+        <title>[{{ notification_counters["total_notifications"] }}] u1traspace - {{ properties["username"] }}</title>
+    {% else %}
+        <title>u1traspace - {{ properties["username"] }}</title>
+    {% endif %}
+{% endblock %}
+{% block body %}
+    <div id="container" class="container">
+        <section class="profile-top">
+            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.gif" alt="">
+            <div>
+                <h2 id="breadCrumb" class="breadCrumb">
+                    /<a href="{{ url_for('user_list') }}">users</a>/
+                    <a class="user" href="{{ url_for('user_profile', user_id=properties['user_id']) }}">{{ properties['username'] }}</a>
+                    <div class="end">
+                        <div>
+                            /<a href="{{ url_for('blog_list', user_id=properties['user_id']) }}">blogs</a>/
+                        </div>
+                        <div>
+                            /<a class="friends" href="{{ url_for('friend_list', user_id=properties['user_id']) }}">friends</a>/
+                        </div>
+                    </div>
+
+                </h2>
+                <h4><span>joined: </span><i>{{ time(properties['join_date']) }}</i></h4>
+                <h4><span>last seen: </span><i>{{ time(properties['last_seen']) }}</i></h4>
+                <h4><span>views: </span>{{ properties['page_views'] }}</h4>
+            </div>
+            {% if ("user_id") in session and session["user_id"] | int == properties["user_id"] %}
+                <a class="settings" href="{{ url_for('user_preferences') }}">
+                    <img src="{{ cdn_uri }}/static/img/gears.gif" alt="user preferences">
+                </a>
+            {% endif %}
+
+        </section>
+        <section class="about">
+            <h3>about me:</h3>
+            {% if properties["about"] %}
+                <p>{{ properties["about"] }}</p>
+            {% else %}
+                <p>nothing to see here... yet!</p>
+                <img src="{{ cdn_uri }}/static/img/construction.gif" alt="under construction" style="width: 200px;">
+            {% endif %}
+        </section>
+        <div class="profile-bottom">
+            <section class="comments">
+                <h4 class="number-of-comments">{{ comments | length }} comments:</h4>
+                {% for comment in comments %}
+                    <div class="comment">
+                        <a href="{{ url_for('user_profile', user_id=comment['author_id']) }}">
+                            <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['author_id'] }}.gif" alt="{{ comment['username'] }}">
+                        </a>
+                        <div class="comment-container">
+                            <div class="comment-top">
+                                <a href="{{ url_for('user_profile', user_id=comment['author_id']) }}">
+                                    <h5>{{ comment["username"] }}</h5>
+                                </a>
+                                <span>{{ time(comment["date"]) }}</span>
+                                {% if session["user_id"] == comment["author_id"] | string or session["user_id"] == properties["user_id"] | string %}
+                                    <form class="deleteButton" action="" method="post" novalidate>
+                                        {{delete_form.hidden_tag()}}
+                                        <button name="delete" value="{{comment.id}}" type="submit">delete</button>
+                                    </form>
+                              {%endif%}
+                            </div>
+                            <div class="comment-corpus">
+                                <p>
+                                    {{ comment["corpus"] | escape | regex_replace('javascript:','javashcript:') | markdown }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </section>
+            <section class="profile-bottom-right">
+                <div class="commentForm">
+                    <form action="" method="post" novalidate>
+                        {% if ('user_id') in session %}
+                            {{ comment_form.hidden_tag() }}
+                            {{ comment_form.corpus(placeholder="leave a comment...", id="comment-input", class="comment-input", oninput="textAreaAdjust(this)")}}
+                            {{ comment_form.submit(class="commentPost", id="commentPost", value=" ") }}
+                        {% else %}
+                            <textarea id="comment-input" class="comment-input" placeholder="please login to leave a comment" disabled></textarea>
+                            <input type="submit" value="&nbsp;" disabled>
+                        {% endif %}
+                    </form>
+                </div>
+                <div class="interaction">
+                    {% if (session.get("user_id") != None) and (session.get("user_id") | int != properties["user_id"] | int) %}
+                        {% if not session.get('user_id') | int in friends | map(attribute="recipient_id")%}
+                            <form action="{{ url_for('add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
+                                {{friend_form.hidden_tag()}}
+                                <input id="friend" name="friend" type="submit" value="send friend request">
+                            </form>
+                            <button disabled>message</button>
+                        {% else %}
+                            <button disabled>send friend request</button>
+                            <a href="{{ url_for('direct_message', recipient_id=properties['user_id']) }}">
+                                <button class="pmUser">message</button>
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <button disabled>send friend request</button>
+                        <button disabled>message</button>
+                    {% endif %}
+                    {% if session.get("user_id") | int != properties["user_id"] | int %}
+                        <a href="mailto:admin@u1trav101.net?subject=Report user {{ properties['username'] }} (UUID={{ properties['user_id'] }})">
+                            <button>report user</button>
+                        </a>
+                    {% else %}
+                        <button disabled>report user</button>
+                    {% endif %}
+                </div>
+                <div class="songName">
+                    <h4 class="songTitle">{{ properties['username'] }}'s song:</h4>
+                    <audio 
+                        src="{{ cdn_uri }}/usercontent/audio/{{ properties['user_id'] }}.mp3"
+                        download="{{ properties['username'] }}.mp3"
+                        controls=""
+                        autoplay="true">
+                    </audio>
+                </div>
+            </section>    
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+<script>
+    const textAreaAdjust = (element) => {
+        element.style.height = "auto";
+        element.style.height = element.scrollHeight - 20 + "px";
+    }
+
+    textAreaAdjust(document.getElementById("comment-input"));
+</script>
+{% endblock %}
