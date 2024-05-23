@@ -1,5 +1,6 @@
 from flask import session, redirect, url_for
 from db import Query
+from profile import get_profile_properties
 from web.misc import render_template
 from web.forms import new_blog_form
 
@@ -26,5 +27,6 @@ def new_blog(user_id):
 
     return render_template(
         "newblog.html",
-        form=form
+        form=form,
+        properties=get_profile_properties(user_id)
     )
