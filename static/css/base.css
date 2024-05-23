@@ -1,11 +1,16 @@
 @font-face {
     font-family: "merchant-copy";
-    src: url("../font/merchant_copy.ttf") format("truetype");
+    src: url("/static/font/merchant_copy.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "apple-garamond";
-    src: url("../font/apple_garamond.ttf") format("truetype");
+    src: url("/static/font/apple_garamond.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "lotion";
+    src: url("/static/font/lotion.ttf") format("truetype");
 }
 
 html, body {
@@ -29,7 +34,56 @@ a {
 }
 
 main {
-    margin: 5% 5% 0;
+    margin: 3% 5% 3%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: center;
+}
+
+form input, form textarea {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+
+    background-color: rgba(0,0,0,0.4);
+    border: none;
+    border-bottom: 1px solid grey;
+    color: #fefefe;
+    font-family: "lotion";
+}
+
+form input::placeholder {
+    color: #fefefe;
+}
+
+input:disabled, button:disabled, textarea:disabled {
+    color: grey !important;
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+}
+
+form textarea {
+    border: 1px solid grey;
+    resize: none;
+    padding: 10px;
+    height: fit-content;
+}
+
+input[type=submit] {
+    font-size: 2.5rem;
+
+    font-family: "merchant-copy";
+}
+
+input[type=submit], .commentPost {
+    width: min-content;
+    padding: 5px 10px;
+
+    border: 1px solid grey;
+    cursor: pointer;
 }
 
 .glNav {
@@ -46,3 +100,39 @@ main {
     display: flex;
     justify-content: space-between;
 }
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-left a, .nav-middle a {
+    margin-right: 20px;
+}
+
+.nav-left h1 {
+    margin: 0;
+}
+
+.nav-middle, .nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right a {
+    margin-left: 20px;
+}
+
+.breadCrumb {
+    margin-top: 30px;
+}
+
+.breadCrumb a {
+    height: fit-content;
+}
+
+.breadCrumb a:hover {
+    color: grey;
+}
+
+

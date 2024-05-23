@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block body %}
+    <h2>login:</h2>
+    <form action="" method="post" novalidate="">
+        {{ form.hidden_tag() }}
+        {{ form.email(placeholder="email") }}
+        {{ form.password(placeholder='password') }}
+        {{ form.submit }}
+    </form>
+{% endblock %}

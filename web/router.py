@@ -29,11 +29,11 @@ def declare_routes(app):
     def register():
         return routes.register()
 
-    @app.route("/users/")
+    @app.route("/user/")
     def user_list():
         return routes.user_list()
 
-    @app.route("/users/random/")
+    @app.route("/user/random/")
     def random_user():
         return routes.random_user()
     
@@ -41,35 +41,35 @@ def declare_routes(app):
     def news():
         return routes.news()
 
-    @app.route("/id/")
+    @app.route("/user/")
     def redirect_to_user_list():
         return redirect(url_for("user_list"))
 
-    @app.route("/id/<user_id>/", methods=["GET", "POST"])
+    @app.route("/user/<user_id>/", methods=["GET", "POST"])
     def user_profile(user_id):
         return routes.user_profile(user_id)
     
-    @app.route("/id/<user_id>/blog/")
+    @app.route("/user/<user_id>/blog/")
     def blog_list(user_id):
         return routes.blog_list(user_id)
 
-    @app.route("/id/<user_id>/blog/<post_id>/", methods=["GET", "POST"])
+    @app.route("/user/<user_id>/blog/<post_id>/", methods=["GET", "POST"])
     def blog(user_id, post_id):
         return routes.blog(user_id, post_id)
 
-    @app.route("/id/<user_id>/blog/new/", methods=["GET", "POST"])
+    @app.route("/user/<user_id>/blog/new/", methods=["GET", "POST"])
     def new_blog(user_id):
         return routes.new_blog(user_id)
 
-    @app.route("/id/<user_id>/friends/")
+    @app.route("/user/<user_id>/friends/")
     def friend_list(user_id):
         return routes.friend_list(user_id)
 
-    @app.route("/id/<user_id>/add-friend/", methods=["POST"])
+    @app.route("/user/<user_id>/add-friend/", methods=["POST"])
     def add_friend(user_id):
         return routes.add_friend(user_id)
 
-    @app.route("/id/<user_id>/remove-friend/", methods=["POST"])
+    @app.route("/user/<user_id>/remove-friend/", methods=["POST"])
     def remove_friend(user_id):
         return routes.remove_friend(user_id)
 

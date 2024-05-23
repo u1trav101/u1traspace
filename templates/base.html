@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="shortcut icon" href="{{ cdn_uri }}/static/favicon.gif" type="image/x-icon">
     <script type="text/javascript" src="{{ url_for('static', filename='js/notificationPoll.js') }}"></script>
+    {% block head %}
+    {% endblock %}
     {% if ("user_id") in session and notification_counters %}
         <title>[{{ notification_counters["total_notifications"] }}] u1traspace</title>
     {% else %}
         <title>u1traspace</title>
     {% endif %}
-    {% block head %}
-    {% endblock %}
 </head>
 <body>
     <div id="head1">
@@ -20,7 +20,7 @@
             <nav class="navbar glNav">
                 <div class="nav-top">
                     <div class="nav-left">
-                        <a href="{{ url_for('index') }}">u1traspace</a>
+                        <a href="{{ url_for('index') }}"><h1>u1traspace</h1></a>
                         <a href="{{ url_for('user_list') }}">users</a>
                         <a href="{{ url_for('search') }}">search</a>                        
                     </div>
