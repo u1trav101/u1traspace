@@ -18,6 +18,8 @@ def get_notification_counters():
         "total_notifications": notification_counters["profile_comment_approval"] + notification_counters["blog_comment_approval"] + notification_counters["friend_request_approval"] + notification_counters["unseen_message"]
     })
 
+    return notification_counters
+
 def get_all_notifications(user_id):
     query = Query()
 
