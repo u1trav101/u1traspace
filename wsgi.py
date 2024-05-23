@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_misaka import Misaka
 from tasks import celery_init_app
 from web import declare_routes, regex_replace
@@ -11,6 +12,7 @@ app = Flask("u1traspace")
 app.config.from_object(CONFIG)
 
 # initialising flask extensions
+CORS(app)
 Misaka(app, autolink=True)
 
 celery_app = celery_init_app(app)
