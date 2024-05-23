@@ -55,21 +55,26 @@ form input, form textarea {
     font-family: "lotion";
 }
 
+form textarea {
+    border: 1px solid grey;
+    resize: none;
+    padding: 10px;
+    height: fit-content;
+}
+
 form input::placeholder {
     color: #fefefe;
+}
+
+form .error {
+    margin: 20px 0;
+    color: red;
 }
 
 input:disabled, button:disabled, textarea:disabled {
     color: grey !important;
     opacity: 0.6 !important;
     cursor: not-allowed !important;
-}
-
-form textarea {
-    border: 1px solid grey;
-    resize: none;
-    padding: 10px;
-    height: fit-content;
 }
 
 input[type=submit] {
@@ -122,17 +127,3 @@ input[type=submit], .commentPost {
 .nav-right a {
     margin-left: 20px;
 }
-
-.breadCrumb {
-    margin-top: 30px;
-}
-
-.breadCrumb a {
-    height: fit-content;
-}
-
-.breadCrumb a:hover {
-    color: grey;
-}
-
-

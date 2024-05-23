@@ -1,0 +1,25 @@
+{% extends "components/page.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bloglist.css') }}">
+    {% if ("user_id") in session and notification_counters %}
+        <title>[{{ notification_counters["total_notifications"] }}] u1traspace - {{ properties["username"] }}'s blogs</title>
+    {% else %}
+        <title>u1traspace - {{ properties["username"] }}'s blogs</title>
+    {% endif %}
+{% endblock %}
+{% block main %}
+    <h3 class="blogs-header">{{ properties['username'] }}'s blogs:</h3>
+    <section class="blogs">
+        {% for blog in blogposts %}
+            <div class="blog-container">
+                <a class="blog" href="{{ url_for('blog', user_id=properties['user_id'], post_id=blog['blog_id']) }}">
+                    <span class="blog-header"><h4>{{ blog["title"] }}</h4>&nbsp- {{blog["date"]}}</span>
+                    <p>
+                        {{ blog["corpus"] }}
+                    </p>
+                </a>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}

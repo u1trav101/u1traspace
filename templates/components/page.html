@@ -1,0 +1,65 @@
+{% extends "components/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/page.css') }}">
+{% endblock %}
+{% block body %}
+    <div id="container" class="container">
+        <section class="profile-top">
+            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.gif" alt="">
+            <div>
+                <h2 id="breadCrumb" class="breadCrumb">
+                    /<a href="{{ url_for('user_list') }}">users</a>/
+                    <a class="user {{'active' if request.path[6:-1] | int == properties['user_id'] | int }}" href="{{ url_for('user_profile', user_id=properties['user_id']) }}">{{ properties['username'] }}</a>
+                    <div class="end">
+                        <div class="blog-crumb">
+                            /<a class="{{ 'active' if request.path[-5:-1] == 'blog' }}" href="{{ url_for('blog_list', user_id=properties['user_id']) }}">blogs</a>/
+                            {% if (session.get("user_id") | int == properties['user_id'] | int) and (request.path[-5:-1] == "blog" or request.path[-4:-1] == "new") %}
+                                <a class="{{ 'active' if request.path[-4:-1] == 'new' }}" href="{{ url_for('new_blog', user_id=properties['user_id']) }}">new</a>/
+                            {% endif %}
+                            {% if blogpost is defined %}
+                                {% if request.path[-7:-1] == "blog/" + blogpost["blog_id"] | string %}
+                                    <a class="active" href="{{ url_for('blog', user_id=properties['user_id'], post_id=blogpost['blog_id']) }}">{{ blogpost["title"] }}</a>/
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <div>
+                            /<a class="friends {{ 'active' if request.path[-7:-1] == 'friends' }}" href="{{ url_for('friend_list', user_id=properties['user_id']) }}">friends</a>/
+                        </div>
+                    </div>
+                </h2>
+                {% if request.path[6:-1] | int == properties["user_id"] | int %}
+                    <h4><span>joined: </span><i>{{ time(properties['join_date']) }}</i></h4>
+                    <h4><span>last seen: </span><i>{{ time(properties['last_seen']) }}</i></h4>
+                    <h4><span>views: </span><i>{{ properties['page_views'] }}</i></h4>
+                {% elif request.path[-5:-1] == "blog" %}
+                    <h4><span>last posted: </span><i>{{ blogposts[0]["date"] }}</i></h4>
+                    <h4><span>total blogs: </span><i>{{ blogposts | length }}</i></h4>
+                {% elif blogpost is defined %}
+                    {% if request.path[-7:-1] == "blog/" + blogpost["blog_id"] | string %}
+                        <h4><span>posted: </span><i>{{ blogpost["date"] }}</i></h4>
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% if ("user_id") in session and session["user_id"] | int == properties["user_id"] %}
+                <a class="settings" href="{{ url_for('user_preferences') }}">
+                    <img src="{{ cdn_uri }}/static/img/gears.gif" alt="user preferences">
+                </a>
+            {% endif %}
+        </section>
+        {% block main %}
+        {% endblock %}
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        const textAreaAdjust = (element) => {
+            element.style.height = "auto";
+            element.style.height = element.scrollHeight - 20 + "px";
+        }
+
+        const elements = document.getElementsByClassName("comment-input");
+        for (let i in elements) {
+            textAreaAdjust(elements[i]);
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,161 @@
+main {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.breadCrumb {
+    display: flex;
+    margin: 0 0 20px;
+}
+
+.breadCrumb .active {
+    color: #d9ca00;
+}
+
+.breadCrumb .active:hover {
+    color: #aba002;
+}
+
+.breadCrumb .end {
+    display: flex;
+    flex-direction: column;
+}
+
+.breadCrumb a {
+    height: fit-content;
+}
+
+.breadCrumb a:hover {
+    color: grey;
+}
+
+.blog-crumb {
+    display: flex;
+}
+
+.container {
+    border: 1px solid grey;
+}
+
+.container img {
+    border: 1px solid #fefefe;
+    margin-right: 30px;
+}
+
+.profile-top {
+    padding: 30px;
+    display: flex;
+
+    background-image: url("http://cdn.u1trav101.net/u1traspace/static/img/stars.gif");
+    border-bottom: 1px solid grey;
+}
+
+.profile-top h4 {
+    margin: 0;
+}
+
+.profile-top h4 span, .about h3, .number-of-comments {
+    font-family: "apple-garamond";
+}
+
+.settings {
+    border: none;
+    margin-left: auto;
+    height: fit-content;
+}
+
+.settings img {
+    border: none;
+    transform: scaleX(-1);
+}
+
+.number-of-comments {
+    margin: 30px;
+}
+
+.comments {
+    display: flex;
+    flex-direction: column;
+}
+
+.comments h3 {
+    margin-top: 0;
+}
+
+.comments img {
+    width: 100px;
+    height: 100px;
+}
+
+.commentForm form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.commentForm input[type=submit] {
+    margin: 0;
+    height: 80px;
+    width: 80px;
+
+    border: 1px solid grey;
+    background-image: url("http://cdn.u1trav101.net/u1traspace/static/img/send.svg");
+    background-size: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.comment-input {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.comment {
+    display: flex;
+    align-items: start;
+    border: 1px solid grey;
+}
+
+.comment-container {
+    width: 100%;
+}
+
+.comment a {
+    border: none;
+    width: fit-content;
+    margin: 20px 0 20px 20px;
+}
+
+.comment h5 {
+    margin: 0;
+}
+
+.comment-corpus {
+    font-size: smaller;
+
+    font-family: "lotion";
+}
+
+.comment-top {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.comment-top a {
+    margin: 0 30px 0 0;
+
+    border-bottom: 1px solid #fefefe;
+}
+
+.comment-top button {
+    all: unset;
+
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid grey;
+    cursor: pointer;
+}
+
+.deleteButton {
+    margin: 0 20px 0 auto;
+}
