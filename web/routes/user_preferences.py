@@ -5,7 +5,6 @@ from db import Query
 from web.misc import render_template
 from config import CONFIG
 import os
-import pylibmagic
 import magic
 import web.forms as forms
 import profile
@@ -22,14 +21,13 @@ def user_preferences():
         return redirect(url_for("login"))
 
     query = Query()
-    res = query.get_interface_and_privacy(session["user_id"])
-    selected_interface = res["interface"]
-    selected_privacy = int.from_bytes(res["private"], "big")
+    res = query.select_users(user_id=session["user_id"], limit=1)[0]
+    selected_interface = res["layout"]
+    selected_privacy = res["private"]
     interfaces = {
-        "default": 0,
-        "twitter": 1,
-        "myspace": 2,
-        "classic": 3
+        "u1traspace": 0,
+        "myspace93": 1,
+        "twitter": 2
     }
     preferences_form = forms.preferences_form(
         interface=interfaces[selected_interface],
@@ -39,7 +37,7 @@ def user_preferences():
     if preferences_form.validate_on_submit():
         form_handler(query, preferences_form)
 
-        return redirect(f"/id/{session['user_id']}?i={randint(1,1000)}")
+        return redirect(url_for("user_prefences", user_id=session["user_id"]))
 
     properties = profile.get_profile_properties(session["user_id"])
     properties.update({
@@ -55,15 +53,11 @@ def user_preferences():
 
 def form_handler(query, preferences_form):
     if len(preferences_form.bio.data) < 4096:
-        query.update_user_preferences(
+        layouts = ["u1traspace", "myspace", "twitter"]
+        query.update_user(
             session["user_id"],
             preferences_form.bio.data,
-            [
-                "default",
-                "twitter",
-                "myspace",
-                "classic"
-            ][int(preferences_form.interface.data)],
+            layouts[int(preferences_form.interface.data)],
             int(preferences_form.privacy.data)
         )
 
