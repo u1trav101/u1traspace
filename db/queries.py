@@ -44,6 +44,15 @@ class _Query():
             password=password
         )
     
+    def update_user(self, user_id, about=None, layout=None, private=None):
+        users.update_user(
+            self.cur,
+            user_id=user_id,
+            about=about,
+            layout=layout,
+            private=private
+        )
+    
     def update_last_seen(self, user_id):
         self.cur.callproc("update_last_seen", [user_id])
     

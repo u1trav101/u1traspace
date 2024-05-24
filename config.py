@@ -39,10 +39,10 @@ class CONFIG:
     CACHE_TYPE = "SimpleCache"
     CACHE_DEFAULT_TIMEOUT = 300
 
-    S3_ACCESS_ID = "u1trav101cdn"
+    S3_ACCESS_ID = "u1trav101"
     S3_SECRET_KEY = client.secrets().get("e447c57f-6f12-4be6-bf02-b17501870a12").data.value
     S3_REGION_NAME = "eu-north-1"
-    S3_ENDPOINT_NAME = "http://127.0.0.1:8080"
+    S3_ENDPOINT_NAME = "https://cdn.u1trav101.net"
 
     CELERY = dict(
         broker_url="redis://127.0.0.1:6379/0",

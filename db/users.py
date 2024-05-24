@@ -45,3 +45,28 @@ def insert_user(cur, email, username, password):
             password
         ]
     )
+
+def update_user(cur, user_id, about, layout, private):
+    if about:
+        cur.execute("""
+            UPDATE users
+            SET about = ?
+            WHERE user_id = ?
+            LIMIT 1;
+        """, [about, user_id])
+    
+    if layout:
+        cur.execute("""
+            UPDATE users
+            SET layout = ?
+            WHERE user_id = ?
+            LIMIT 1;
+        """, [layout, user_id])
+    
+    if private:
+        cur.execute("""
+            UPDATE users
+            SET private = ?
+            WHERE user_id = ?
+            LIMIT 1;
+        """, [private, user_id])
