@@ -37,7 +37,7 @@ def user_preferences():
     if preferences_form.validate_on_submit():
         form_handler(query, preferences_form)
 
-        return redirect(url_for("user_prefences", user_id=session["user_id"]))
+        return redirect(url_for("user_preferences", user_id=session["user_id"]))
 
     properties = profile.get_profile_properties(session["user_id"])
     properties.update({
