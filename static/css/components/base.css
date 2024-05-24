@@ -127,3 +127,7 @@ input[type=submit], .commentPost {
 .nav-right a {
     margin-left: 20px;
 }
+
+.hidden {
+    display: none;
+}

@@ -1,0 +1,58 @@
+.prefs-container {
+    display: flex;
+}
+
+main {
+    width: fit-content;
+}
+
+.pref-categories {
+    display: flex;
+    flex-direction: column;
+    font-size: 3rem;
+
+    text-decoration: underline;
+}
+
+.pref-categories a {
+    padding: 20px;
+    margin-bottom: 20px;
+
+    border-bottom: none;
+}
+
+.pref-categories a:hover {
+    background-color: black;
+}
+
+.avatar-upload {
+    visibility: hidden;
+}
+
+.avatar-upload-label {
+    width: 200px;
+    height: 200px;
+
+    background-size: cover;
+    cursor: pointer;
+    border: 1px solid grey;
+    color: grey;
+}
+
+.avatar-upload-label:hover {
+    border: 1px solid #fefefe;
+    color: #fefefe;
+}
+
+.avatar-upload-label img {
+    height: 200px;
+    width: 200px;
+}
+
+.avatar-upload-label span {
+    position: absolute;
+    margin-top: 88px;
+    margin-left: 26px;
+
+    background-color: rgba(0,0,0,0.7);
+}

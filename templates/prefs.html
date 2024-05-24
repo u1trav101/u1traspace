@@ -1,1 +1,57 @@
-{% extends "page.html" %}
+{% extends "components/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/prefs.css') }}">
+    <title>u1traspace - preferences</title>
+{% endblock %}
+{% block body %}
+    <div class="prefs-container">
+        <main>
+            <nav class="pref-categories">
+                <a href="#">appearance</a>
+                <a href="#">privacy</a>
+                <a href="#">security</a>            
+            </nav>
+        </main>
+        <form enctype="multipart/form-data" method="post" action="" novalidate>
+            {{ form.hidden_tag() }}
+            <aside>
+                <h2>appearance settings:</h2>
+                <label 
+                for="avatar-upload"
+                class="avatar-upload-label">
+                    <span>change avatar</span>
+                    <img id="avatar-preview" src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.gif" alt="">
+                </label>
+                {{ form.avatar(class="avatar-upload", id="avatar-upload") }}
+                {{ form.audio(class="hidden") }}
+                {{ form.interface }}
+                <textarea class="abtForm" id="bio" name="bio" rows="20">{{properties['about']}}</textarea>
+                <textarea class="cssForm" id="css" name="css" rows="20">{{properties['css']}}</textarea>
+                {{ form.submit() }}
+            </aside>
+            <aside>
+                <h2>privacy settings:</h2>
+                {{ form.privacy() }}
+                {{ form.submit() }}
+            </aside>
+        </form>
+
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        const avatarPreview = document.getElementById("avatar-preview");
+        const avatarUpload = document.getElementById("avatar-upload");
+
+        avatarUpload.addEventListener("change", (event) => {
+            const newAvatar = event.target.files[0];
+            const fileReader = new FileReader();
+
+            fileReader.onload = (event) => {
+                avatarPreview.src = event.target.result;
+            }
+
+            fileReader.readAsDataURL(newAvatar);
+        })
+    </script>
+{% endblock %}
