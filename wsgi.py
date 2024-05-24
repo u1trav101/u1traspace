@@ -4,7 +4,18 @@ from flask_misaka import Misaka
 from tasks import celery_init_app
 from web import declare_routes, regex_replace
 from config import CONFIG
+import os
 
+
+# create necessary directories
+os.makedirs(os.path.dirname("./.tmp/img"), exist_ok=True)
+os.makedirs(os.path.dirname("./.tmp/audio"), exist_ok=True)
+os.makedirs(os.path.dirname("./usercontent/img/raw"), exist_ok=True)
+os.makedirs(os.path.dirname("./usercontent/img/rsz/200px"), exist_ok=True)
+os.makedirs(os.path.dirname("./usercontent/img/rsz/100px"), exist_ok=True)
+os.makedirs(os.path.dirname("./usercontent/img/rsz/32px"), exist_ok=True)
+os.makedirs(os.path.dirname("./usercontent/audio"), exist_ok=True)
+os.makedirs(os.path.dirname("./usercontent/css"), exist_ok=True)
 
 app = Flask("u1traspace")
 
@@ -15,7 +26,7 @@ app.config.from_object(CONFIG)
 CORS(app)
 Misaka(app, autolink=True)
 
-celery_app = celery_init_app(app)
+celery = celery_init_app(app)
 
 # declaring jinja filters
 app.add_template_filter(regex_replace)
