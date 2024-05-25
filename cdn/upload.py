@@ -31,7 +31,7 @@ def upload_audio(file_path, destination):
         destination,
         ExtraArgs={
             "ACL": "public-read",
-            "ContentType": "audio/ogg"
+            "ContentType": "audio/mpeg"
         }
     )
 
