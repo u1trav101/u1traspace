@@ -53,9 +53,21 @@
         {% endblock %}
     </main>
 </body>
+<script>
+        // automatically adjusts the height of textarea elements to match their content
+        const textAreaAdjust = (element) => {
+            element.style.height = "auto";
+            element.style.height = element.scrollHeight - 20 + "px";
+        }
+
+        const elements = document.getElementsByClassName("comment-input");
+        for (let i in elements) {
+            textAreaAdjust(elements[i]);
+        }    
+</script>
 {% if "timezone" not in session %}
-    <script type="text/javascript">
-        // Send browser's timezone to server for displaying dates/times in local timezone.
+    <script>
+        // send browser's timezone to server for displaying dates/times in local timezone
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         fetch("/set-timezone", {method: 'POST', body: timezone});
     </script> 

@@ -23,8 +23,8 @@
                 {{ form.avatar(class="avatar-upload", id="avatar-upload") }}
                 {{ form.audio(class="hidden") }}
                 {{ form.interface }}
-                <textarea class="abtForm" id="bio" name="bio" rows="20">{{properties['about']}}</textarea>
-                <textarea class="cssForm" id="css" name="css" rows="20">{{properties['css']}}</textarea>
+                <textarea class="abtForm comment-input" placeholder="about you" id="bio" name="bio" oninput="textAreaAdjust(this)">{{ properties["about"] if properties['about'] == None else "" }}</textarea>
+                <textarea class="cssForm comment-input" placeholder="custom page css" id="css" name="css" oninput="textAreaAdjust(this)">{{ properties["css"] }}</textarea>
                 {{ form.submit() }}
             </aside>
             <aside class="hidden">
