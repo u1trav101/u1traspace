@@ -5,13 +5,11 @@
 {% endblock %}
 {% block body %}
     <div class="prefs-container">
-        <main>
-            <nav class="pref-categories">
-                <a href="#">appearance</a>
-                <a href="#">privacy</a>
-                <a href="#">security</a>            
-            </nav>
-        </main>
+        <nav class="pref-categories">
+            <a href="#">appearance</a>
+            <a href="#">privacy</a>
+            <a href="#">security</a>            
+        </nav>
         <form enctype="multipart/form-data" method="post" action="" novalidate>
             {{ form.hidden_tag() }}
             <aside>
@@ -29,7 +27,7 @@
                 <textarea class="cssForm" id="css" name="css" rows="20">{{properties['css']}}</textarea>
                 {{ form.submit() }}
             </aside>
-            <aside>
+            <aside class="hidden">
                 <h2>privacy settings:</h2>
                 {{ form.privacy() }}
                 {{ form.submit() }}
