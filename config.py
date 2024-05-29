@@ -39,10 +39,11 @@ class CONFIG:
     CACHE_TYPE = "SimpleCache"
     CACHE_DEFAULT_TIMEOUT = 300
 
-    S3_ACCESS_ID = "u1traspace"
+    S3_ACCESS_ID = client.secrets().get("fa54bc8d-5d1f-43dc-9139-b17f002037ad").data.value
     S3_SECRET_KEY = client.secrets().get("e447c57f-6f12-4be6-bf02-b17501870a12").data.value
-    S3_REGION_NAME = "eu-north-1"
-    S3_ENDPOINT_NAME = "https://cdn.u1trav101.net"
+    S3_REGION_NAME = "eu-west-2"
+    S3_ENDPOINT_NAME = None
+    S3_BUCKET_NAME = "u1trav101"
 
     CELERY = dict(
         broker_url="redis://127.0.0.1:6379/0",

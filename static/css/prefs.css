@@ -1,17 +1,26 @@
+main {
+    margin: 0;
+    height: 100%;
+}
+
 .prefs-container {
     display: flex;
 }
 
-main {
-    width: fit-content;
+.prefs-container form {
+    width: 100%;
+    margin: 30px;
 }
 
 .pref-categories {
     display: flex;
     flex-direction: column;
     font-size: 3rem;
+    width: fit-content;
+    padding: 20px 0;
 
     text-decoration: underline;
+    background-color: rgba(0,0,0,0.2);
 }
 
 .pref-categories a {
@@ -19,10 +28,26 @@ main {
     margin-bottom: 20px;
 
     border-bottom: none;
+    color: grey;
 }
 
 .pref-categories a:hover {
     background-color: black;
+    color: #fefefe;
+}
+
+aside {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+aside h2 {
+    margin-top: 10px;
+}
+
+aside textarea {
+    height: 30px;
 }
 
 .avatar-upload {
