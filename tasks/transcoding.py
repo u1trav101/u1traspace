@@ -1,5 +1,4 @@
 from celery import shared_task
-from config import CONFIG
 import cdn
 import os
 
