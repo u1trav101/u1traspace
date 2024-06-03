@@ -24,7 +24,8 @@
                 {{ form.audio(class="hidden") }}
                 {{ form.interface }}
                 <textarea class="abtForm comment-input" placeholder="about you" id="bio" name="bio" oninput="textAreaAdjust(this)">{{ properties["about"] if properties['about'] == None else "" }}</textarea>
-                <textarea class="cssForm comment-input" placeholder="custom page css" id="css" name="css" oninput="textAreaAdjust(this)">{{ properties["css"] }}</textarea>
+                <textarea class="cssForm css-form comment-input" placeholder="custom page css" id="css" name="css" oninput="textAreaAdjust(this)">{{ properties["css"] }}</textarea>
+                <div id="ace"></div>
                 {{ form.submit() }}
             </aside>
             <aside class="hidden">
@@ -37,9 +38,23 @@
     </div>
 {% endblock %}
 {% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.34.2/ace.js" integrity="sha512-WdJDvPkK4mLIW1kpkWRd7dFtAF6Z0xnfD3XbfrNsK2/f36vMNGt/44iqYQuliJZwCFw32CrxDRh2hpM2TJS1Ew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         const avatarPreview = document.getElementById("avatar-preview");
         const avatarUpload = document.getElementById("avatar-upload");
+        const cssTextArea = document.getElementById("css");
+
+        cssTextArea.classList.toggle("hidden");
+        const editor = ace.edit("ace");
+        editor.setTheme("ace/theme/dracula");
+        editor.session.setMode("ace/mode/css");
+        editor.session.setValue(cssTextArea.value);
+        editor.session.on("change", () => {
+            cssTextarea.value = editor.session.getValue();
+        });
+        editor.setOptions({
+            maxLines: Infinity
+        });
 
         avatarUpload.addEventListener("change", (event) => {
             const newAvatar = event.target.files[0];
