@@ -24,7 +24,7 @@
                 {{ form.audio(class="hidden") }}
                 {{ form.interface }}
                 <textarea class="abtForm comment-input" placeholder="about you" id="bio" name="bio" oninput="textAreaAdjust(this)">{{ properties["about"] if properties['about'] == None else "" }}</textarea>
-                <textarea class="cssForm css-form comment-input" placeholder="custom page css" id="css" name="css" oninput="textAreaAdjust(this)">{{ properties["css"] }}</textarea>
+                <textarea class="hidden" id="css" name="css">{{ properties["css"] }}</textarea>
                 <div id="ace"></div>
                 {{ form.submit() }}
             </aside>
@@ -34,7 +34,6 @@
                 {{ form.submit() }}
             </aside>
         </form>
-
     </div>
 {% endblock %}
 {% block script %}
@@ -44,16 +43,15 @@
         const avatarUpload = document.getElementById("avatar-upload");
         const cssTextArea = document.getElementById("css");
 
-        cssTextArea.classList.toggle("hidden");
         const editor = ace.edit("ace");
         editor.setTheme("ace/theme/dracula");
         editor.session.setMode("ace/mode/css");
         editor.session.setValue(cssTextArea.value);
         editor.session.on("change", () => {
-            cssTextarea.value = editor.session.getValue();
+            cssTextArea.value = editor.session.getValue();
         });
         editor.setOptions({
-            maxLines: Infinity
+            maxLines: 20
         });
 
         avatarUpload.addEventListener("change", (event) => {
