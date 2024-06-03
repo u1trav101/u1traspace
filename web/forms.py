@@ -1,4 +1,4 @@
-from flask import redirect, session
+from flask import redirect, session, url_for
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField, EmailField
@@ -22,7 +22,7 @@ class register_form(FlaskForm):
 def register_commit(username, user_id):
     session["user_id"] = str(user_id)
 
-    return redirect(f"/id/{user_id}")
+    return redirect(url_for("user_profile", user_id=user_id))
 
 
 class comment_form(FlaskForm):
