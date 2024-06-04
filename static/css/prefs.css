@@ -161,3 +161,20 @@ aside textarea {
 .edit-disclaimer {
     color: grey;
 }
+
+.markdown-help, .css-help {
+    width: fit-content;
+    margin: 10px 0 0;
+
+    border-bottom: 1px solid grey;
+    color: grey;
+}
+
+.css-help {
+    margin-bottom: 20px;
+}
+
+.markdown-help:hover, .css-help:hover {
+    border-bottom: 1px solid #fefefe;
+    color: #fefefe;
+}
