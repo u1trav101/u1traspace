@@ -1,10 +1,11 @@
 main {
     margin: 0;
-    height: 100%;
+    height: calc(100% - 86px);
 }
 
 .prefs-container {
     display: flex;
+    height: 100%;
 }
 
 .prefs-container form {
@@ -17,21 +18,22 @@ main {
     flex-direction: column;
     font-size: 3rem;
     width: fit-content;
-    padding: 20px 0;
+    padding: 20px 0 0;
 
     text-decoration: underline;
     background-color: rgba(0,0,0,0.2);
 }
 
-.pref-categories a {
+.pref-categories span {
     padding: 20px;
     margin-bottom: 20px;
 
     border-bottom: none;
     color: grey;
+    cursor: pointer;
 }
 
-.pref-categories a:hover {
+.pref-categories span:hover {
     background-color: black;
     color: #fefefe;
 }
@@ -42,12 +44,47 @@ aside {
     width: 100%;
 }
 
+aside .row {
+    display: flex;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+aside .row.audio {
+    justify-content: unset;
+}
+
+aside .row.audio audio {
+    margin-right: 20px;
+}
+
+aside .row.audio span {
+    margin-left: 20px;
+}
+
 aside h2 {
     margin-top: 10px;
 }
 
+aside h3 {
+    margin: 0 0 20px 0;
+}
+
 aside textarea {
     height: 30px;
+}
+
+.avatar-upload-container {
+    width: 200px;
+    height: 200px;
+
+    border: 2px solid grey;
+    color: grey;
+}
+
+.avatar-upload-container:hover {
+    border: 2px solid #fefefe;
+    color: #fefefe;
 }
 
 .avatar-upload {
@@ -60,13 +97,6 @@ aside textarea {
 
     background-size: cover;
     cursor: pointer;
-    border: 1px solid grey;
-    color: grey;
-}
-
-.avatar-upload-label:hover {
-    border: 1px solid #fefefe;
-    color: #fefefe;
 }
 
 .avatar-upload-label img {
@@ -80,4 +110,54 @@ aside textarea {
     margin-left: 26px;
 
     background-color: rgba(0,0,0,0.7);
+}
+
+.comment-input {
+    width: 80%;
+    margin: 0 0 0 auto;
+
+    color: grey;
+}
+
+.comment-input:focus {
+    color: #fefefe;
+}
+
+.audio-upload-label {
+    cursor: pointer;
+    padding: 10px;
+    height: fit-content;
+
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid grey;
+    color: grey;
+}
+
+.audio-upload-label:hover {
+    color: #fefefe;
+    border: 1px solid #fefefe;
+}
+
+.audio-upload {
+    content-visibility: hidden;
+}
+
+.cancel-audio {
+    color: 1px solid grey;
+    border: 1px solid grey;
+}
+
+.cancel-audio:hover {
+    color: 1px solid #fefefe;
+    border: 1px solid #fefefe;
+}
+
+.ace_editor {
+    margin-bottom: 40px;
+
+    border: 1px solid grey;
+}
+
+.edit-disclaimer {
+    color: grey;
 }

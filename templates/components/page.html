@@ -5,7 +5,7 @@
 {% block body %}
     <div id="container" class="container">
         <section class="profile-top">
-            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.gif" alt="">
+            <img class="avatar" src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.gif" alt="">
             <div>
                 <h2 id="breadCrumb" class="breadCrumb">
                     /<a href="{{ url_for('user_list') }}">users</a>/
