@@ -1,8 +1,8 @@
-from wsgi import celery
+from celery import current_app
 
 
 def get_scheduled_tasks():
-    inspect = celery.control.inspect()
+    inspect = current_app.control.inspect()
     tasks = inspect.scheduled()
     key = next(iter(tasks))
     tasks = tasks[key]
@@ -10,7 +10,7 @@ def get_scheduled_tasks():
     return tasks if len(tasks) > 0 else None
 
 def get_running_tasks():
-    inspect = celery.control.inspect()
+    inspect = current_app.control.inspect()
     tasks =  inspect.active()
     key = next(iter(tasks))
     tasks = tasks[key]
