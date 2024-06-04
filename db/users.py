@@ -54,6 +54,14 @@ def update_user(cur, user_id, about, layout, private):
             WHERE user_id = ?
             LIMIT 1;
         """, [about, user_id])
+    else:
+        print("nulling")
+        cur.execute("""
+            UPDATE users
+            SET about = NULL
+            WHERE user_id = ?
+            LIMIT 1;
+        """, [user_id])
     
     if layout:
         cur.execute("""
@@ -63,7 +71,7 @@ def update_user(cur, user_id, about, layout, private):
             LIMIT 1;
         """, [layout, user_id])
     
-    if private:
+    if private is not None:
         cur.execute("""
             UPDATE users
             SET private = ?

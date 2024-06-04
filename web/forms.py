@@ -1,7 +1,7 @@
 from flask import redirect, session, url_for
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField, EmailField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField, EmailField, BooleanField
 from wtforms.validators import DataRequired, Length, EqualTo
 
 
@@ -50,8 +50,8 @@ class preferences_form(FlaskForm):
     css = TextAreaField("css")
     bio = TextAreaField("bio")
     interface = SelectField("interface", choices=[(0, "default"), (1, "twitter"), (2, "myspace"), (3, "classic")])
-    privacy = SelectField("privacy", choices=[(0, "public"), (1, "private")])
-    submit = SubmitField("submit", validators=[DataRequired()])
+    privacy = BooleanField("private")
+    submit = SubmitField("save", validators=[DataRequired()])
 
 
 class new_blog_form(FlaskForm):
