@@ -1,1 +1,5 @@
-{% extends "components/base.html" %}
+{% extends "components/page.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/page.css') }}">
+    <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
+{% endblock %}

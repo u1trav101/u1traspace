@@ -2,6 +2,7 @@
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/components/page.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/blogpost.css') }}">
+    <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
     {% if ("user_id") in session and notification_counters %}
         <title>[{{ notification_counters["total_notifications"] }}] u1traspace - {{ blogpost["title"] }}</title>
     {% else %}
