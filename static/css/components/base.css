@@ -4,8 +4,8 @@
 }
 
 @font-face {
-    font-family: "apple-garamond";
-    src: url("/static/font/apple_garamond.ttf") format("truetype");
+    font-family: "junicode-italic";
+    src: url("/static/font/junicode_italic.ttf") format("truetype");
 }
 
 @font-face {
