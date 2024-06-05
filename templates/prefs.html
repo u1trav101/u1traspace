@@ -43,7 +43,7 @@
                     {% endif %}
                 </div>
                 <label for="css"><h3>custom css:</h3></label>
-                <textarea class="hidden" id="css" name="css">{{ properties["css"] }}</textarea>
+                <textarea class="hidden" id="css" name="css">{{ properties["css"] if properties["css"] else "" }}</textarea>
                 <div id="ace"></div>
                 {{ form.submit() }}
                 <span class="edit-disclaimer">* your edits may not be visible immediately, try refreshing if your settings haven't updated</span>

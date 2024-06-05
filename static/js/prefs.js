@@ -41,6 +41,7 @@ editor.session.on("change", () => {
     cssTextArea.value = editor.session.getValue();
 });
 editor.setOptions({
+    minLines: 5,
     maxLines: 20,
     fontSize: "1rem",
     fontFamily: "fira-code"
