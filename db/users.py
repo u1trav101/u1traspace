@@ -1,4 +1,4 @@
-def select_users(cur, count, online, start, visible, order, limit, email, user_id):
+def select_users(cur, count, online, start, visible, order_by, order, limit, email, user_id):
     select = "COUNT(*)" if count else "*"
 
     params = [
@@ -19,7 +19,7 @@ def select_users(cur, count, online, start, visible, order, limit, email, user_i
         AND visible = ?
         {"AND email = ?" if email else ""}
         {"AND user_id = ?" if user_id else ""}
-        ORDER BY user_id {order}
+        ORDER BY {order_by} {order}
         LIMIT ?;
     """, params)
 

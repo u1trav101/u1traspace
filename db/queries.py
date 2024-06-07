@@ -17,13 +17,14 @@ class _Query():
         self.conn.close()
     
     # works on users table
-    def select_users(self, count=False, online=False, start=0, visible=True, order="ASC", limit=CONFIG.SELECT_LIMIT, email=None, user_id=None):
+    def select_users(self, count=False, online=False, start=0, visible=True, order_by="user_id", order="DESC", limit=CONFIG.SELECT_LIMIT, email=None, user_id=None):
         return users.select_users(
             self.cur, 
             count=count, 
             online=online, 
             start=start, 
             visible=visible,
+            order_by=order_by,
             order=order,
             limit=limit,
             email=email,
