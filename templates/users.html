@@ -8,10 +8,43 @@
     {% endif %}
 {% endblock %}
 {% block body %}
-    {% for user in users %}
-        <a href="{{ url_for('user_profile', user_id=user['user_id']) }}" class="user">
-            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ user['user_id'] }}.gif" alt="{{ user['username'] }}">
-            <span>{{ user['username'] }}</span>
-        </a>
-    {% endfor %}
+    <div>
+        <div class="top">
+            <h2>all users:</h2>
+            <div class="options">
+                <h3>filter online:</h3>
+                <input type="checkbox" name="online" onclick="filterUsers(this.checked)" {{ "checked" if request.args.get("f") == "online" }}>
+                <h3>sort:</h3>
+                <select name="sort" id="sort" onchange="sortUsers(this.value)" onfocus="this.selectedIndex = -1;">
+                    <option value="new" {{ "selected" if request.args.get("s") ==  "new" }}>newest to oldest</option>
+                    <option value="old" {{ "selected" if request.args.get("s") ==  "old" }}>oldest to newest</option>
+                    <option value="mviews" {{ "selected" if request.args.get("s") ==  "mviews" }}>most page views</option>
+                    <option value="lviews" {{ "selected" if request.args.get("s") ==  "lviews" }}>least page views</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="users">
+        {% for user in users %}
+            <a href="{{ url_for('user_profile', user_id=user['user_id']) }}" class="user">
+                <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ user['user_id'] }}.gif" alt="{{ user['username'] }}">
+                <span>{{ user['username'] }}</span>
+            </a>
+        {% endfor %}        
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        const filterUsers = (online) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set("f", online ? "online" : "")
+            window.location.search = urlParams.toString();
+        }
+
+        const sortUsers = (value) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set("s", value);
+            window.location.search = urlParams.toString();
+        }
+    </script>
 {% endblock %}

@@ -1,5 +1,38 @@
+.top {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.options {
+    display: flex;
+    align-content: center;
+}
+
+.options a {
+    height: min-content;
+    z-index: 10;
+}
+
+.top h2, .options h3 {
+    margin: 0;
+}
+
+.options input[type="checkbox"] {
+    margin: auto 0;
+    height: 33px;
+    width: 33px;
+}
+
+.users {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .user {
     padding: 20px;
+    margin: 20px;
     display: flex;
     flex-direction: column;
     width: fit-content;
