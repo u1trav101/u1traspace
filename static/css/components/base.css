@@ -1,11 +1,11 @@
 @font-face {
     font-family: "merchant-copy";
-    src: url("/static/font/merchant_copy.ttf") format("truetype");
+    src: url("/static/font/merchant_copy.woff2") format("woff2");
 }
 
 @font-face {
     font-family: "eb-garamond-italic";
-    src: url("/static/font/eb_garamond_italic.ttf") format("truetype");
+    src: url("/static/font/eb_garamond_italic.woff2") format("woff2");
 }
 
 @font-face {
