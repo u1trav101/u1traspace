@@ -1,0 +1,92 @@
+main {
+    margin-bottom: 0;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top h2 {
+    font-style: italic;
+    z-index: 10;
+}
+
+.images {
+    display: flex;
+    align-items: center;
+}
+
+.heart {
+    height: 200px;
+
+    z-index: 5;
+}
+
+.cats {
+    width: 200px;
+    margin-left: -200px;
+
+    z-index: 10;
+}
+
+.rainbow {
+    height: 250px;
+    margin-top: -250px;
+}
+
+.mid {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.description {
+    width: 40%;
+
+    text-align: center;
+}
+
+.love {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copyright {
+    color: grey;
+    font-size: 1rem;
+}
+
+.purpose {
+    width: fit-content;
+}
+
+.purpose ul {
+    padding: 0;
+}
+
+.purpose li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.purpose li img {
+    height: 50px;
+    width: fit-content;
+    margin-bottom: 20px;
+}
+
+.purpose, .user {
+    margin-top: -150px;
+}
+
+.cat-running {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+}

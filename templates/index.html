@@ -1,1 +1,54 @@
 {% extends "components/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+{% block body %}
+    <section class="top">
+        <h2>the coolest place on the world wide web :]</h2>
+        <div class="images">
+            <img class="heart" src="{{ cdn_uri }}/static/img/heart.gif" alt="hearts">
+            <img class="cats" src="{{ cdn_uri }}/static/img/cats.gif" alt="cats">
+        </div>
+        <img class="rainbow" src="{{ cdn_uri }}/static/img/rainbow.gif" alt="rainbow">
+    </section>
+    <section class="mid">
+        <section class="purpose">
+            <h3>what is this site for?</h3>
+            <ul>
+                <li>
+                    <span>blogging & commenting!</span>
+                    <img src="{{ cdn_uri }}/static/img/writing.gif" alt="a quill writing on parchment paper">
+                </li>
+                <li>
+                    <span>chatting with friends!</span>
+                    <img src="{{ cdn_uri }}/static/img/transfer.gif" alt="one computer sending data to another">
+                </li>
+                <li>
+                    <span>expressing your creativity!</span>
+                    <img src="{{ cdn_uri }}/static/img/wand_sparkles.gif" alt="a magic wand with sparkles flying out of the tip">
+                </li>
+            </ul>
+        </section>
+        <section class="description">
+            <p>
+                do you miss the old internet?<br><br>
+                is social media draining your soul?<br><br>
+                do you wish you could fully express yourself online?<br><br>
+                then become an exclusive member of the coolest internet club right <a href="{{ url_for('register') }}">here</a> (⌐■_■)
+            </p>
+            <span class="love">
+                <img src="{{ cdn_uri }}/static/img/love.gif" alt="made with love">
+                &nbspby&nbsp<a href="{{ url_for('user_profile', user_id=1) }}">ciara</a>&nbsp<3 
+            </span><br><br>
+            <span class="copyright">Copyright © 2024 u1trav101et. All rights reserved.</span>
+        </section>
+        <section class="user">
+            <h3>random user of the day :0</h3>
+            <a href="{{ url_for('user_profile', user_id=user['user_id']) }}">
+                <img src="{{ cdn_uri }}/usercontent/rsz/200px/{{ user['user_id'] }}.webp" alt="{{ user['username'] }}'s profile picture">
+                <h4>{{ user['username'] }}</h4>
+            </a>
+        </section>
+    </section>
+    <img class="cat-running" src="{{ cdn_uri }}/static/img/cat_running.gif" alt="cat running across the screen">
+{% endblock %}
