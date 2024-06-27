@@ -5,10 +5,10 @@ import os
 
 @shared_task()
 def _transcode_and_upload_image(file_path, usercontent_dir, user_id, size):
-    os.system(f"ffmpeg -loglevel error -hide_banner -i {file_path} -filter_complex '[0:v] scale={size}:-1:flags=lanczos,split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse' -y {usercontent_dir}img/rsz/{size}px/{user_id}.gif")
+    os.system(f"ffmpeg -loglevel error -hide_banner -i {file_path} -y -vf scale={size}:{size} {usercontent_dir}img/rsz/{size}px/{user_id}.webp")
     cdn.upload_image(
-        f"{usercontent_dir}img/rsz/{size}px/{user_id}.gif",
-        f"u1traspace/usercontent/img/rsz/{size}px/{user_id}.gif"
+        f"{usercontent_dir}img/rsz/{size}px/{user_id}.webp",
+        f"u1traspace/usercontent/img/rsz/{size}px/{user_id}.webp"
     )
 
 
@@ -18,10 +18,10 @@ def transcode_and_upload_images(file_path, usercontent_dir, user_id):
     _transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 100)
     _transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 200)
 
-    os.system(f"ffmpeg -loglevel error -hide_banner -i {file_path} -filter_complex '[0:v] scale=-1:-1:flags=lanczos,split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse' -y {usercontent_dir}img/raw/{user_id}.gif")
+    os.system(f"ffmpeg -loglevel error -hide_banner -i {file_path} -y {usercontent_dir}img/raw/{user_id}.webp")
     cdn.upload_image(
-        f"{usercontent_dir}img/raw/{user_id}.gif",
-        f"u1traspace/usercontent/img/raw/{user_id}.gif"
+        f"{usercontent_dir}img/raw/{user_id}.webp",
+        f"u1traspace/usercontent/img/raw/{user_id}.webp"
     )
 
 
