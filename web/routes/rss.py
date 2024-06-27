@@ -47,7 +47,7 @@ def rss(req_str):
         fe.id(blog_url)
         fe.link(href = blog_url)
         fe.content(content = post["corpus"])
-        fe.enclosure(url = f"http://sys.chiyo.org/usercontent/img/rsz/200px/{post['authorid']}.gif", type = "image/gif")
+        fe.enclosure(url = f"http://sys.chiyo.org/usercontent/img/rsz/200px/{post['authorid']}.webp", type = "image/gif")
         
         if req_str == "all":
             fe.author(name = f"{post['username']} [{post['authorid']}]", email = "rss@chiyo.org")
