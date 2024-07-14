@@ -9,6 +9,7 @@
     <section class="new-blog">
         <h3>new blog:</h3>
         <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
             {{ form.title(placeholder="title") }}
             {% for error in form.title.errors %}
                 <span class="error">{{ error }}</span>
