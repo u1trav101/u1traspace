@@ -83,6 +83,19 @@ main {
     margin-top: -150px;
 }
 
+.user a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    border: none;
+    text-align: center;
+}
+
+.user img {
+    width: 200px;
+}
+
 .cat-running {
     position: absolute;
     bottom: 0;
