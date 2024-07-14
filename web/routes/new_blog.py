@@ -9,7 +9,7 @@ def new_blog(user_id):
     try:
         int(user_id)
     except ValueError:
-        return redirect(url_for("user_profile"))
+        return redirect(url_for("user_list"))
 
     if ("user_id") not in session:
         return redirect(url_for("login"))
