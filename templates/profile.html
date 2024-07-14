@@ -25,7 +25,7 @@
             {% for comment in comments %}
                 <div class="comment">
                     <a href="{{ url_for('user_profile', user_id=comment['author_id']) }}">
-                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['author_id'] }}.gif" alt="{{ comment['username'] }}">
+                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['author_id'] }}.webp" alt="{{ comment['username'] }}">
                     </a>
                     <div class="comment-container">
                         <div class="comment-top">
