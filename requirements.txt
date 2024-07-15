@@ -11,5 +11,5 @@ mariadb==1.1.4
 pillow==10.3.0 # don't install this dep through pip if you are using a nix shell
 python-magic==0.4.27
 pylibmagic==0.4.0
-setuptools==69.5.1
+setuptools==70.0.0
 werkzeug==3.0.3
