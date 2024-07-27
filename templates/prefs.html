@@ -23,7 +23,7 @@
                             {% if avatar_uploading %}
                                 <img src="{{ cdn_uri }}/static/img/transfer.gif" alt="avatar is being updated">
                             {% else %}
-                                <img id="avatar-preview" src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.gif?n={{ range(1, 99999) | random }}" alt="">
+                                <img id="avatar-preview" src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.webp?n={{ range(1, 99999) | random }}" alt="">
                             {% endif %}
                         </label>
                         {{ form.avatar(class="avatar-upload", id="avatar-upload") }}
