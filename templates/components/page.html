@@ -23,7 +23,7 @@
                             {% endif %}
                         </div>
                         <div>
-                            /<a class="friends {{ 'active' if request.path[-7:-1] == 'friends' }}" href="{{ url_for('friend_list', user_id=properties['user_id']) }}">friends</a>/
+                            /<a class="friends {{ 'active' if 'friends' in request.path }}" href="{{ url_for('friend_list', user_id=properties['user_id']) }}">friends</a>/
                         </div>
                     </div>
                 </h2>
