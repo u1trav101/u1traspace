@@ -74,6 +74,7 @@ def blog(user_id, post_id):
         blogposts=profile.get_all_user_blogposts(user_id),
         comments=profile.get_blogpost_comments(post_id),
         friends=profile.get_user_friends(user_id),
+        is_friends=profile.is_friends(user_id),
         comment_form=comment_form,
         delete_form=delete_form,
         friend_form=friend_form

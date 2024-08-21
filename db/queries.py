@@ -153,6 +153,22 @@ class _Query():
             recipient_id=recipient_id
         )
     
+    def insert_friend(self, sender_id, recipient_id, approved=False):
+        friends.insert_friend(
+            self.cur,
+            sender_id=sender_id,
+            recipient_id=recipient_id,
+            approved=approved
+        )
+    
+    def update_friend(self, sender_id, recipient_id, approved):
+        friends.update_friend(
+            self.cur,
+            sender_id=sender_id,
+            recipient_id=recipient_id,
+            approved=approved
+        )
+    
     # works on messages table
     def select_messages(self, count=False, start=None, read=None, order="DESC", limit=CONFIG.SELECT_LIMIT, message_id=None, sender_id=None, recipient_id=None):
         return messages.select_messages(

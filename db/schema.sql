@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS blog_comments (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS friends (
-    `relationship_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `friend_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `sender_id` int NOT NULL REFERENCES users (`user_id`) ON UPDATE CASCADE,
     `recipient_id` int NOT NULL REFERENCES users(`user_id`) ON UPDATE CASCADE,
     `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
