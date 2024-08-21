@@ -1,11 +1,38 @@
 {% extends "components/page.html" %}
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/components/page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}">
     <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
 {% endblock %}
 {% block main %}
-    <h3>{{ properties["username"] }}'s friends</h3>
+    <h3>{{ properties["username"] }}'s friends:</h3>
+    {% if ("user_id") in session and (session["user_id"] | int == properties["user_id"]) and friend_requests %}
+        <h4>friend requests:</h4>
+        <section class="pending">
+            {% for friend in friend_requests %}
+                <a class="user" href="{{ url_for('user_profile', user_id=friend['user_id']) }}">
+                    <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
+                    <span>{{ friend["username"] }}</span>
+                    <div class="actions">
+                        <form action="{{ url_for('add_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
+                            {{ friend_form.hidden_tag() }}
+                            <input id="friend" name="friend" type="submit" value="approve">
+                        </form>
+                        <form action="{{ url_for('remove_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
+                            {{ friend_form.hidden_tag() }}
+                            <input id="friend" name="friend" type="submit" value="deny">
+                        </form>
+                    </div>
+                </a>
+            {% endfor %}
+        </section>
+    {% endif %}
     <section class="friends">
-        {{ friends }}
+        {% for friend in friends %}
+            <a class="user" href="{{ url_for('user_profile', user_id=friend['user_id']) }}">
+                <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
+                <span>{{ friend["username"] }}</span>
+            </a>
+        {% endfor %}
     </section>
 {% endblock %}

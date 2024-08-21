@@ -59,6 +59,7 @@ def user_profile(user_id):
         comments=profile.get_profile_comments(user_id),
         blogposts=profile.get_all_user_blogposts(user_id),
         friends=profile.get_user_friends(user_id),
+        is_friends=profile.is_friends(user_id),
         comment_form=comment_form,
         delete_form=delete_form,
         friend_form=friend_form

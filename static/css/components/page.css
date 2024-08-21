@@ -59,7 +59,7 @@ main {
     font-family: "eb-garamond-italic";
 }
 
-.settings {
+.settings, .add-friend {
     border: none;
     margin-left: auto;
     height: fit-content;

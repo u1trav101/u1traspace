@@ -25,10 +25,3 @@ def get_profile_css(user_id):
             return f.read()
     except FileNotFoundError:
         open(file_path, "a").close()
-
-
-def get_user_friends(user_id):
-    query = Query()
-    res = query.select_friends(recipient_id=user_id)
-
-    return res

@@ -9,7 +9,7 @@
             <div>
                 <h2 id="breadCrumb" class="breadCrumb">
                     /<a href="{{ url_for('user_list') }}">users</a>/
-                    <a class="user {{'active' if request.path[6:-1] | int == properties['user_id'] | int }}" href="{{ url_for('user_profile', user_id=properties['user_id']) }}">{{ properties['username'] }}</a>
+                    <a class="user-crumb {{'active' if request.path[6:-1] | int == properties['user_id'] | int }}" href="{{ url_for('user_profile', user_id=properties['user_id']) }}">{{ properties['username'] }}</a>
                     <div class="end">
                         <div class="blog-crumb">
                             /<a class="{{ 'active' if request.path[-5:-1] == 'blog' }}" href="{{ url_for('blog_list', user_id=properties['user_id']) }}">blogs</a>/
@@ -23,7 +23,7 @@
                             {% endif %}
                         </div>
                         <div>
-                            /<a class="friends {{ 'active' if 'friends' in request.path }}" href="{{ url_for('friend_list', user_id=properties['user_id']) }}">friends</a>/
+                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('friend_list', user_id=properties['user_id']) }}">friends</a>/
                         </div>
                     </div>
                 </h2>
@@ -49,6 +49,13 @@
                 <a class="settings" href="{{ url_for('user_preferences') }}">
                     <img src="{{ cdn_uri }}/static/img/gears.gif" alt="user preferences">
                 </a>
+            {% elif ("user_id") in session and session["user_id"] | int != properties["user_id"] %}
+                {% if not is_friends %}
+                    <form class="add-friend" action="{{ url_for('add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
+                        {{ friend_form.hidden_tag() }}
+                        <input id="friend" name="friend" type="submit" value="send friend request">
+                    </form>
+                {% endif %}
             {% endif %}
         </section>
         {% block main %}

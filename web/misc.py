@@ -5,15 +5,11 @@ from zoneinfo import ZoneInfo
 from time import time
 from config import CONFIG
 from db import Query
-from profile import get_notification_counters
-import web.forms as forms
 import re
 
 
 # template render function to pass an argument to all routes
 def render_template(*args, **kwargs):
-    login_form = forms.login_form()
-
     CDN_URI = CONFIG.CDN_URI
     if request.headers.get("X-Chiyo-Legacy") == "true":
         CDN_URI = CONFIG.INSECURE_CDN_URI
@@ -22,9 +18,7 @@ def render_template(*args, **kwargs):
         *args,
         **kwargs,
         cdn_uri=CDN_URI,
-        login_form=login_form,
         current_time=round(time()),
-        notification_counters=get_notification_counters(),
         time=unix_to_readable,
     )
 

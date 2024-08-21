@@ -17,5 +17,6 @@ def blog_list(user_id):
         properties=profile.get_profile_properties(user_id),
         blogposts=profile.get_all_user_blogposts(user_id),
         friends=profile.get_user_friends(user_id),
+        is_friends=profile.is_friends(user_id),
         friend_form=form
     )
