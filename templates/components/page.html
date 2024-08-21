@@ -33,7 +33,7 @@
                     <h4><span>views: </span><i>{{ properties['page_views'] }}</i></h4>
                 {% elif request.path[-5:-1] == "blog" %}
                     {% if blogposts %}
-                        <h4><span>last posted: </span><i>{{ blogposts[0]["date"] }}</i></h4>
+                        <h4><span>last posted: </span><i>{{ time(blogposts[0]["date"]) }}</i></h4>
                         <h4><span>total blogs: </span><i>{{ blogposts | length }}</i></h4>
                     {% else %}
                         <h4><span>last posted: </span><i>never</i></h4>
@@ -41,7 +41,7 @@
                     {% endif %}
                 {% elif blogpost is defined %}
                     {% if request.path[-7:-1] == "blog/" + blogpost["blog_id"] | string %}
-                        <h4><span>posted: </span><i>{{ blogpost["date"] }}</i></h4>
+                        <h4><span>posted: </span><i>{{ time(blogpost["date"]) }}</i></h4>
                     {% endif %}
                 {% endif %}
             </div>
