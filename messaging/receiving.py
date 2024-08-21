@@ -1,6 +1,6 @@
 from db import Query
 from markupsafe import Markup
-from web.misc import unix_to_readable
+from web.misc import epoch_to_readable
 
 
 def get_incoming_senders(recipient_id):
@@ -62,7 +62,7 @@ def poll_incoming_messages(sender_id, recipient_id, last_message_id):
     else:
         res.insert(0, True)
         for i in range(1, len(res)):
-            res[i]["date"] = unix_to_readable(res[i]["date"], True)
+            res[i]["date"] = epoch_to_readable(res[i]["date"], True)
             res[i]["corpus"] = Markup.escape(res[i]["corpus"])
 
     return res

@@ -35,22 +35,25 @@
         {% if comments %}
             {% for comment in comments %}
                 <div class="comment-container">
-                    <div class="comment-top">
-                        <a href="{{ url_for('user_profile', user_id=comment['author_id']) }}">
-                            <h5>{{ comment["username"] }}</h5>
-                        </a>
-                        <span>{{ time(comment["date"]) }}</span>
-                        {% if session["user_id"] == comment["author_id"] | string or session["user_id"] == properties["user_id"] | string %}
-                            <form class="deleteButton delete-button" action="" method="post" novalidate>
-                                {{delete_form.hidden_tag()}}
-                                <button name="delete" value="{{comment.id}}" type="submit">delete</button>
-                            </form>
-                        {%endif%}
-                    </div>
-                    <div class="comment-corpus">
-                        <p>
-                            {{ comment["corpus"] | escape | regex_replace('javascript:','javashcript:') | markdown }}
-                        </p>
+                    <img class="avatar {{ 'online' if current_time - comment['last_seen'].timestamp() | round | int <= 300 }}" src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['user_id'] }}.webp" alt="{{ comment['username'] }}">
+                    <div>
+                        <div class="comment-top">
+                            <a href="{{ url_for('user_profile', user_id=comment['author_id']) }}">
+                                <h5>{{ comment["username"] }}</h5>
+                            </a>
+                            <span>{{ time(comment["date"]) }}</span>
+                            {% if session["user_id"] == comment["author_id"] | string or session["user_id"] == properties["user_id"] | string %}
+                                <form class="deleteButton delete-button" action="" method="post" novalidate>
+                                    {{delete_form.hidden_tag()}}
+                                    <button name="delete" value="{{comment.id}}" type="submit">delete</button>
+                                </form>
+                            {%endif%}
+                        </div>
+                        <div class="comment-corpus">
+                            <p>
+                                {{ comment["corpus"] | escape | regex_replace('javascript:','javashcript:') | markdown }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             {% endfor %}

@@ -5,7 +5,7 @@
 {% block body %}
     <div id="container" class="container">
         <section class="profile-top">
-            <img class="avatar" src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.webp" alt="">
+            <img class="avatar {{ 'online' if current_time - properties['last_seen'].timestamp() | round | int <= 300 }}" src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.webp" alt="">
             <div>
                 <h2 id="breadCrumb" class="breadCrumb">
                     /<a href="{{ url_for('user_list') }}">users</a>/
