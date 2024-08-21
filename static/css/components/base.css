@@ -111,6 +111,10 @@ input[type=submit], .commentPost {
     justify-content: space-between;
 }
 
+.nav-top a:hover, .nav-top a:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
 .nav-left {
     display: flex;
     align-items: center;
