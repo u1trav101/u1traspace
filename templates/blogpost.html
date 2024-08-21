@@ -8,7 +8,7 @@
 {% block main %}
     <section class="blogContent blog-content">
         <div class="blog-header">
-            {{ blogpost["title"] }}&nbsp- {{blogpost["date"]}}
+            {{ blogpost["title"] }}&nbsp- {{ time(blogpost["date"]) }}
         </div>
         <div class="comText">
             {% for line in blogpost['corpus'].split('\n') %}
