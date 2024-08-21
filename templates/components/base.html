@@ -14,11 +14,6 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/notificationPoll.js') }}"></script>
     {% block head %}
     {% endblock %}
-    {% if ("user_id") in session and notification_counters %}
-        <title>[{{ notification_counters["total_notifications"] }}] u1traspace</title>
-    {% else %}
-        <title>u1traspace</title>
-    {% endif %}
     <style>
         html, body {
             display: block !important;

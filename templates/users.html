@@ -1,11 +1,7 @@
 {% extends "components/base.html" %}
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
-    {% if ("user_id") in session and notification_counters %}
-        <title>[{{ notification_counters["total_notifications"] }}] u1traspace - users</title>
-        {% else %}
-        <title>u1traspace - users</title>
-    {% endif %}
+    <title>u1traspace - users</title>
 {% endblock %}
 {% block body %}
     <div>
