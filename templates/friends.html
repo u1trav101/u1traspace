@@ -6,7 +6,7 @@
     <title>u1traspace - {{ properties["username"] }}'s friends</title>
 {% endblock %}
 {% block main %}
-    <h3>{{ properties["username"] }}'s friends:</h3>
+    <h3 class="friends-header header">{{ properties["username"] }}'s friends:</h3>
     {% if ("user_id") in session and (session["user_id"] | int == properties["user_id"]) and friend_requests %}
         <h4>friend requests:</h4>
         <section class="pending">
@@ -28,12 +28,14 @@
             {% endfor %}
         </section>
     {% endif %}
-    <section class="friends">
-        {% for friend in friends %}
-            <a class="user" href="{{ url_for('user_profile', user_id=friend['user_id']) }}">
-                <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
-                <span>{{ friend["username"] }}</span>
-            </a>
-        {% endfor %}
-    </section>
+    {% if friends %}
+        <section class="friends">
+            {% for friend in friends %}
+                <a class="user" href="{{ url_for('user_profile', user_id=friend['user_id']) }}">
+                    <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
+                    <span>{{ friend["username"] }}</span>
+                </a>
+            {% endfor %}
+        </section>
+    {% endif %}
 {% endblock %}

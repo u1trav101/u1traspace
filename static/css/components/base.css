@@ -222,3 +222,7 @@ input:checked + .slider:before {
     margin-top: 20px;
     text-align: center;
 }
+
+.user.online, .avatar.online {
+    border: 1px solid lawngreen;
+}

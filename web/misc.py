@@ -19,7 +19,7 @@ def render_template(*args, **kwargs):
         **kwargs,
         cdn_uri=CDN_URI,
         current_time=round(time()),
-        time=unix_to_readable,
+        time=epoch_to_readable,
     )
 
 
@@ -33,7 +33,7 @@ def before_request():
 
 
 # converts unix time to human readable time format
-def unix_to_readable(time, short=False):
+def epoch_to_readable(time, short=False):
     strf = "%H:%M:%S" if short else "%d/%m/%Y %H:%M:%S"
     readable_time = datetime(
         time.year,
