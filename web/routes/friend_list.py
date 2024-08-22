@@ -1,19 +1,16 @@
 from flask import redirect, url_for
+from flask_wtf import FlaskForm
+from werkzeug import Response
 from web.misc import render_template
 import web.forms as forms
 import profile
 
 
-def friend_list(user_id):
-    try:
-        int(user_id)
-    except ValueError:
-        return redirect(url_for("user_list"))
+def friend_list(user_id: int) -> Response | str:
+    properties: dict = profile.get_profile_properties(user_id)
+    friend_form: FlaskForm = forms.friend_form()
 
-    properties = profile.get_profile_properties(user_id)
-    friend_form = forms.friend_form()
-
-    template = "friends.html"
+    template: str = "friends.html"
     match properties["layout"]:
         case "twitter":
             template = "twitter/friends.html"

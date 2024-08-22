@@ -4,7 +4,7 @@ import os
 
 
 @shared_task
-def save_css(corpus, usercontent_dir, user_id):
+def save_css(corpus: str, usercontent_dir: str, user_id: int) -> None:
     with open(os.path.join(usercontent_dir, f"css/{user_id}.css"), "w") as f:
         f.write(corpus)
         

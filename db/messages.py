@@ -1,5 +1,8 @@
-def select_messages(cur, count, start, read, order, limit, message_id, sender_id, recipient_id):
-    params = []
+from mariadb import Cursor
+
+
+def select_messages(cur:Cursor, count:bool, start:int|None, read:bool|None, order:str, limit:int, message_id:int|None, sender_id:int|None, recipient_id:int|None) -> list:
+    params: list = []
     if start:
         params.append(start)
     if read is not None:
@@ -28,7 +31,7 @@ def select_messages(cur, count, start, read, order, limit, message_id, sender_id
 
     return cur.fetchall()
 
-def select_user_conversations(cur, user_id, count, order, limit):
+def select_user_conversations(cur:Cursor, user_id:int, count:bool, order:str, limit:int) -> list:
     cur.execute("""
         SELECT DISTINCT sender_id, recipient_id
         FROM messages
@@ -38,7 +41,7 @@ def select_user_conversations(cur, user_id, count, order, limit):
 
     return cur.fetchall()
 
-def insert_message(cur, sender_id, recipient_id, corpus):
+def insert_message(cur: Cursor, sender_id: int, recipient_id: int, corpus: str) -> None:
     cur.execute("""
         INSERT INTO messages (sender_id, recipient_id, corpus)
         VALUES (?, ?, ?);

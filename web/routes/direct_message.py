@@ -1,35 +1,29 @@
 from flask import redirect, session, url_for
+from flask_wtf import FlaskForm
+from werkzeug import Response
 from db import Query
 from web.misc import render_template
-from tasks import clear_message_notifications
 import web.forms as forms
 import profile
 import messaging
 
 
-def direct_message(recipient_id):
+def direct_message(recipient_id: int) -> Response | str:
     if ("user_id") not in session:
         return redirect(url_for("login"))
 
-    try:
-        int(recipient_id)
-    except ValueError:
-        return redirect(url_for("friend_list", user_id=session["user_id"]))
-
-    clear_message_notifications.delay(session["user_id"], recipient_id)
-
     query = Query()
-    friends = query.get_user_friends(recipient_id)
+    friends: list = query.get_user_friends(recipient_id)
 
-    are_friends = False
+    is_friends: bool = False
     for friend in friends:
         if int(session["user_id"]) == friend["friend"]:
-            are_friends = True
+            is_friends = True
 
-    if not are_friends:
+    if not is_friends:
         return redirect(url_for("friend_list", user_id=session["user_id"]))
 
-    message_form = forms.message_form()
+    message_form: FlaskForm = forms.message_form()
 
     if message_form.validate_on_submit():
         messaging.send_message(

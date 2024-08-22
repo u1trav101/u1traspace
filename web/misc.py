@@ -1,9 +1,12 @@
-from flask import session, request
+from typing import Callable
+from flask import redirect, session, request, url_for
 from flask import render_template as real_render_template
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from functools import wraps
 from time import time
 
+from werkzeug import Response
 from config import CONFIG
 from db import Query
 import re
@@ -51,7 +54,29 @@ def epoch_to_readable(time: datetime, short=False) -> str:
     return readable_time
 
 
+# escapes characters with potential for XSS (e.g. 'javascript:')
 def regex_replace(text: str, find: str, replace: str) -> str:
     regex: re.Pattern[str] = re.compile(re.escape(find), re.IGNORECASE)
 
     return regex.sub(repl=replace, string=text)
+
+
+# ensures that user_id and post_id are always int, and redirects if casting if not possible
+def validate_url_vars(func: Callable) -> Callable:
+    @wraps(func)
+    def decorator(*args, **kwargs):
+        if "user_id" in kwargs:
+            try:
+                kwargs["user_id"] = int(kwargs["user_id"])
+            except ValueError:
+                return redirect(url_for("user_list"))
+        
+        if "post_id" in kwargs:
+            try:
+                kwargs["post_id"] = int(kwargs["post_id"])
+            except ValueError:
+                return redirect(url_for("blog_list", user_id=kwargs["user_id"]))
+        
+        return func(*args, **kwargs)
+    
+    return decorator

@@ -1,5 +1,6 @@
 from werkzeug import Response
 from flask import redirect, url_for
+from web.misc import validate_url_vars
 import web.misc as misc
 import web.routes as routes
 
@@ -46,41 +47,39 @@ def declare_routes(app) -> None:
         return redirect(url_for("user_list"))
 
     @app.route("/user/<user_id>/", methods=["GET", "POST"])
-    def user_profile(user_id: str) -> Response | str:
-        return routes.user_profile(int(user_id))
-    
+    @validate_url_vars
+    def user_profile(user_id: int) -> Response | str | tuple:
+        return routes.user_profile(user_id)
+
     @app.route("/user/<user_id>/blog/")
-    def blog_list(user_id: str) -> Response | str:
-        return routes.blog_list(int(user_id))
+    @validate_url_vars
+    def blog_list(user_id: int) -> Response | str:
+        return routes.blog_list(user_id)
 
     @app.route("/user/<user_id>/blog/<post_id>/", methods=["GET", "POST"])
-    def blog(user_id: str, post_id: str) -> Response | str:
-        try:
-            int(user_id)
-        except ValueError:
-            return redirect(url_for("user_list"))
-        try:
-            int(post_id)
-        except ValueError:
-            return redirect(url_for("blog_list", user_id=user_id))
-        
-        return routes.blog(int(user_id), int(post_id))
+    @validate_url_vars
+    def blog(user_id: int, post_id: int) -> Response | str | tuple:
+        return routes.blog(user_id, post_id)
 
     @app.route("/user/<user_id>/blog/new/", methods=["GET", "POST"])
-    def new_blog(user_id: str) -> Response | str:
-        return routes.new_blog(int(user_id))
+    @validate_url_vars
+    def new_blog(user_id: int) -> Response | str | tuple:
+        return routes.new_blog(user_id)
 
     @app.route("/user/<user_id>/friends/")
-    def friend_list(user_id: str) -> Response | str:
-        return routes.friend_list(int(user_id))
+    @validate_url_vars
+    def friend_list(user_id: int) -> Response | str:
+        return routes.friend_list(user_id)
 
     @app.route("/user/<user_id>/add-friend/", methods=["POST"])
-    def add_friend(user_id: str) -> Response:
-        return routes.add_friend(int(user_id))
+    @validate_url_vars
+    def add_friend(user_id: int) -> Response:
+        return routes.add_friend(user_id)
 
     @app.route("/user/<user_id>/remove-friend/", methods=["POST"])
-    def remove_friend(user_id: str) -> Response:
-        return routes.remove_friend(int(user_id))
+    @validate_url_vars
+    def remove_friend(user_id: int) -> Response:
+        return routes.remove_friend(user_id)
 
     @app.route("/preferences/", methods=["GET", "POST"])
     def user_preferences() -> Response | str:
@@ -98,24 +97,25 @@ def declare_routes(app) -> None:
     def message_list() -> Response | str:
         return routes.message_list()
 
-    @app.route("/msg/<recipient_id>/", methods=["GET", "POST"])
-    def direct_message(recipient_id: str) -> Response | str:
-        return routes.direct_message(int(recipient_id))
+    @app.route("/msg/<user_id>/", methods=["GET", "POST"])
+    @validate_url_vars
+    def direct_message(user_id: int) -> Response | str:
+        return routes.direct_message(user_id)
 
-    @app.route("/msg/<recipient_id>/poll")
-    def message_poll(recipient_id: str) -> Response | list:
-        return routes.message_poll(int(recipient_id))
+    @app.route("/msg/<user_id>/poll")
+    def message_poll(user_id: int) -> Response | list:
+        return routes.message_poll(user_id)
 
     @app.route("/search/", methods=["GET", "POST"])
-    def search() -> str:
+    def search() -> str | tuple:
         return routes.search()
 
     @app.route("/konata/")
     def konata() -> Response:
         return routes.konata()
     
-    @app.route("/rss/<req_str>")
-    def rss(request: str) -> Response | str:
+    @app.route("/rss/<request>")
+    def rss(request: str) -> Response | str | tuple:
         return routes.rss(request)
     
     @app.route("/faq/")

@@ -1,5 +1,8 @@
-def select_page_comments(cur, count, visible, approved, order, limit, comment_id, page_id, author_id):
-    params = [visible, visible, approved]
+from mariadb import Cursor
+
+
+def select_page_comments(cur:Cursor, count:bool, visible:bool, approved:bool, order:str, limit:int, comment_id:int|None, page_id:int|None, author_id:int|None) -> list:
+    params: list = [visible, visible, approved]
     if comment_id:
         params.append(comment_id)
     if page_id:
@@ -24,7 +27,7 @@ def select_page_comments(cur, count, visible, approved, order, limit, comment_id
 
     return cur.fetchall()
 
-def insert_page_comment(cur, page_id, author_id, corpus):
+def insert_page_comment(cur:Cursor, page_id:int, author_id:int, corpus:str) -> None:
     cur.execute("""
         INSERT INTO page_comments (page_id, author_id, corpus)
         VALUES (?, ?, ?);

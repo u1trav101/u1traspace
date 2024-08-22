@@ -1,5 +1,8 @@
-def select_blog_comments(cur, count, visible, approved, order, limit, comment_id, blog_id, author_id):
-    params = [visible, approved]
+from mariadb import Cursor
+
+
+def select_blog_comments(cur:Cursor, count:int, visible:bool, approved:bool, order:str, limit:int, comment_id:int|None, blog_id:int|None, author_id:int|None) -> list:
+    params: list = [visible, approved]
     if comment_id:
         params.append(comment_id)
     if blog_id:
@@ -23,8 +26,8 @@ def select_blog_comments(cur, count, visible, approved, order, limit, comment_id
 
     return cur.fetchall()
 
-def select_pending_blog_comments(cur, count, visible, order, limit, blog_id, author_id):
-    params = [visible]
+def select_pending_blog_comments(cur:Cursor, count:int, visible:bool, order:str, limit:int, blog_id:int|None, author_id:int|None) -> list:
+    params: list = [visible]
     if author_id:
         params.append(author_id)
     if blog_id:
@@ -45,7 +48,7 @@ def select_pending_blog_comments(cur, count, visible, order, limit, blog_id, aut
 
     return cur.fetchall()
 
-def insert_blog_comment(cur, blog_id, author_id, corpus):
+def insert_blog_comment(cur:Cursor, blog_id:int, author_id:int, corpus:str) -> None:
     cur.execute("""
         INSERT INTO blog_comments (blog_id, author_id, corpus)
         VALUES (?, ?, ?);

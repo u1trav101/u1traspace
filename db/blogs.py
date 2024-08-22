@@ -1,5 +1,8 @@
-def select_blogs(cur, count, visible, order, limit, blog_id, author_id):
-    params = [visible, visible]
+from mariadb import Cursor
+
+
+def select_blogs(cur:Cursor, count:int, visible:bool, order:str, limit:int, blog_id:int|None, author_id:int|None) -> list:
+    params: list = [visible, visible]
     if blog_id:
         params.append(blog_id)
     if author_id:
@@ -20,7 +23,7 @@ def select_blogs(cur, count, visible, order, limit, blog_id, author_id):
 
     return cur.fetchall()
 
-def search_blogs(cur, search_term):
+def search_blogs(cur:Cursor, search_term:str) -> list:
     cur.execute("""
         SELECT *
         FROM blogs
@@ -32,7 +35,7 @@ def search_blogs(cur, search_term):
 
     return cur.fetchall()
 
-def insert_blog(cur, author_id, title, corpus):
+def insert_blog(cur:Cursor, author_id:int, title:str, corpus:str) -> None:
     cur.execute("""
         INSERT INTO blogs (author_id, title, corpus)
         VALUES (?, ?, ?);

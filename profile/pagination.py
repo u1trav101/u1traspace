@@ -3,19 +3,19 @@ from flask_paginate import Pagination, get_page_args
 from db import Query
 
 
-def users_paginator():
+def users_paginator() -> tuple:
     query = Query()
 
-    filter_online = True if request.args.get("f") == "online" else False
-    sort = request.args.get("s")
+    filter_online: bool = True if request.args.get("f") == "online" else False
+    sort: str | None = request.args.get("s")
     
-    number_of_users = query.select_users(count=True, online=filter_online)
+    number_of_users: int = query.select_users(count=True, online=filter_online)
 
-    page_number = get_page_args(page_parameter="page")[0]
+    page_number: int = int(get_page_args(page_parameter="page")[0])
     users_per_page = 15
-    offset = (page_number * 15) - 15
+    offset: int = (page_number * 15) - 15
 
-    users = []
+    users: list = []
     match sort:
         case "new":
             users = query.select_users(online=filter_online, start=offset)

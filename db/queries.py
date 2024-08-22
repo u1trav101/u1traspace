@@ -1,3 +1,4 @@
+from mariadb import Connection
 import db.users as users
 import db.page_comments as page_comments
 import db.blogs as blogs
@@ -8,16 +9,28 @@ from config import CONFIG
 
 
 class _Query():
-    def __init__(self, conn):
+    def __init__(self, conn:Connection) -> None:
         self.conn = conn
         self.cur = conn.cursor(dictionary=True)
 
-    def __del__(self):
+    def __del__(self) -> None:
         self.conn.commit()
         self.conn.close()
     
     # works on users table
-    def select_users(self, count=False, online=False, start=0, visible=True, order_by="user_id", order="DESC", limit=CONFIG.SELECT_LIMIT, email=None, user_id=None):
+    def select_users(
+        self, 
+        count: bool = False, 
+        online: bool = False, 
+        start: int = 0, 
+        visible: bool = True, 
+        order_by: str = "user_id", 
+        order: str = "DESC", 
+        limit: int = CONFIG.SELECT_LIMIT, 
+        email: str | None = None, 
+        user_id: int | None = None
+    ) -> list | int:
+
         return users.select_users(
             self.cur, 
             count=count, 
@@ -31,13 +44,13 @@ class _Query():
             user_id=user_id
         )
     
-    def search_users(self, search_term):
+    def search_users(self, search_term:str) -> list:
         return users.search_users(
             self.cur,
             search_term=search_term
         )
     
-    def insert_user(self, email, username, password):
+    def insert_user(self, email:str, username:str, password:str) -> None:
         users.insert_user(
             self.cur,
             email=email, 
@@ -45,7 +58,14 @@ class _Query():
             password=password
         )
     
-    def update_user(self, user_id, about=None, layout=None, private=None):
+    def update_user(
+        self,
+        user_id: int,
+        about: str | None = None,
+        layout: str | None = None,
+        private: bool | None = None
+    ) -> None:
+
         users.update_user(
             self.cur,
             user_id=user_id,
@@ -54,14 +74,25 @@ class _Query():
             private=private
         )
     
-    def update_last_seen(self, user_id):
+    def update_last_seen(self, user_id:int) -> None:
         self.cur.callproc("update_last_seen", [user_id])
     
-    def increase_page_views(self, user_id):
+    def increase_page_views(self, user_id:int) -> None:
         self.cur.callproc("increase_page_views", [user_id])
     
     # works on page_comments table
-    def select_page_comments(self, count=False, visible=True, approved=True, order="DESC", limit=CONFIG.SELECT_LIMIT, comment_id=None, page_id=None, author_id=None):
+    def select_page_comments(
+        self,
+        count: bool = False,
+        visible: bool = True,
+        approved: bool = True,
+        order: str = "DESC",
+        limit: int = CONFIG.SELECT_LIMIT,
+        comment_id: int | None = None,
+        page_id: int | None = None,
+        author_id: int | None =None
+    ) -> list:
+
         return page_comments.select_page_comments(
             self.cur,
             count=count,
@@ -74,7 +105,7 @@ class _Query():
             author_id=author_id
         )
     
-    def insert_page_comment(self, page_id, author_id, corpus):
+    def insert_page_comment(self, page_id:int, author_id:int, corpus:str) -> None:
         page_comments.insert_page_comment(
             self.cur,
             page_id=page_id,
@@ -83,7 +114,16 @@ class _Query():
         )
 
     # works on blogs table
-    def select_blogs(self, count=False, visible=True, order="DESC", limit=CONFIG.SELECT_LIMIT, blog_id=None, author_id=None):
+    def select_blogs(
+        self,
+        count: bool = False,
+        visible: bool = True,
+        order: str = "DESC",
+        limit: int = CONFIG.SELECT_LIMIT,
+        blog_id: int | None = None,
+        author_id: int | None = None
+    ) -> list:
+
         return blogs.select_blogs(
             self.cur,
             count=count,
@@ -94,13 +134,13 @@ class _Query():
             author_id=author_id
         )
     
-    def search_blogs(self, search_term):
+    def search_blogs(self, search_term:str) -> list:
         return blogs.search_blogs(
             self.cur,
             search_term=search_term
         )
     
-    def insert_blog(self, author_id, title, corpus):
+    def insert_blog(self, author_id:int, title:str, corpus:str) -> None:
         blogs.insert_blog(
             self.cur,
             author_id=author_id,
@@ -109,7 +149,18 @@ class _Query():
         )
     
     # works on blog_comments table
-    def select_blog_comments(self, count=False, visible=True, approved=True, order="DESC", limit=CONFIG.SELECT_LIMIT, comment_id=None, blog_id=None, author_id=None):
+    def select_blog_comments(
+        self,
+        count: bool = False,
+        visible: bool = True,
+        approved: bool = True,
+        order: str = "DESC",
+        limit: int = CONFIG.SELECT_LIMIT,
+        comment_id: int | None = None,
+        blog_id: int | None = None,
+        author_id: int | None = None
+    ) -> list:
+
         return blog_comments.select_blog_comments(
             self.cur,
             count=count,
@@ -122,7 +173,16 @@ class _Query():
             author_id=author_id
         )
     
-    def select_pending_blog_comments(self, count=False, visible=True, order="DESC", limit=CONFIG.SELECT_LIMIT, blog_id=None, author_id=None):
+    def select_pending_blog_comments(
+        self,
+        count: bool = False,
+        visible: bool = True,
+        order: str = "DESC",
+        limit: int = CONFIG.SELECT_LIMIT,
+        blog_id: int | None = None,
+        author_id: int | None =None
+    ) -> list:
+
         return blog_comments.select_pending_blog_comments(
             self.cur,
             count=count,
@@ -133,7 +193,7 @@ class _Query():
             author_id=author_id
         )
     
-    def insert_blog_comment(self, blog_id, author_id, corpus):
+    def insert_blog_comment(self, blog_id:int, author_id:int, corpus:str) -> None:
         blog_comments.insert_blog_comment(
             self.cur,
             blog_id=blog_id,
@@ -142,7 +202,16 @@ class _Query():
         )
     
     # works on friends table
-    def select_friends(self, count=False, approved=True, order="ASC", limit=CONFIG.SELECT_LIMIT, sender_id=None, recipient_id=None):
+    def select_friends(
+        self,
+        count: bool = False,
+        approved: bool | None = True,
+        order: str = "ASC",
+        limit: int = CONFIG.SELECT_LIMIT,
+        sender_id: int | None = None,
+        recipient_id: int | None = None
+        ) -> list:
+
         return friends.select_friends(
             self.cur,
             count=count,
@@ -153,7 +222,7 @@ class _Query():
             recipient_id=recipient_id
         )
     
-    def insert_friend(self, sender_id, recipient_id, approved=False):
+    def insert_friend(self, sender_id:int, recipient_id:int, approved:bool=False) -> None:
         friends.insert_friend(
             self.cur,
             sender_id=sender_id,
@@ -161,7 +230,7 @@ class _Query():
             approved=approved
         )
     
-    def update_friend(self, sender_id, recipient_id, approved):
+    def update_friend(self, sender_id:int, recipient_id:int, approved:bool) -> None:
         friends.update_friend(
             self.cur,
             sender_id=sender_id,
@@ -170,12 +239,23 @@ class _Query():
         )
     
     # works on messages table
-    def select_messages(self, count=False, start=None, read=None, order="DESC", limit=CONFIG.SELECT_LIMIT, message_id=None, sender_id=None, recipient_id=None):
+    def select_messages(
+        self,
+        count: bool = False,
+        start: int | None = None,
+        read: bool | None = None,
+        order: str = "DESC",
+        limit: int = CONFIG.SELECT_LIMIT,
+        message_id: int | None = None,
+        sender_id: int | None = None,
+        recipient_id: int | None =None
+        ) -> list:
+
         return messages.select_messages(
             self.cur,
             count=count,
             start=start,
-            read=None,
+            read=read,
             order=order,
             limit=limit,
             message_id=message_id,
@@ -183,7 +263,7 @@ class _Query():
             recipient_id=recipient_id
         )
     
-    def select_user_conversations(self, user_id, count=False, order="DESC", limit=CONFIG.SELECT_LIMIT):
+    def select_user_conversations(self, user_id:int, count:bool=False, order:str="DESC", limit:int=CONFIG.SELECT_LIMIT) -> list:
         return messages.select_user_conversations(
             self.cur,
             user_id=user_id,
@@ -192,7 +272,7 @@ class _Query():
             limit=limit
         )
     
-    def insert_message(self, sender_id, recipient_id, corpus):
+    def insert_message(self, sender_id:int, recipient_id:int, corpus:str):
         messages.insert_message(
             self.cur,
             sender_id=sender_id,

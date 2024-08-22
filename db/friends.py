@@ -1,5 +1,8 @@
-def select_friends(cur, count, approved, order, limit, sender_id, recipient_id):
-    params = []
+from mariadb import Cursor
+
+
+def select_friends(cur:Cursor, count:int, approved:bool|None, order:str, limit:int, sender_id:int|None, recipient_id:int|None) -> list:
+    params: list = []
     if approved is not None:
         params.append(approved)
     if sender_id:
@@ -8,7 +11,7 @@ def select_friends(cur, count, approved, order, limit, sender_id, recipient_id):
         params.append(recipient_id)
     params.append(limit)
 
-    if sender_id and not recipient_id:
+    if sender_id and not recipient_id: # if only sender_id is provided then only JOIN on recipient_id
         cur.execute(f"""
             SELECT {"COUNT(*)" if count else "*"}
             FROM friends 
@@ -18,7 +21,7 @@ def select_friends(cur, count, approved, order, limit, sender_id, recipient_id):
             ORDER BY friends.friend_id {order}
             LIMIT ?;
         """, params)
-    elif recipient_id and not sender_id:
+    elif recipient_id and not sender_id: # if only recipient_id is provided then only JOIN on sender_id
         cur.execute(f"""
             SELECT {"COUNT(*)" if count else "*"}
             FROM friends 
@@ -28,7 +31,7 @@ def select_friends(cur, count, approved, order, limit, sender_id, recipient_id):
             ORDER BY friends.friend_id {order}
             LIMIT ?;
         """, params)
-    else:
+    else: # if both sender_id and recipient_id is provided then don't JOIN on anything
         cur.execute(f"""
             SELECT {"COUNT(*)" if count else "*"}
             FROM friends 
@@ -41,13 +44,13 @@ def select_friends(cur, count, approved, order, limit, sender_id, recipient_id):
 
     return cur.fetchall()
 
-def insert_friend(cur, sender_id, recipient_id, approved):
+def insert_friend(cur:Cursor, sender_id:int, recipient_id:int, approved:bool) -> None:
     cur.execute("""
         INSERT INTO friends (sender_id, recipient_id, approved)
         VALUES (?, ?, ?);
     """, [sender_id, recipient_id, approved])
 
-def update_friend(cur, sender_id, recipient_id, approved):
+def update_friend(cur:Cursor, sender_id:int, recipient_id:int, approved:bool) -> None:
     cur.execute("""
         UPDATE friends
         SET approved = ?

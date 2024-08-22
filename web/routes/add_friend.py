@@ -9,11 +9,6 @@ def add_friend(recipient_id: int) -> Response:
     if ("user_id") not in session:
         return redirect(url_for("login"))
 
-    try:
-        int(recipient_id)
-    except ValueError:
-        return redirect(url_for("user_profile", user_id=recipient_id))
-
     form: FlaskForm = friend_form()
     sender_id: int = int(session["user_id"])
 
