@@ -6,11 +6,6 @@ import profile
 
 
 def blog_list(user_id) -> Response | str:
-    try:
-        int(user_id)
-    except ValueError:
-        return redirect(url_for("user_list"))
-
     form = friend_form()
 
     return render_template(

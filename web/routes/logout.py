@@ -1,7 +1,8 @@
 from flask import redirect, session, request, url_for
+from werkzeug import Response
 
 
-def logout():
+def logout() -> Response:
     if ("user_id") in session:
         session.pop("user_id")
 

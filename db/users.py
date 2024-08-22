@@ -1,7 +1,10 @@
-def select_users(cur, count, online, start, visible, order_by, order, limit, email, user_id):
-    select = "COUNT(*)" if count else "*"
+from mariadb import Cursor
 
-    params = [
+
+def select_users(cur:Cursor, count:bool, online:bool, start:int, visible:bool, order_by:str, order:str, limit:int, email:str|None, user_id:int|None) -> list | int:
+    select: str = "COUNT(*)" if count else "*"
+
+    params: list = [
         start,
         visible,
     ]
@@ -25,7 +28,7 @@ def select_users(cur, count, online, start, visible, order_by, order, limit, ema
 
     return cur.fetchone()["COUNT(*)"] if count else cur.fetchall()
 
-def search_users(cur, search_term):
+def search_users(cur:Cursor, search_term:str) -> list:
     cur.execute("""
         SELECT *
         FROM users
@@ -35,7 +38,7 @@ def search_users(cur, search_term):
 
     return cur.fetchall()
     
-def insert_user(cur, email, username, password):
+def insert_user(cur:Cursor, email:str, username:str, password:str) -> None:
     cur.execute("""
         INSERT INTO users (email, username, password)
         VALUES (?, ?, ?);
@@ -46,7 +49,7 @@ def insert_user(cur, email, username, password):
         ]
     )
 
-def update_user(cur, user_id, about, layout, private):
+def update_user(cur:Cursor, user_id:int, about:str|None, layout:str|None, private:bool|None) -> None:
     if about:
         cur.execute("""
             UPDATE users

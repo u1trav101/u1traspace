@@ -1,4 +1,5 @@
 from flask import request, escape
+from flask_wtf import FlaskForm
 from db.search import search as search_db
 from web.misc import render_template
 from web.forms import search_form
@@ -9,8 +10,8 @@ import re
 RE_COMBINE_WHITESPACE = re.compile(r"\s+")
 
 
-def search():
-    form = search_form()
+def search() -> str | tuple:
+    form: FlaskForm = search_form()
 
     if request.method == "GET":
         return render_template(
@@ -21,13 +22,15 @@ def search():
             search_terms=None
         )
 
-    results = None
-    corpus = request.form.get("corpus")
-    if request.form.get("corpus").replace(" ", "") not in CONFIG.BLACKLISTED_SEARCHES:
+    corpus: str | None = request.form.get("corpus")
+    if not corpus:
+        return "No search term provided", 400
+    
+    results: dict[str, list] | None = None
+    if corpus.replace(" ", "") not in CONFIG.BLACKLISTED_SEARCHES:
         results = search_db(corpus)
 
     search_term = escape(corpus)
-
     search_terms = RE_COMBINE_WHITESPACE.sub(" ", corpus).strip().split(" ")
     for i in range(len(search_terms)):
         search_terms[i] = escape(search_terms[i])

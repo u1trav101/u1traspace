@@ -39,25 +39,37 @@ def send_friend_request(sender_id: int, recipient_id: int) -> bool:
     )
     return False
 
-def get_user_friends(user_id: int) -> list[dict]:
+def get_user_friends(user_id: int) -> list[dict] | None:
     query = Query()
 
-    return query.select_friends(sender_id=user_id) + query.select_friends(recipient_id=user_id)
+    res: list = query.select_friends(sender_id=user_id) + query.select_friends(recipient_id=user_id)
 
-def get_friend_requests(user_id: int) -> list[dict]:
+    if not res:
+        return None
+    
+    return res
+
+def get_friend_requests(user_id: int) -> list[dict] | None:
     query = Query()
 
-    return query.select_friends(
+    res: list = query.select_friends(
         recipient_id=user_id,
         approved=False
     )
+
+    if not res:
+        return None
+    
+    return res
     
 def is_friends(user_id: int) -> bool:
     if ("user_id") not in session:
         return False
     
-    for friend in get_user_friends(user_id):
-        if (friend["sender_id"] == int(session["user_id"])) or (friend["recipient_id"] == int(session["user_id"])):
-            return True
+    friends = get_user_friends(user_id)
+    if friends:
+        for friend in friends:
+            if (friend["sender_id"] == int(session["user_id"])) or (friend["recipient_id"] == int(session["user_id"])):
+                return True
     
     return False

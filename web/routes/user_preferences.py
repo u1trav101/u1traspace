@@ -1,4 +1,6 @@
 from flask import redirect, session, url_for, request
+from werkzeug import Response
+from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
 from db import Query
 from web.misc import render_template
@@ -10,25 +12,25 @@ import profile
 import tasks
 
 
-dir_name = os.path.dirname(__file__)
-temp_dir = os.path.join(dir_name, "../../.tmp/")
-usercontent_dir = os.path.join(dir_name, "../../usercontent/")
+DIR_NAME: str = os.path.dirname(__file__)
+TEMP_DIR: str = os.path.join(DIR_NAME, "../../.tmp/")
+USERCONTENT_DIR: str = os.path.join(DIR_NAME, "../../usercontent/")
 
 
-def user_preferences():
+def user_preferences() -> Response | str:
     if ("user_id") not in session:
         return redirect(url_for("login"))
 
     query = Query()
-    res = query.select_users(user_id=session["user_id"], limit=1)[0]
-    selected_interface = res["layout"]
-    selected_privacy = res["private"]
+    res: dict = query.select_users(user_id=session["user_id"], limit=1)[0]
+    selected_interface: str = res["layout"]
+    selected_privacy: str = res["private"]
     interfaces = {
         "u1traspace": 0,
         "myspace93": 1,
         "twitter": 2
     }
-    preferences_form = forms.preferences_form(
+    preferences_form: FlaskForm = forms.preferences_form(
         interface=interfaces[selected_interface],
         privacy=selected_privacy
     )
@@ -38,15 +40,15 @@ def user_preferences():
 
         return redirect(request.url)
 
-    properties = profile.get_profile_properties(session["user_id"])
+    properties: dict = profile.get_profile_properties(session["user_id"])
     properties.update({
         "css": profile.get_profile_css(session["user_id"])
     })
 
-    avatar_uploading = False
-    audio_uploading = False
-    scheduled_tasks = tasks.get_scheduled_tasks()
-    running_tasks = tasks.get_running_tasks()
+    avatar_uploading: bool = False
+    audio_uploading: bool = False
+    scheduled_tasks: list | None = tasks.get_scheduled_tasks()
+    running_tasks: list | None = tasks.get_running_tasks()
     if scheduled_tasks:
         for task in scheduled_tasks:
             avatar_uploading = True if check_task(task, "image") is True else avatar_uploading
@@ -65,13 +67,15 @@ def user_preferences():
     )
 
 
-def check_task(task, type):
+def check_task(task: dict, type: str) -> bool:
     if task["name"] == "tasks.transcoding._transcode_and_upload_image" and type == "image":
         return True
     elif task["name"] == "tasks.transcoding.transcode_and_upload_audio" and type == "audio":
         return True
+    
+    return False
 
-def form_handler(query, preferences_form):
+def form_handler(query: Query, preferences_form: FlaskForm) -> None:
     if len(preferences_form.bio.data) < 4096:
         # empty input uploads "" but must be None to properly update DB 
         preferences_form.bio.data = None if preferences_form.bio.data == "" else preferences_form.bio.data
@@ -86,33 +90,33 @@ def form_handler(query, preferences_form):
 
     avatar = preferences_form.avatar.data
     if avatar:
-        file_extension = os.path.splitext(secure_filename(avatar.filename))[-1]
+        file_extension: str = os.path.splitext(secure_filename(avatar.filename))[-1]
         if file_extension in CONFIG.ALLOWED_IMAGE_UPLOAD_EXTENSIONS:
 
-            file_name = f"img/{session['user_id'] + file_extension}"
-            file_path = os.path.join(temp_dir, file_name)
+            file_name: str = f"img/{session['user_id'] + file_extension}"
+            file_path: str = os.path.join(TEMP_DIR, file_name)
             avatar.save(file_path)
 
             if magic.from_file(file_path, mime=True) in CONFIG.ALLOWED_IMAGE_MIME_TYPES:
                 tasks.transcode_and_upload_images.delay(
                     file_path,
-                    usercontent_dir,
+                    USERCONTENT_DIR,
                     session["user_id"]
                 )
 
     audio = preferences_form.audio.data
     if audio:
-        file_extension = os.path.splitext(secure_filename(audio.filename))[-1]
+        file_extension: str = os.path.splitext(secure_filename(audio.filename))[-1]
         if file_extension in CONFIG.ALLOWED_AUDIO_UPLOAD_EXTENSIONS:
 
-            file_name = f"audio/{session['user_id'] + file_extension}"
-            file_path = os.path.join(temp_dir, file_name)
+            file_name: str = f"audio/{session['user_id'] + file_extension}"
+            file_path: str = os.path.join(TEMP_DIR, file_name)
             audio.save(file_path)
 
             if magic.from_file(file_path, mime=True) in CONFIG.ALLOWED_AUDIO_MIME_TYPES:
                 tasks.transcode_and_upload_audio.delay(
                     file_path,
-                    usercontent_dir,
+                    USERCONTENT_DIR,
                     session["user_id"]
                 )
 
@@ -120,6 +124,6 @@ def form_handler(query, preferences_form):
     if css:
         tasks.save_css.delay(
             css,
-            usercontent_dir,
+            USERCONTENT_DIR,
             session["user_id"]
         )

@@ -1,10 +1,10 @@
-from boto3 import session
+from boto3 import Session, session
 from celery import shared_task
 from config import CONFIG
 
 
-session = session.Session()
-client = session.client(
+sess: Session = session.Session()
+client = sess.client(
     "s3",
     region_name=CONFIG.S3_REGION_NAME,
     endpoint_url=CONFIG.S3_ENDPOINT_NAME,
@@ -13,7 +13,7 @@ client = session.client(
 )
 
 @shared_task
-def copy_default_avatar(user_id):
+def copy_default_avatar(user_id: int) -> None:
     client.copy_object(
         CopySource=f"{CONFIG.S3_BUCKET_NAME}/u1traspace/usercontent/img/raw/default.webp",
         Bucket=CONFIG.S3_BUCKET_NAME,

@@ -1,11 +1,12 @@
 from flask import request, session, redirect, url_for
+from werkzeug import Response
 from web.misc import render_template
 from db import Query
 
 
-def news():
+def news() -> Response | str:
     query = Query()
-    blogs = None
+    blogs: list[dict] | None = None
 
     if request.args.get("show") == "friends":
         if ("user_id") not in session:

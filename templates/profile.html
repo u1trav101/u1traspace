@@ -69,7 +69,7 @@
                             <button disabled>message</button>
                         {% else %}
                             <button disabled>send friend request</button>
-                            <a href="{{ url_for('direct_message', recipient_id=properties['user_id']) }}">
+                            <a href="{{ url_for('direct_message', user_id=properties['user_id']) }}">
                                 <button class="pmUser">message</button>
                             </a>
                         {% endif %}

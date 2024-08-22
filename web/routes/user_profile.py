@@ -1,4 +1,6 @@
 from flask import session, redirect, url_for, request
+from werkzeug import Response
+from flask_wtf import FlaskForm
 from db import Query
 from web.misc import render_template
 import web.forms as forms
@@ -6,19 +8,14 @@ import profile
 import messaging
 
 
-def user_profile(user_id):
-    try:
-        int(user_id)
-    except ValueError:
-        return redirect(url_for("user_list"))
-
-    properties = profile.get_profile_properties(user_id)
+def user_profile(user_id: int) -> Response | str | tuple:
+    properties: dict | None = profile.get_profile_properties(user_id)
     if not properties:
         return redirect(url_for("user_list"))
 
-    comment_form = forms.comment_form()
-    delete_form = forms.comment_delete_form()
-    friend_form = forms.friend_form()
+    comment_form: FlaskForm = forms.comment_form()
+    delete_form: FlaskForm = forms.comment_delete_form()
+    friend_form: FlaskForm = forms.friend_form()
     query = Query()
 
     if ("user_id") in session:
@@ -30,7 +27,11 @@ def user_profile(user_id):
             )
 
         elif delete_form.validate_on_submit():
-            comment_id = request.form.get("delete")
+            res: str | None = request.form.get("delete")
+            if not res:
+                return "Invalid value for field 'delete'", 400
+
+            comment_id: int = int(res)
             res = str(query.get_user_comment_author(user_id, comment_id))
 
             if (session["user_id"] == user_id) or (session["user_id"] == res):
@@ -44,7 +45,7 @@ def user_profile(user_id):
 
     query.increase_page_views(user_id)
 
-    template = "profile.html"
+    template: str = "profile.html"
     match properties["layout"]:
         case "twitter":
             template = "twitter/profile.html"

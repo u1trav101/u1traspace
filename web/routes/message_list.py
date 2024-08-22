@@ -1,9 +1,10 @@
 from flask import session, redirect, url_for
+from werkzeug import Response
 from web.misc import render_template
 import profile
 import messaging
 
-def message_list():
+def message_list() -> Response | str:
     if ("user_id") not in session:
         return redirect(url_for("login"))
 

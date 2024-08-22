@@ -1,7 +1,8 @@
 from flask import session, redirect, url_for
+from werkzeug import Response
 
 
-def konata():
+def konata() -> Response:
     if ("konata") in session:
         session.pop("konata")
     else:

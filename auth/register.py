@@ -2,7 +2,7 @@ from werkzeug.security import generate_password_hash
 from db import Query
 
 
-def register_user(email, username, password):
+def register_user(email: str, username: str, password: str) -> int:
     query = Query()
     query.insert_user(
         email, 

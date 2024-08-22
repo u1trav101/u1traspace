@@ -3,29 +3,34 @@ from markupsafe import Markup
 from web.misc import epoch_to_readable
 
 
-def get_incoming_senders(recipient_id):
+def get_incoming_senders(recipient_id: int) -> list[dict] | None:
     query = Query()
-    res = query.select_messages(recipient_id=recipient_id, order="ASC")
+    res: list = query.select_messages(recipient_id=recipient_id, order="ASC")
+
+    if not res:
+        return None
 
     return res
 
 
-def get_direct_messages(recipient_id, sender_id):
+def get_direct_messages(recipient_id: int, sender_id: int) -> list[dict] | None:
     query = Query()
     res = query.select_messages(recipient_id=recipient_id, sender_id=sender_id)
 
+    if not res:
+        return None
+
     return res
 
-def get_user_conversations(user_id):
+def get_user_conversations(user_id: int) -> list[dict] | None:
     query = Query()
-    res = query.select_user_conversations(user_id)
+    res: list = query.select_user_conversations(user_id)
 
-    user_id = int(user_id)
-    other_users = []
-    conversations = []
+    other_users: list = []
+    conversations: list[dict] = []
 
     for i in range(len(res)):
-        other_user_id = None
+        other_user_id: int | None = None
 
         if (res[i]["senderid"] == user_id) and (res[i]["recipientid"] not in other_users):
             other_user_id = res[i]["recipientid"]
@@ -36,13 +41,13 @@ def get_user_conversations(user_id):
         if other_user_id:
             other_users.append(other_user_id)
 
-            message = query.select_messages(limit=1, sender_id=user_id, recipient_id=other_user_id)
+            message: dict = query.select_messages(limit=1, sender_id=user_id, recipient_id=other_user_id)[0]
 
             conversations.append({
                 "id": other_user_id,
-                "username": query.get_user_by_id(other_user_id)["username"],
+                "username": query.select_users(user_id=other_user_id, limit=1)[0]["username"],
                 "sender_id": message["senderid"],
-                "sender_username": query.get_user_by_id(message["senderid"])["username"],
+                "sender_username": query.select_users(user_id=message["senderid"], limit=1)[0]["username"],
                 "corpus": message["corpus"],
                 "date": message["date"]
             })
@@ -52,9 +57,9 @@ def get_user_conversations(user_id):
     return conversations
 
 
-def poll_incoming_messages(sender_id, recipient_id, last_message_id):
+def poll_incoming_messages(sender_id: int, recipient_id: int, last_message_id: int) -> list:
     query = Query()
-    res = query.select_messages(start=last_message_id, sender_id=sender_id, recipient_id=recipient_id)
+    res: list = query.select_messages(start=last_message_id, sender_id=sender_id, recipient_id=recipient_id)
 
     if not res:
         return [False]

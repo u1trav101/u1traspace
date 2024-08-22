@@ -3,7 +3,7 @@ from config import CONFIG
 from db.queries import _Query
 
 
-def __setup():
+def __setup() -> None:
     try:
         return mariadb.connect(
             user=CONFIG.MARIADB_USER,
