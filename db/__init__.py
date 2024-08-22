@@ -16,5 +16,5 @@ def __setup():
         print("Error connecting to MariaDB platform")
 
 
-def Query():
+def Query() -> _Query:
     return _Query(__setup())

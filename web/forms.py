@@ -1,3 +1,4 @@
+from werkzeug import Response
 from flask import redirect, session, url_for
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
@@ -6,21 +7,21 @@ from wtforms.validators import DataRequired, Length, EqualTo
 
 
 class login_form(FlaskForm):
-    email = EmailField("email", validators=[DataRequired(), Length(2, 100)])
-    password = PasswordField("password", validators=[DataRequired(), Length(2, 30)])
-    submit = SubmitField("login", validators=[DataRequired()])
+    email: EmailField = EmailField("email", validators=[DataRequired(), Length(2, 100)])
+    password: PasswordField = PasswordField("password", validators=[DataRequired(), Length(2, 30)])
+    submit: SubmitField = SubmitField("login", validators=[DataRequired()])
 
 
 class register_form(FlaskForm):
-    email = EmailField("email", validators=[DataRequired(), Length(2, 100)])
-    username = StringField("username", validators=[DataRequired(), Length(2, 30)])
-    password = PasswordField("password", validators=[DataRequired(), Length(2, 64)])
-    confirm = PasswordField("confirm", validators=[DataRequired(), Length(2, 64), EqualTo("password")])
-    submit = SubmitField("register", validators=[DataRequired()])
+    email: EmailField = EmailField("email", validators=[DataRequired(), Length(2, 100)])
+    username: StringField = StringField("username", validators=[DataRequired(), Length(2, 30)])
+    password: PasswordField = PasswordField("password", validators=[DataRequired(), Length(2, 64)])
+    confirm: PasswordField = PasswordField("confirm", validators=[DataRequired(), Length(2, 64), EqualTo("password")])
+    submit: SubmitField = SubmitField("register", validators=[DataRequired()])
 
 
-def register_commit(username, user_id):
-    session["user_id"] = str(user_id)
+def register_commit(user_id: int) -> Response:
+    session["user_id"] = user_id
 
     return redirect(url_for("user_profile", user_id=user_id))
 

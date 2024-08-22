@@ -1,10 +1,11 @@
 from flask import redirect, url_for
+from werkzeug import Response
 from web.misc import render_template
 from web.forms import friend_form
 import profile
 
 
-def blog_list(user_id):
+def blog_list(user_id) -> Response | str:
     try:
         int(user_id)
     except ValueError:

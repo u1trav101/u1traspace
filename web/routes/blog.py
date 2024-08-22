@@ -1,4 +1,5 @@
 from flask import session, redirect, url_for, request
+from flask_wtf import FlaskForm
 from web.misc import render_template
 from db import Query
 import web.forms as forms
@@ -6,24 +7,14 @@ import profile
 import messaging
 
 
-def blog(user_id, post_id):
-    try:
-        int(user_id)
-    except ValueError:
-        return redirect(url_for("user_list"))
-
-    try:
-        int(post_id)
-    except ValueError:
-        return redirect(url_for("blog_list", user_id=user_id))
-
-    blogpost = profile.get_blogpost(user_id, post_id)
+def blog(user_id: int, post_id: int):
+    blogpost: dict | None = profile.get_blogpost(user_id, post_id)
     if not blogpost:
         return redirect(url_for("blog_list", user_id=user_id))
 
-    comment_form = forms.comment_form()
-    delete_form = forms.comment_delete_form()
-    friend_form = forms.friend_form()
+    comment_form: FlaskForm = forms.comment_form()
+    delete_form: FlaskForm = forms.comment_delete_form()
+    friend_form: FlaskForm = forms.friend_form()
 
     if ("user_id") in session:
         if comment_form.validate_on_submit():
@@ -31,7 +22,7 @@ def blog(user_id, post_id):
                 session["user_id"], post_id, comment_form.corpus.data)
 
         elif delete_form.validate_on_submit():
-            delete_value = request.form.get("delete")
+            delete_value: str = request.form.get("delete")
             query = Query()
 
             if delete_value == "blog":
@@ -39,7 +30,7 @@ def blog(user_id, post_id):
 
                 return redirect(url_for("user_profile", user_id=user_id))
 
-            res = str(query.get_blog_comment_author(
+            res: str = str(query.get_blog_comment_author(
                 user_id,
                 post_id,
                 delete_value
@@ -57,8 +48,8 @@ def blog(user_id, post_id):
         if request.method == "POST":
             return redirect(url_for("blog", user_id=user_id, post_id=post_id))
 
-    properties = profile.get_profile_properties(user_id)
-    template = "blogpost.html"
+    properties: list = profile.get_profile_properties(user_id)
+    template: str = "blogpost.html"
     match properties["layout"]:
         case "twitter":
             template = "twitter/blogpost.html"
