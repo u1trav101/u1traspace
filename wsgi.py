@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_misaka import Misaka
+from celery import Celery
 from tasks import celery_init_app
 from web import declare_routes, regex_replace
 from config import CONFIG
@@ -17,7 +18,7 @@ os.makedirs(os.path.dirname("./usercontent/img/rsz/32px"), exist_ok=True)
 os.makedirs(os.path.dirname("./usercontent/audio"), exist_ok=True)
 os.makedirs(os.path.dirname("./usercontent/css"), exist_ok=True)
 
-app = Flask("u1traspace")
+app: Flask = Flask("u1traspace")
 
 # applying configs from config class
 app.config.from_object(CONFIG)
@@ -26,7 +27,7 @@ app.config.from_object(CONFIG)
 CORS(app)
 Misaka(app, autolink=True)
 
-celery = celery_init_app(app)
+celery: Celery = celery_init_app(app)
 
 # declaring jinja filters
 app.add_template_filter(regex_replace)
