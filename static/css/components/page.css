@@ -70,10 +70,6 @@ main {
     transform: scaleX(-1);
 }
 
-.number-of-comments {
-    margin: 30px;
-}
-
 .comments {
     display: flex;
     flex-direction: column;
