@@ -9,21 +9,21 @@
             <div>
                 <h2 id="breadCrumb" class="breadCrumb">
                     /<a href="{{ url_for('user_list') }}">users</a>/
-                    <a class="user-crumb {{'active' if request.path[6:-1] | int == properties['user_id'] | int }}" href="{{ url_for('user_profile', user_id=properties['user_id']) }}">{{ properties['username'] }}</a>
+                    <a class="user-crumb {{'active' if request.path[6:-1] | int == properties['user_id'] | int }}" href="{{ url_for('user.page', user_id=properties['user_id']) }}">{{ properties['username'] }}</a>
                     <div class="end">
                         <div class="blog-crumb">
-                            /<a class="{{ 'active' if request.path[-5:-1] == 'blog' }}" href="{{ url_for('blog_list', user_id=properties['user_id']) }}">blogs</a>/
+                            /<a class="{{ 'active' if request.path[-5:-1] == 'blog' }}" href="{{ url_for('user.blog.browse', user_id=properties['user_id']) }}">blogs</a>/
                             {% if (session.get("user_id") | int == properties['user_id'] | int) and (request.path[-5:-1] == "blog" or request.path[-4:-1] == "new") %}
-                                <a class="{{ 'active' if request.path[-4:-1] == 'new' }}" href="{{ url_for('new_blog', user_id=properties['user_id']) }}">new</a>/
+                                <a class="{{ 'active' if request.path[-4:-1] == 'new' }}" href="{{ url_for('user.blog.new', user_id=properties['user_id']) }}">new</a>/
                             {% endif %}
                             {% if blogpost is defined %}
                                 {% if request.path[-7:-1] == "blog/" + blogpost["blog_id"] | string %}
-                                    <a class="active" href="{{ url_for('blog', user_id=properties['user_id'], post_id=blogpost['blog_id']) }}">{{ blogpost["title"] }}</a>/
+                                    <a class="active" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blogpost['blog_id']) }}">{{ blogpost["title"] }}</a>/
                                 {% endif %}
                             {% endif %}
                         </div>
                         <div>
-                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('friend_list', user_id=properties['user_id']) }}">friends</a>/
+                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('user.friends', user_id=properties['user_id']) }}">friends</a>/
                         </div>
                     </div>
                 </h2>
@@ -46,12 +46,12 @@
                 {% endif %}
             </div>
             {% if ("user_id") in session and session["user_id"] | int == properties["user_id"] %}
-                <a class="settings" href="{{ url_for('user_preferences') }}">
+                <a class="settings" href="{{ url_for('preferences') }}">
                     <img src="{{ cdn_uri }}/static/img/gears.gif" alt="user preferences">
                 </a>
             {% elif ("user_id") in session and session["user_id"] | int != properties["user_id"] %}
                 {% if not is_friends %}
-                    <form class="add-friend" action="{{ url_for('add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
+                    <form class="add-friend" action="{{ url_for('user.add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
                         {{ friend_form.hidden_tag() }}
                         <input id="friend" name="friend" type="submit" value="send friend request">
                     </form>

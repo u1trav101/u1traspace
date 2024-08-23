@@ -11,15 +11,15 @@
         <h4>friend requests:</h4>
         <section class="pending">
             {% for friend in friend_requests %}
-                <a class="user" href="{{ url_for('user_profile', user_id=friend['user_id']) }}">
+                <a class="user" href="{{ url_for('user.page', user_id=friend['user_id']) }}">
                     <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
                     <span>{{ friend["username"] }}</span>
                     <div class="actions">
-                        <form action="{{ url_for('add_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
+                        <form action="{{ url_for('user.add_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
                             {{ friend_form.hidden_tag() }}
                             <input id="friend" name="friend" type="submit" value="approve">
                         </form>
-                        <form action="{{ url_for('remove_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
+                        <form action="{{ url_for('user.remove_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
                             {{ friend_form.hidden_tag() }}
                             <input id="friend" name="friend" type="submit" value="deny">
                         </form>
@@ -31,7 +31,7 @@
     {% if friends %}
         <section class="friends">
             {% for friend in friends %}
-                <a class="user" href="{{ url_for('user_profile', user_id=friend['user_id']) }}">
+                <a class="user" href="{{ url_for('user.page', user_id=friend['user_id']) }}">
                     <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
                     <span>{{ friend["username"] }}</span>
                 </a>

@@ -38,7 +38,7 @@
                     <img class="avatar {{ 'online' if current_time - comment['last_seen'].timestamp() | round | int <= 300 }}" src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['user_id'] }}.webp" alt="{{ comment['username'] }}">
                     <div>
                         <div class="comment-top">
-                            <a href="{{ url_for('user_profile', user_id=comment['author_id']) }}">
+                            <a href="{{ url_for('user.page', user_id=comment['author_id']) }}">
                                 <h5>{{ comment["username"] }}</h5>
                             </a>
                             <span>{{ time(comment["date"]) }}</span>

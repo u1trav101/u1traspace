@@ -17,11 +17,11 @@
                 <div class="list">
                     {% if friends %}
                     {% for friend in friends %}
-                    <center class="userelement"><a href="{{url_for('user_profile', user_id=friend['friend'])}}"><img
+                    <center class="userelement"><a href="{{url_for('user.page', user_id=friend['friend'])}}"><img
                                 src="{{cdn_uri}}/usercontent/img/rsz/100px/{{friend['friend']}}.gif" class="userAvi"></a>
                         <div class="elementtext">
 
-                            <p><a href="{{url_for('user_profile', user_id=friend['friend'])}}">{{friend['username']}}
+                            <p><a href="{{url_for('user.page', user_id=friend['friend'])}}">{{friend['username']}}
                                     <span>[{{friend['friend']}}]</span></a>
                                     {% if session.get('user_id')|int == properties['id'] %}
                                     <form method="post" action="/id/{{friend['friend']}}/remove-friend">

@@ -3,8 +3,8 @@ from werkzeug import Response
 from profile import random
 
 
-def random_user() -> Response:
+def _random() -> Response:
     return redirect(url_for(
-        "user_profile",
+        "user.page",
         user_id=random()["user_id"]
     ))

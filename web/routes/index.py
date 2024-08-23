@@ -14,7 +14,7 @@ def index() -> str:
 
     search_form:FlaskForm = forms.search_form()
 
-    number_of_users:int = query.select_users(count=True)[0]["COUNT(*)"]
+    number_of_users:int = query.select_users(count=True)
     seed(str(date.today()))
     user_of_the_day: int = randint(0, number_of_users)
 

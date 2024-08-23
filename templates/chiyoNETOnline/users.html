@@ -36,11 +36,11 @@
                 <br>
                 <div class="list">
                     {% for user in users %}
-                    <center class="userelement"><a href="{{url_for('user_profile', user_id=user['user_id'])}}"><img
+                    <center class="userelement"><a href="{{url_for('user.page', user_id=user['user_id'])}}"><img
                                 src="{{cdn_uri}}/usercontent/img/rsz/100px/{{user['user_id']}}.gif" class="userAvi"></a>
                         <div class="elementtext">
 
-                            <p><a href="{{url_for('user_profile', user_id=user['user_id'])}}">{{user['username']}}
+                            <p><a href="{{url_for('user.page', user_id=user['user_id'])}}">{{user['username']}}
                                     <span>[{{user['user_id']}}]</span></a>
 
                                     {% if current_time - user['last_seen']|int < 300 %}

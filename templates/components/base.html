@@ -32,17 +32,17 @@
                     </div>
                     {% if ("user_id") in session %}
                     <div class="nav-middle">
-                        <a href="{{ url_for('user_profile', user_id=session['user_id']) }}">profile</a>
-                        <a href="{{ url_for('friend_list', user_id=session['user_id']) }}">friends</a>
-                        <a href="{{ url_for('message_list') }}">messages</a>
+                        <a href="{{ url_for('user.page', user_id=session['user_id']) }}">profile</a>
+                        <a href="{{ url_for('user.friends', user_id=session['user_id']) }}">friends</a>
+                        <a href="{{ url_for('message.browse') }}">messages</a>
                     </div>
                 {% endif %}
                     <div class="nav-right">
                         {% if ("user_id" in session) %}
-                            <a href="{{ url_for('logout') }}">logout</a>
+                            <a href="{{ url_for('auth.logout') }}">logout</a>
                         {% else %}
-                            <a href="{{ url_for('login') }}">login</a>
-                            <a href="{{ url_for('register') }}">register</a>
+                            <a href="{{ url_for('auth.login') }}">login</a>
+                            <a href="{{ url_for('auth.register') }}">register</a>
                         {% endif %}
                     </div>
                 </div>

@@ -1,4 +1,3 @@
-from flask import redirect, url_for
 from flask_wtf import FlaskForm
 from werkzeug import Response
 from web.misc import render_template
@@ -6,7 +5,7 @@ import web.forms as forms
 import profile
 
 
-def friend_list(user_id: int) -> Response | str:
+def _friends(user_id: int) -> Response | str:
     properties: dict = profile.get_profile_properties(user_id)
     friend_form: FlaskForm = forms.friend_form()
 

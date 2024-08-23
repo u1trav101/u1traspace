@@ -25,12 +25,12 @@
                                     {%if notif['type'] == 'friend_request_approval' %}
 
                                     <center class="userelement"><a
-                                            href="{{url_for('user_profile', user_id=notif['actionuserid'])}}"><img
+                                            href="{{url_for('user.page', user_id=notif['actionuserid'])}}"><img
                                                 src="{{cdn_uri}}/usercontent/img/rsz/100px/{{notif['actionuserid']}}.gif"
                                                 class="userAvi"></a>
                                         <div class="elementtext">
 
-                                            <p><a href="{{url_for('user_profile', user_id=notif['actionuserid'])}}">{{notif['username']}}
+                                            <p><a href="{{url_for('user.page', user_id=notif['actionuserid'])}}">{{notif['username']}}
                                                     <span>[{{notif['actionuserid']}}]</span></a>
                                                 <form class="deleteButton" action="" method="post" novalidate="">
                                                     {{form.hidden_tag()}}

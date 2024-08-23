@@ -40,14 +40,14 @@ def rss(request: str) -> Response | str | tuple:
                 return "That user does not exist", 404
 
             author = user["username"]
-            fg.id(url_for("user_profile", user_id=user_id, _external=True))
+            fg.id(url_for("user.page", user_id=user_id, _external=True))
             fg.title(f"{author} [{user['id']}]'s blog")
-            fg.link(href = url_for("blog_list", user_id=user_id, _external=True))
+            fg.link(href = url_for("user.blog.browse", user_id=user_id, _external=True))
             fg.author(name = author, email = "enquiries@u1trav101.net")
             fg.description(f"all of {author}'s blogposts on u1traspace")
     
     for post in posts:
-        blog_url = url_for("blog", user_id=post["author_id"], post_id=post["blog_id"], _external=True)
+        blog_url = url_for("user.blog.post", user_id=post["author_id"], post_id=post["blog_id"], _external=True)
         fe = fg.add_entry()
         fe.id(blog_url)
         fe.link(href = blog_url)

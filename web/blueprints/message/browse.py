@@ -4,9 +4,9 @@ from web.misc import render_template
 import profile
 import messaging
 
-def message_list() -> Response | str:
+def _browse() -> Response | str:
     if ("user_id") not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("ath.login"))
 
     return render_template(
         "messagelist.html",

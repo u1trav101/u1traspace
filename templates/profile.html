@@ -17,33 +17,35 @@
     </section>
     <div class="profile-bottom">
         <section class="comments">
-            <h4 class="number-of-comments">{{ comments | length }} comments:</h4>
-            {% for comment in comments %}
-                <div class="comment">
-                    <a href="{{ url_for('user_profile', user_id=comment['author_id']) }}">
-                        <img class="avatar {{ 'online' if current_time - comment['last_seen'].timestamp() | round | int <= 300 }}" src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['author_id'] }}.webp" alt="{{ comment['username'] }}">
-                    </a>
-                    <div class="comment-container">
-                        <div class="comment-top">
-                            <a href="{{ url_for('user_profile', user_id=comment['author_id']) }}">
-                                <h5>{{ comment["username"] }}</h5>
-                            </a>
-                            <span>{{ time(comment["date"]) }}</span>
-                            {% if session["user_id"] == comment["author_id"] | string or session["user_id"] == properties["user_id"] | string %}
-                                <form class="deleteButton" action="" method="post" novalidate>
-                                    {{delete_form.hidden_tag()}}
-                                    <button name="delete" value="{{comment.id}}" type="submit">delete</button>
-                                </form>
-                            {%endif%}
-                        </div>
-                        <div class="comment-corpus">
-                            <p>
-                                {{ comment["corpus"] | escape | regex_replace('javascript:','javashcript:') | markdown }}
-                            </p>
+            <h4 class="number-of-comments">{{ comments | length if comments else 0 }} comments:</h4>
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="comment">
+                        <a href="{{ url_for('user.page', user_id=comment['author_id']) }}">
+                            <img class="avatar {{ 'online' if current_time - comment['last_seen'].timestamp() | round | int <= 300 }}" src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['author_id'] }}.webp" alt="{{ comment['username'] }}">
+                        </a>
+                        <div class="comment-container">
+                            <div class="comment-top">
+                                <a href="{{ url_for('user.page', user_id=comment['author_id']) }}">
+                                    <h5>{{ comment["username"] }}</h5>
+                                </a>
+                                <span>{{ time(comment["date"]) }}</span>
+                                {% if session["user_id"] == comment["author_id"] | string or session["user_id"] == properties["user_id"] | string %}
+                                    <form class="deleteButton" action="" method="post" novalidate>
+                                        {{delete_form.hidden_tag()}}
+                                        <button name="delete" value="{{comment.id}}" type="submit">delete</button>
+                                    </form>
+                                {%endif%}
+                            </div>
+                            <div class="comment-corpus">
+                                <p>
+                                    {{ comment["corpus"] | escape | regex_replace('javascript:','javashcript:') | markdown }}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% endif %}
         </section>
         <section class="profile-bottom-right">
             <div class="top">
@@ -62,14 +64,14 @@
                 <div class="interaction">
                     {% if (session.get("user_id") != None) and (session.get("user_id") | int != properties["user_id"] | int) %}
                         {% if not session.get('user_id') | int in friends | map(attribute="recipient_id")%}
-                            <form action="{{ url_for('add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
+                            <form action="{{ url_for('user.add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
                                 {{friend_form.hidden_tag()}}
                                 <input id="friend" name="friend" type="submit" value="send friend request">
                             </form>
                             <button disabled>message</button>
                         {% else %}
                             <button disabled>send friend request</button>
-                            <a href="{{ url_for('direct_message', user_id=properties['user_id']) }}">
+                            <a href="{{ url_for('user.add_friend', user_id=properties['user_id']) }}">
                                 <button class="pmUser">message</button>
                             </a>
                         {% endif %}
@@ -97,11 +99,13 @@
             </div>
             <div class="blogs">
                 <h4>{{ properties['username'] }}'s blogs:</h4>
-                {% for blog in blogposts %}
-                    <a class="blog-preview" href="{{ url_for('blog', user_id=properties['user_id'], post_id=blog['blog_id']) }}">
-                        <h5>{{ blog["title"] }}</h5>&nbsp- {{ blog["date"] }}
-                    </a>
-                {% endfor %}
+                {% if blogposts %}
+                    {% for blog in blogposts %}
+                        <a class="blog-preview" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blog['blog_id']) }}">
+                            <h5>{{ blog["title"] }}</h5>&nbsp- {{ blog["date"] }}
+                        </a>
+                    {% endfor %}
+                {% endif %}
             </div>
         </section>    
 {% endblock %}

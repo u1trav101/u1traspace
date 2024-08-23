@@ -75,7 +75,7 @@ def validate_url_vars(func: Callable) -> Callable:
             try:
                 kwargs["post_id"] = int(kwargs["post_id"])
             except ValueError:
-                return redirect(url_for("blog_list", user_id=kwargs["user_id"]))
+                return redirect(url_for("user.blog.browse", user_id=kwargs["user_id"]))
         
         return func(*args, **kwargs)
     
