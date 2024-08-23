@@ -17,7 +17,7 @@
     </section>
     <div class="profile-bottom">
         <section class="comments">
-            <h4 class="number-of-comments">{{ comments | length if comments else 0 }} comments:</h4>
+            <h4 class="header number-of-comments">{{ comments | length if comments else 0 }} comments:</h4>
             {% if comments %}
                 {% for comment in comments %}
                     <div class="comment">
