@@ -8,10 +8,10 @@ import profile
 import messaging
 
 
-def blog(user_id: int, post_id: int) -> Response | str | tuple:
+def _post(user_id: int, post_id: int) -> Response | str | tuple:
     blogpost: dict | None = profile.get_blogpost(user_id, post_id)
     if not blogpost:
-        return redirect(url_for("blog_list", user_id=user_id))
+        return redirect(url_for("user.blog.browse", user_id=user_id))
 
     comment_form: FlaskForm = forms.comment_form()
     delete_form: FlaskForm = forms.comment_delete_form()
@@ -29,7 +29,7 @@ def blog(user_id: int, post_id: int) -> Response | str | tuple:
             if delete_value == "blog":
                 query.delete_blogpost(user_id, post_id)
 
-                return redirect(url_for("user_profile", user_id=user_id))
+                return redirect(url_for("user.page", user_id=user_id))
             elif delete_value == "blog_comment":
                 res: str = str(query.get_blog_comment_author(
                     user_id,
@@ -41,7 +41,7 @@ def blog(user_id: int, post_id: int) -> Response | str | tuple:
                     query.delete_blog_comment(post_id, delete_value)
 
                     return redirect(url_for(
-                        "blog",
+                        "blog.post",
                         user_id=user_id,
                         post_id=post_id
                     ))
@@ -49,7 +49,7 @@ def blog(user_id: int, post_id: int) -> Response | str | tuple:
                 return "Invalid value for field 'delete'", 400
 
         if request.method == "POST":
-            return redirect(url_for("blog", user_id=user_id, post_id=post_id))
+            return redirect(url_for("user.blog.post", user_id=user_id, post_id=post_id))
 
     properties: dict = profile.get_profile_properties(user_id)
     template: str = "blogpost.html"

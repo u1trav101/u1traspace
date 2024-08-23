@@ -23,7 +23,7 @@ class register_form(FlaskForm):
 def register_commit(user_id: int) -> Response:
     session["user_id"] = user_id
 
-    return redirect(url_for("user_profile", user_id=user_id))
+    return redirect(url_for("user.page", user_id=user_id))
 
 
 class comment_form(FlaskForm):

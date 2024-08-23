@@ -5,9 +5,9 @@ from web.forms import friend_form
 from db import Query
 
 
-def remove_friend(user_id: int) -> Response:
+def _remove_friend(user_id: int) -> Response:
     if ("user_id") not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
 
     form: FlaskForm = friend_form()
 
@@ -16,7 +16,7 @@ def remove_friend(user_id: int) -> Response:
         query.friend_reject_action(session["user_id"], user_id)
         query.friend_reject_action(user_id, session["user_id"])
     
-    if request.referrer is None or url_for("remove_friend", user_id=user_id) in request.referrer:
-        return redirect(url_for("friend_list", user_id=session["user_id"]))
+    if request.referrer is None or url_for("user.remove_friend", user_id=user_id) in request.referrer:
+        return redirect(url_for("user.friend_list", user_id=session["user_id"]))
     
     return redirect(request.referrer)

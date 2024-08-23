@@ -17,9 +17,9 @@ TEMP_DIR: str = os.path.join(DIR_NAME, "../../.tmp/")
 USERCONTENT_DIR: str = os.path.join(DIR_NAME, "../../usercontent/")
 
 
-def user_preferences() -> Response | str:
+def preferences() -> Response | str:
     if ("user_id") not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
 
     query = Query()
     res: dict = query.select_users(user_id=session["user_id"], limit=1)[0]

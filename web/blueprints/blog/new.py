@@ -7,12 +7,12 @@ from web.misc import render_template
 from web.forms import new_blog_form
 
 
-def new_blog(user_id: int) -> Response | str:
+def _new(user_id: int) -> Response | str:
     if ("user_id") not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
 
     elif int(session["user_id"]) != int(user_id):
-        return redirect(url_for("user_profile", user_id=user_id))
+        return redirect(url_for("user.page", user_id=user_id))
 
     form: FlaskForm = new_blog_form()
     if form.validate_on_submit():
@@ -20,7 +20,7 @@ def new_blog(user_id: int) -> Response | str:
         query.insert_blog(user_id, form.title.data, form.corpus.data)
         blog_id: int = query.select_blogs(limit=1, author_id=user_id)[0]["blog_id"]
 
-        return redirect(url_for("blog", user_id=user_id, post_id=blog_id))
+        return redirect(url_for("user.blog.post", user_id=user_id, post_id=blog_id))
 
     return render_template(
         "newblog.html",

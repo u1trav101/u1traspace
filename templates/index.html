@@ -35,7 +35,7 @@
                 do you miss the old internet?<br><br>
                 is social media draining your soul?<br><br>
                 do you wish you could fully express yourself online?<br><br>
-                then become an exclusive member of the coolest internet club right <a href="{{ url_for('register') }}">here</a> (⌐■_■)
+                then become an exclusive member of the coolest internet club right <a href="{{ url_for('auth.register') }}">here</a> (⌐■_■)
             </p>
             <span class="love">
                 <img src="{{ cdn_uri }}/static/img/love.gif" alt="made with love">
@@ -45,7 +45,7 @@
         </section>
         <section class="user">
             <h3>random user of the day :0</h3>
-            <a href="{{ url_for('user_profile', user_id=user['user_id']) }}">
+            <a href="{{ url_for('user.page', user_id=user['user_id']) }}">
                 <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ user['user_id'] }}.webp" alt="{{ user['username'] }}'s profile picture">
                 <h4>{{ user['username'] }}</h4>
             </a>

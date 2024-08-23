@@ -8,9 +8,9 @@ import profile
 import messaging
 
 
-def direct_message(recipient_id: int) -> Response | str:
+def _conversation(recipient_id: int) -> Response | str:
     if ("user_id") not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
 
     query = Query()
     friends: list = query.get_user_friends(recipient_id)
@@ -21,7 +21,7 @@ def direct_message(recipient_id: int) -> Response | str:
             is_friends = True
 
     if not is_friends:
-        return redirect(url_for("friend_list", user_id=session["user_id"]))
+        return redirect(url_for("user.friend_list", user_id=session["user_id"]))
 
     message_form: FlaskForm = forms.message_form()
 
@@ -32,7 +32,7 @@ def direct_message(recipient_id: int) -> Response | str:
             message_form.corpus.data
         )
 
-        return redirect(url_for("direct_message", recipient_id=recipient_id))
+        return redirect(url_for("message.conversation", recipient_id=recipient_id))
 
     return render_template(
         "directmsg.html",

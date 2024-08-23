@@ -3,7 +3,7 @@ from werkzeug import Response
 import messaging
 
 
-def message_poll(recipient_id: int) -> Response | list:
+def _poll(recipient_id: int) -> Response | list:
     if ("user_id") not in session:
         return redirect("login")
 

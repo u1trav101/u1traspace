@@ -7,9 +7,9 @@ import web.forms as forms
 import auth
 
 
-def login() -> Response | str:
+def _login() -> Response | str:
     if ("user_id") in session:
-        return redirect(url_for("user_profile", user_id=session["user_id"]))
+        return redirect(url_for("user.page", user_id=session["user_id"]))
 
     login_form: FlaskForm = forms.login_form()
 
@@ -20,7 +20,7 @@ def login() -> Response | str:
             user_id: int = query.select_users(email=login_form.email.data, limit=1)[0]["user_id"]
             session["user_id"] = str(user_id)
             
-            return redirect(url_for("user_profile", user_id=user_id))
+            return redirect(url_for("user.page", user_id=user_id))
 
     return render_template(
         "login.html",

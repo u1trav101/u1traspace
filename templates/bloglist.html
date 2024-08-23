@@ -8,15 +8,17 @@
 {% block main %}
     <h3 class="blogs-header header">{{ properties["username"] }}'s blogs:</h3>
     <section class="blogs">
-        {% for blog in blogposts %}
-            <div class="blog-container">
-                <a class="blog" href="{{ url_for('blog', user_id=properties['user_id'], post_id=blog['blog_id']) }}">
-                    <span class="blog-header"><h4>{{ blog["title"] }}</h4>&nbsp- {{ time(blog["date"]) }}</span>
-                    <p>
-                        {{ blog["corpus"] }}
-                    </p>
-                </a>
-            </div>
-        {% endfor %}
+        {% if blogposts %}
+            {% for blog in blogposts %}
+                <div class="blog-container">
+                    <a class="blog" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blog['blog_id']) }}">
+                        <span class="blog-header"><h4>{{ blog["title"] }}</h4>&nbsp- {{ time(blog["date"]) }}</span>
+                        <p>
+                            {{ blog["corpus"] }}
+                        </p>
+                    </a>
+                </div>
+            {% endfor %}
+        {% endif %}
     </section>
 {% endblock %}

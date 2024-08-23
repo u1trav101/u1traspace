@@ -8,7 +8,7 @@ from web.forms import notification_action_form
 
 def notifications() -> Response | str:
     if ("user_id") not in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
 
     action_form: FlaskForm = notification_action_form()
 
