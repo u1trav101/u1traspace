@@ -10,7 +10,7 @@ blog_blueprint = Blueprint("blog", __name__)
 
 @blog_blueprint.route("/")
 @validate_url_vars
-def browse(user_id: int, *args, **kwargs) -> Response | str:
+def browse(user_id: int) -> Response | str:
     return _browse(user_id)
 
 @blog_blueprint.route("/<post_id>/", methods=["GET", "POST"])

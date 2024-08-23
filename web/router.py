@@ -1,10 +1,7 @@
 from werkzeug import Response
+from web.blueprints import auth_blueprint, blog_blueprint, message_blueprint, user_blueprint
 import web.misc as misc
 import web.routes as routes
-from web.blueprints.auth import auth_blueprint
-from web.blueprints.blog import blog_blueprint
-from web.blueprints.message import message_blueprint
-from web.blueprints.user import user_blueprint
 
 
 def declare_routes(app) -> None:
