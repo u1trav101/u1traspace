@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_misaka import Misaka
+from flask_sock import Sock
 from celery import Celery
 from tasks import celery_init_app
 from web import declare_routes, regex_replace
@@ -26,6 +27,7 @@ app.config.from_object(CONFIG)
 # initialising flask extensions
 CORS(app)
 Misaka(app, autolink=True)
+sock = Sock(app)
 
 celery: Celery = celery_init_app(app)
 
@@ -33,7 +35,7 @@ celery: Celery = celery_init_app(app)
 app.add_template_filter(regex_replace)
 
 # declaring the app URL endpoints
-declare_routes(app)
+declare_routes(app, sock)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=CONFIG.PORT)

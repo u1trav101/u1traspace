@@ -5,25 +5,7 @@ const audioUploadLabel = document.getElementById("audio-upload-label");
 const audioUpload = document.getElementById("audio-upload");
 const cancelAudio = document.getElementById("cancel-audio");
 const cssTextArea = document.getElementById("css");
-const prefCategories = Array.prototype.filter.call(
-    document.getElementsByClassName("pref-category"),
-    (element) => element.nodeName === "ASIDE"
-)
 
-// switches the view to only show the selected pref category
-const changeCategory = (category) => {
-    for (let i in prefCategories) {
-        if (!prefCategories[i].classList.contains("hidden")) {
-            prefCategories[i].classList.toggle("hidden");
-        }
-    }
-
-    prefCategories[category].classList.toggle("hidden");
-
-    const curUrl = window.location.href.split('?')[0];
-    const newUrl = curUrl + "?c=" + prefCategories[category].getAttribute("id");
-    history.replaceState(null, window.title, newUrl)
-}
 
 // cancels audio upload
 const cancelAudioAction = () => {

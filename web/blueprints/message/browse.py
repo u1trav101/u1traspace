@@ -6,7 +6,7 @@ import messaging
 
 def _browse() -> Response | str:
     if ("user_id") not in session:
-        return redirect(url_for("ath.login"))
+        return redirect(url_for("auth.login"))
 
     return render_template(
         "messagelist.html",

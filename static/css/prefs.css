@@ -1,5 +1,5 @@
 main {
-    margin: 0;
+    padding: 0;
     height: calc(100% - 86px);
 }
 
@@ -11,43 +11,6 @@ main {
 .prefs-container form {
     width: 100%;
     margin: 30px;
-}
-
-.pref-categories {
-    display: flex;
-    flex-direction: column;
-    font-size: 3rem;
-    width: fit-content;
-    padding: 20px 0 0;
-
-    text-decoration: underline;
-    background-color: rgba(0,0,0,0.2);
-}
-
-.pref-categories span {
-    padding: 20px;
-    margin-bottom: 20px;
-
-    border-bottom: none;
-    color: grey;
-    cursor: pointer;
-}
-
-.pref-categories span:hover {
-    background-color: black;
-    color: #fefefe;
-}
-
-aside {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-aside .row {
-    display: flex;
-    margin-bottom: 40px;
-    width: 100%;
 }
 
 aside .row.audio {

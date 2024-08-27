@@ -36,6 +36,11 @@ class CONFIG:
     SECRET_KEY: str = client.secrets().get("04d85160-cad6-42e6-9e4f-b17501735703").data.value
     CAPTCHA_CONFIG: dict[str, str] = {"SECRET_CSRF_KEY": SECRET_KEY}
 
+    SOCK_SERVER_OPTIONS: dict[str, int] = {
+        "max_message_size":  512000,
+        "ping_interval": 25
+    }
+
     CACHE_TYPE: str = "SimpleCache"
     CACHE_DEFAULT_TIMEOUT: int = 300
 

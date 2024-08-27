@@ -1,44 +1,36 @@
 from flask import redirect, session, url_for
-from flask_wtf import FlaskForm
 from werkzeug import Response
-from db import Query
-from web.misc import render_template
-import web.forms as forms
-import profile
-import messaging
+from messaging import Messages
+import json
 
-
-def _conversation(recipient_id: int) -> Response | str:
+def conversation(recipient_id: int, ws) -> Response | None:
     if ("user_id") not in session:
         return redirect(url_for("auth.login"))
 
-    query = Query()
-    friends: list = query.get_user_friends(recipient_id)
+    messages = Messages(int(session["user_id"]), recipient_id)
+    while True:
+        check_sock(ws, messages)
 
-    is_friends: bool = False
-    for friend in friends:
-        if int(session["user_id"]) == friend["friend"]:
-            is_friends = True
 
-    if not is_friends:
-        return redirect(url_for("user.friend_list", user_id=session["user_id"]))
+def check_sock(ws, messages) -> None:
+    received: str | None = ws.receive()
+    if received: # if a request is received from the client
+        res_json: dict = json.loads(received)
 
-    message_form: FlaskForm = forms.message_form()
+        if res_json["type"] == "get": # if the request is a 'get' request
+            if res_json["resource"] == "messages": # if the client is requesting all messages
+                ws.send(json.dumps({
+                    "type": "post",
+                    "resource": "messages",
+                    "data": messages.get_messages()
+                }))
+        elif res_json["type"] == "post": # if the request is a 'post' request
+            if res_json["resource"] == "messages": # if the user sent a new message
+                messages.add_message(res_json["data"])
 
-    if message_form.validate_on_submit():
-        messaging.send_message(
-            session["user_id"],
-            recipient_id,
-            message_form.corpus.data
-        )
+                ws.send(json.dumps({
+                    "type": "post",
+                    "resource": "messages",
+                    "data": messages.get_messages()[-1]
+                }))
 
-        return redirect(url_for("message.conversation", recipient_id=recipient_id))
-
-    return render_template(
-        "directmsg.html",
-        properties=profile.get_profile_properties(recipient_id),
-        messages=messaging.get_direct_messages(recipient_id, session["user_id"]),
-        conversations=messaging.get_user_conversations(session["user_id"]),
-        friends=profile.get_user_friends(session["user_id"]),
-        form=message_form
-    )
