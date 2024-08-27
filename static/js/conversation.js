@@ -4,13 +4,17 @@ let messagesDiv = null;
 let renderedMessages = 0;
 
 const createSocket = recipientID => {
-    messagesDiv = document.getElementById(`messages-${recipientID}`)
     messages = null;
-
+    messagesDiv = document.getElementById(`messages-${recipientID}`)
+    renderedMessages = 0;
+    
+    if (socket) {
+        socket.close();
+        console.log("Closed current socket connection")
+    };
     socket = new WebSocket(`/msg/${recipientID}`);
     socket.onopen = (event) => {
         console.log(`WebSocket opened on /msg/${recipientID}`);
-        console.log("Fetching messages...");
         socket.send(JSON.stringify({
             type: "get",
             resource: "messages"
@@ -20,7 +24,7 @@ const createSocket = recipientID => {
     socket.onmessage = (event) => {
         receiveMessage(event);
     }
-} 
+}
 
 const sendMessage = textarea => {
     if (textarea.value.trim() !== "") {
@@ -34,7 +38,6 @@ const sendMessage = textarea => {
     
         textarea.value = "";
     }
-
 }
 
 const receiveMessage = event => {
@@ -72,6 +75,8 @@ const receiveMessage = event => {
 
 const renderMessages = () => {
     for (let i = renderedMessages; i < messages.length; i++) {
+        console.log("Rendering...");
+        
         // creating new elements
         const newMessage = document.createElement("div");
         const avatar = document.createElement("img");

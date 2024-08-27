@@ -8,15 +8,13 @@
     {% set conversation_user_ids = [] %}
     <div class="messages-container">
         <nav class="nav-categories">
-            <h3>conversations:</h3>
             {% for i in range(conversations | length) %}
                 {% set conversation_user_ids = conversation_user_ids.append(conversations[i]["user_id"]) %}
-                <span onclick="changeConversation({{ i }}, {{ friends[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
+                <span onclick="changeConversation({{ friends[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
             {% endfor %}
-            <h3>all friends:</h3>
             {% for i in range(friends | length) %}
                 {% if friends[i]["user_id"] not in conversation_user_ids %}
-                    <span onclick="changeConversation({{ i }}, {{ friends[i]['user_id'] }})">{{ friends[i]["username"] }}</span>
+                    <span onclick="changeConversation({{ friends[i]['user_id'] }})">{{ friends[i]["username"] }}</span>
                 {% endif %}
             {% endfor %}
         </nav>
@@ -54,8 +52,8 @@
 {% endblock %}
 {% block script %}
     <script>
-        const changeConversation = (categoryID, userID) => {
-            changeCategory(categoryID);
+        const changeConversation = (userID) => {
+            changeCategory(userID);
             createSocket(userID);
         }
 

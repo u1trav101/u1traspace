@@ -7,9 +7,9 @@
 {% block body %}
     <div class="prefs-container">
         <nav class="nav-categories">
-            <span onclick="changeCategory(0)">appearance</span>
-            <span href="" onclick="changeCategory(1)">privacy</span>
-            <span href="" onclick="changeCategory(2)">security</span>            
+            <span onclick="changeCategory('appearance')">appearance</span>
+            <span href="" onclick="changeCategory('privacy')">privacy</span>
+            <span href="" onclick="changeCategory('security')">security</span>            
         </nav>
         <form enctype="multipart/form-data" method="post" action="" novalidate>
             {{ form.hidden_tag() }}
