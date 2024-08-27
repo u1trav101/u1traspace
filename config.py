@@ -31,18 +31,18 @@ class CONFIG:
     CDN_URI: str = "https://cdn.u1trav101.net/u1traspace"
     INSECURE_CDN_URI: str = "http://cdn.u1trav101.net/ultraspace"
 
-    MAX_CONTENT_LENGTH: int = 8 * 1000 * 1000
+    MAX_CONTENT_LENGTH: int = 8 * 1000 * 1000 #  bytes
 
     SECRET_KEY: str = client.secrets().get("04d85160-cad6-42e6-9e4f-b17501735703").data.value
     CAPTCHA_CONFIG: dict[str, str] = {"SECRET_CSRF_KEY": SECRET_KEY}
 
     SOCK_SERVER_OPTIONS: dict[str, int] = {
-        "max_message_size":  512000,
-        "ping_interval": 25
+        "max_message_size":  512000, # bytes
+        "ping_interval": 25 # seconds (s)
     }
 
     CACHE_TYPE: str = "SimpleCache"
-    CACHE_DEFAULT_TIMEOUT: int = 300
+    CACHE_DEFAULT_TIMEOUT: int = 300 # seconds
 
     S3_ACCESS_ID: str = client.secrets().get("fa54bc8d-5d1f-43dc-9139-b17f002037ad").data.value
     S3_SECRET_KEY: str = client.secrets().get("e447c57f-6f12-4be6-bf02-b17501870a12").data.value
