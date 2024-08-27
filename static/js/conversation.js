@@ -2,7 +2,7 @@ let socket = null;
 let messages = {};
 let messagesDiv = null;
 let renderedMessages = 0;
-let lastMessageIDs = {};
+let messageCounts = {};
 let recipientID = null;
 
 
@@ -27,11 +27,21 @@ const createSocket = recipientID => {
             type: "get",
             resource: "messages"
         }))
-    
+
+        setInterval(refreshMessages, 500)
     };
     socket.onmessage = (event) => {
         receiveMessage(event);
     }
+}
+
+const refreshMessages = () => {
+    console.log("Refreshing messages...");
+    
+    socket.send(JSON.stringify({
+        type: "poll",
+        resource: "messages"
+    }))
 }
 
 const sendMessage = textarea => {
@@ -63,13 +73,13 @@ const receiveMessage = event => {
                 console.log("Receiving messages...");
                 
                 if (msg.data.constructor != Object) {
-                    messages = msg.data;
+                    messages = messages.concat(msg.data);
                 } else {
                     messages.push(msg.data);
                 }
 
                 renderMessages();
-                lastMessageIDs[userID] = messages[messages.length - 1]["message_id"]
+                messageCounts[userID] = messages[messages.length]
 
                 break;
             
@@ -80,10 +90,10 @@ const receiveMessage = event => {
 }
 
 const renderMessages = () => {
-    for (let i = renderedMessages; i < messages.length; i++) {
-        if ((!lastMessageIDs[userID]) || messages[i]["message_id"] > lastMessageIDs[userID]) {
-            console.log("Rendering...");
-        
+    if ((!messageCounts[userID]) || messages.length > messageCounts[userID]) {
+        console.log("Rendering...");
+
+        for (let i = renderedMessages; i < messages.length; i++) {
             // creating new elements
             const newMessage = document.createElement("div");
             const avatar = document.createElement("img");

@@ -17,20 +17,37 @@ def check_sock(ws, messages) -> None:
     if received: # if a request is received from the client
         res_json: dict = json.loads(received)
 
-        if res_json["type"] == "get": # if the request is a 'get' request
-            if res_json["resource"] == "messages": # if the client is requesting all messages
-                ws.send(json.dumps({
-                    "type": "post",
-                    "resource": "messages",
-                    "data": messages.get_messages()
-                }))
-        elif res_json["type"] == "post": # if the request is a 'post' request
-            if res_json["resource"] == "messages": # if the user sent a new message
-                messages.add_message(res_json["data"])
+        match res_json["type"]:
+            case "get": # if the client has sent data
+                if res_json["resource"] == "messages": # if the client is requesting all messages
+                    ws.send(json.dumps({
+                        "type": "post",
+                        "resource": "messages",
+                        "data": messages.get_messages()
+                    }))
 
-                ws.send(json.dumps({
-                    "type": "post",
-                    "resource": "messages",
-                    "data": messages.get_messages()[-1]
-                }))
+            case "post": # if the client sent a request for all data
+                if res_json["resource"] == "messages": # if the user sent a new message
+                    messages.add_message(res_json["data"])
+                    messages.refresh()
+
+                    ws.send(json.dumps({
+                        "type": "post",
+                        "resource": "messages",
+                        "data": messages.get_messages()[-1]
+                    }))
+
+            case "poll": # if the client is polling new messages
+                if res_json["resource"] == "messages":
+                    last_index = messages.get_last_index()
+                    messages.refresh()
+
+                    if messages.get_is_new_messages():
+                        messages.set_is_new_messages(False)
+                        
+                        ws.send(json.dumps({
+                            "type": "post",
+                            "resource": "messages",
+                            "data": messages.get_messages()[last_index + 1:]
+                        }))
 
