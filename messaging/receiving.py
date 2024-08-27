@@ -53,7 +53,7 @@ def get_user_conversations(user_id: int) -> list[dict] | None:
                 "date": message["date"]
             })
     
-    conversations = sorted(conversations, key=lambda d: d["date"], reverse=True)
+    conversations = sorted(conversations, key=lambda d: d["date"])
 
     return conversations
 

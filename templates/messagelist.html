@@ -10,7 +10,7 @@
         <nav class="nav-categories">
             {% for i in range(conversations | length) %}
                 {% set conversation_user_ids = conversation_user_ids.append(conversations[i]["user_id"]) %}
-                <span onclick="changeConversation({{ friends[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
+                <span onclick="changeConversation({{ conversations[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
             {% endfor %}
             {% for i in range(friends | length) %}
                 {% if friends[i]["user_id"] not in conversation_user_ids %}
