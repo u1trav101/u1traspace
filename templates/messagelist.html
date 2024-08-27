@@ -5,26 +5,26 @@
     <title>u1traspace - messages</title>
 {% endblock %}
 {% block body %}
+    {% set conversation_user_ids = [] %}
     <div class="messages-container">
         <nav class="nav-categories">
             <h3>conversations:</h3>
-            {% set counter = 0 %}
             {% for i in range(conversations | length) %}
-                {% set counter = counter + 1 %}
+                {% set conversation_user_ids = conversation_user_ids.append(conversations[i]["user_id"]) %}
                 <span onclick="changeConversation({{ i }}, {{ friends[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
             {% endfor %}
             <h3>all friends:</h3>
-            {% for i in range(counter, friends | length + counter) %}
-                <span onclick="changeConversation({{ i }}, {{ friends[i]['user_id'] }})">{{ friends[i]["username"] }}</span>
+            {% for i in range(friends | length) %}
+                {% if friends[i]["user_id"] not in conversation_user_ids %}
+                    <span onclick="changeConversation({{ i }}, {{ friends[i]['user_id'] }})">{{ friends[i]["username"] }}</span>
+                {% endif %}
             {% endfor %}
         </nav>
         <div>
-            {% set counter = 0 %}
             {% for i in range(conversations | length) %}
-                {% set counter = counter + 1 %}
                 <aside class="nav-category {{ 'hidden' if (request.args.get('c') | int != conversations[i]['user_id']) and request.args.get('c') != '' }}" id="{{ conversations[i]['user_id'] }}">
                     <a class="message-header" href="{{ url_for('user.page', user_id=conversations[i]['user_id']) }}">
-                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" alt="{{ conversations[i]['username'] }}">
+                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ conversations[i]['user_id'] }}.webp" alt="{{ conversations[i]['username'] }}">
                         <h2>{{ conversations[i]["username"] }}</h2>
                     </a>
                     <div id="messages-{{ conversations[i]['user_id'] }}" class="messages"></div>
@@ -34,18 +34,20 @@
                     </form>
                 </aside>
             {% endfor %}
-            {% for i in range(counter, friends | length + counter) %}
-                <aside class="nav-category {{ 'hidden' if (request.args.get('c') | int != friends[i]['user_id']) and request.args.get('c') != '' }}" id="{{ friends[i]['user_id'] }}">
-                    <a class="message-header" href="{{ url_for('user.page', user_id=friends[i]['user_id']) }}">
-                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" alt="{{ friends[i]['username'] }}">
-                        <h2>{{ friends[i]["username"] }}</h2>
-                    </a>
-                    <div id="messages-{{ friends[i]['user_id'] }}" class="messages"></div>
-                    <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
-                        <textarea name="message-box" id="message-box"></textarea>
-                        <input type="submit" value="send">
-                    </form>
-                </aside>
+            {% for i in range(friends | length) %}
+                {% if friends[i]["user_id"] not in conversation_user_ids %}
+                    <aside class="nav-category {{ 'hidden' if (request.args.get('c') | int != friends[i]['user_id']) and request.args.get('c') != '' }}" id="{{ friends[i]['user_id'] }}">
+                        <a class="message-header" href="{{ url_for('user.page', user_id=friends[i]['user_id']) }}">
+                            <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" alt="{{ friends[i]['username'] }}">
+                            <h2>{{ friends[i]["username"] }}</h2>
+                        </a>
+                        <div id="messages-{{ friends[i]['user_id'] }}" class="messages"></div>
+                        <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
+                            <textarea name="message-box" id="message-box"></textarea>
+                            <input type="submit" value="send">
+                        </form>
+                    </aside>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
