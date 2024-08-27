@@ -17,6 +17,6 @@ def _remove_friend(user_id: int) -> Response:
         query.friend_reject_action(user_id, session["user_id"])
     
     if request.referrer is None or url_for("user.remove_friend", user_id=user_id) in request.referrer:
-        return redirect(url_for("user.friend_list", user_id=session["user_id"]))
+        return redirect(url_for("user.friends", user_id=session["user_id"]))
     
     return redirect(request.referrer)
