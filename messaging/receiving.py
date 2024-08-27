@@ -44,15 +44,13 @@ def get_user_conversations(user_id: int) -> list[dict] | None:
             message: dict = query.select_messages(limit=1, sender_id=user_id, recipient_id=other_user_id)[0]
 
             conversations.append({
-                "id": other_user_id,
+                "user_id": other_user_id,
                 "username": query.select_users(user_id=other_user_id, limit=1)[0]["username"],
-                "sender_id": message["sender_id"],
-                "sender_username": query.select_users(user_id=message["sender_id"], limit=1)[0]["username"],
                 "corpus": message["corpus"],
                 "date": message["date"]
             })
     
-    conversations = sorted(conversations, key=lambda d: d["message_id"], reverse=True)
+    conversations = sorted(conversations, key=lambda d: d["date"], reverse=True)
 
     return conversations
 
