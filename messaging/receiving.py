@@ -45,7 +45,6 @@ def get_user_conversations(user_id: int) -> list[dict] | None:
         if other_user_id and message:
             other_users.append(other_user_id)
 
-            print(query.select_users(user_id=other_user_id, limit=1))
             conversations.append({
                 "user_id": other_user_id,
                 "username": query.select_users(user_id=other_user_id, limit=1)[0]["username"],
