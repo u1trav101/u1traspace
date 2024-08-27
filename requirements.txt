@@ -1,6 +1,7 @@
 attr==0.3.2
 bitwarden_sdk==0.1.0
 boto3==1.34.162
+celery==5.4.0
 ConfigParser==7.1.0
 contextlib2==21.6.0
 cryptography==41.0.7
@@ -28,6 +29,7 @@ pyOpenSSL==24.2.1
 python_magic==0.4.27
 railroad==0.5.0
 redis==5.0.7
+setuptools==73.0.1
 Sphinx==8.0.2
 thread==2.0.5
 tornado==6.4.1
