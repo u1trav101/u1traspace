@@ -4,14 +4,17 @@ let messagesDiv = null;
 let renderedMessages = 0;
 
 const createSocket = recipientID => {
+    if (socket) { 
+        if (socket.url.includes(`/msg/${recipientID}`)) return;
+        else socket.close();
+    }
+
+    console.log("Closed current socket connection")
+
     messages = [];
     messagesDiv = document.getElementById(`messages-${recipientID}`)
     renderedMessages = 0;
     
-    if (socket) {
-        socket.close();
-        console.log("Closed current socket connection")
-    };
     socket = new WebSocket(`/msg/${recipientID}`);
     socket.onopen = (event) => {
         console.log(`WebSocket opened on /msg/${recipientID}`);
@@ -19,7 +22,7 @@ const createSocket = recipientID => {
             type: "get",
             resource: "messages"
         }))
-        
+    
     };
     socket.onmessage = (event) => {
         receiveMessage(event);
@@ -54,8 +57,8 @@ const receiveMessage = event => {
             case "messages":
                 console.log("Receiving messages...");
                 
-                if (messages != Object) {
-                    messages.push(msg.data[0]);
+                if (msg.data.constructor != Object) {
+                    messages = msg.data;
                 } else {
                     messages.push(msg.data);
                 }

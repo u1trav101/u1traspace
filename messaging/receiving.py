@@ -79,6 +79,7 @@ def poll_incoming_messages(sender_id: int, recipient_id: int, last_message_id: i
             res[i]["corpus"] = Markup.escape(res[i]["corpus"])
             res[i].pop("email")
             res[i].pop("password")
+            res[i].pop("about")
             res[i].pop("layout")
             res[i].pop("join_date")
             res[i].pop("page_views")
