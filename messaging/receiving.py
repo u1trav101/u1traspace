@@ -31,18 +31,21 @@ def get_user_conversations(user_id: int) -> list[dict] | None:
 
     for i in range(len(res)):
         other_user_id: int | None = None
+        message: dict | None = None
 
         if (res[i]["sender_id"] == user_id) and (res[i]["recipient_id"] not in other_users):
             other_user_id = res[i]["recipient_id"]
+            message = query.select_messages(limit=1, sender_id=user_id, recipient_id=other_user_id)[0]
+
 
         elif (res[i]["recipient_id"] == user_id) and (res[i]["sender_id"] not in other_users):
             other_user_id = res[i]["sender_id"]
+            message = query.select_messages(limit=1, sender_id=other_user_id, recipient_id=user_id)[0]
         
-        if other_user_id:
+        if other_user_id and message:
             other_users.append(other_user_id)
 
-            message: dict = query.select_messages(limit=1, sender_id=user_id, recipient_id=other_user_id)[0]
-
+            print(query.select_users(user_id=other_user_id, limit=1))
             conversations.append({
                 "user_id": other_user_id,
                 "username": query.select_users(user_id=other_user_id, limit=1)[0]["username"],

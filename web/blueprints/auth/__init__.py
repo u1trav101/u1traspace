@@ -11,7 +11,7 @@ auth_blueprint = Blueprint("auth", __name__)
 def login() -> Response | str:
     return _login()
 
-@auth_blueprint.route("/logout", methods=["POST"])
+@auth_blueprint.route("/logout")
 def logout() -> Response:
     return _logout()
 

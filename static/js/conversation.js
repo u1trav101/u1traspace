@@ -1,10 +1,10 @@
 let socket = null;
-let messages = null;
+let messages = [];
 let messagesDiv = null;
 let renderedMessages = 0;
 
 const createSocket = recipientID => {
-    messages = null;
+    messages = [];
     messagesDiv = document.getElementById(`messages-${recipientID}`)
     renderedMessages = 0;
     
@@ -54,17 +54,13 @@ const receiveMessage = event => {
             case "messages":
                 console.log("Receiving messages...");
                 
-                if (messages) {
-                    messages.push(msg.data);
+                if (messages != Object) {
+                    messages.push(msg.data[0]);
                 } else {
-                    if (msg.data == Object) {
-                        messages = [msg.data];
-                    } else {
-                        messages = msg.data;
-                    }
+                    messages.push(msg.data);
                 }
-
                 renderMessages();
+
                 break;
             
             default:
@@ -76,6 +72,7 @@ const receiveMessage = event => {
 const renderMessages = () => {
     for (let i = renderedMessages; i < messages.length; i++) {
         console.log("Rendering...");
+        console.log(messages);
         
         // creating new elements
         const newMessage = document.createElement("div");
