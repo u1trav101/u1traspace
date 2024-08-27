@@ -1,1 +1,69 @@
 {% extends "components/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/nav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/messagelist.css') }}">
+    <title>u1traspace - messages</title>
+{% endblock %}
+{% block body %}
+    <div class="messages-container">
+        <nav class="nav-categories">
+            <h3>conversations:</h3>
+            {% set counter = 0 %}
+            {% for i in range(conversations | length) %}
+                {% set counter = counter + 1 %}
+                <span onclick="changeConversation({{ i }}, {{ friends[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
+            {% endfor %}
+            <h3>all friends:</h3>
+            {% for i in range(counter, friends | length + counter) %}
+                <span onclick="changeConversation({{ i }}, {{ friends[i]['user_id'] }})">{{ friends[i]["username"] }}</span>
+            {% endfor %}
+        </nav>
+        <div>
+            {% set counter = 0 %}
+            {% for i in range(conversations | length) %}
+                {% set counter = counter + 1 %}
+                <aside class="nav-category {{ 'hidden' if (request.args.get('c') | int != conversations[i]['user_id']) and request.args.get('c') != '' }}" id="{{ conversations[i]['user_id'] }}">
+                    <a class="message-header" href="{{ url_for('user.page', user_id=conversations[i]['user_id']) }}">
+                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" alt="{{ conversations[i]['username'] }}">
+                        <h2>{{ conversations[i]["username"] }}</h2>
+                    </a>
+                    <div id="messages-{{ conversations[i]['user_id'] }}" class="messages"></div>
+                    <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
+                        <textarea name="message-box" id="message-box"></textarea>
+                        <input type="submit" value="send">
+                    </form>
+                </aside>
+            {% endfor %}
+            {% for i in range(counter, friends | length + counter) %}
+                <aside class="nav-category {{ 'hidden' if (request.args.get('c') | int != friends[i]['user_id']) and request.args.get('c') != '' }}" id="{{ friends[i]['user_id'] }}">
+                    <a class="message-header" href="{{ url_for('user.page', user_id=friends[i]['user_id']) }}">
+                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" alt="{{ friends[i]['username'] }}">
+                        <h2>{{ friends[i]["username"] }}</h2>
+                    </a>
+                    <div id="messages-{{ friends[i]['user_id'] }}" class="messages"></div>
+                    <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
+                        <textarea name="message-box" id="message-box"></textarea>
+                        <input type="submit" value="send">
+                    </form>
+                </aside>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        const changeConversation = (categoryID, userID) => {
+            changeCategory(categoryID);
+            createSocket(userID);
+        }
+
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get("c")) {
+                createSocket(urlParams.get("c"));
+            }
+        }
+    </script>
+    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/conversation.js') }}"></script>
+{% endblock %}

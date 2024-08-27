@@ -58,7 +58,6 @@ def update_user(cur:Cursor, user_id:int, about:str|None, layout:str|None, privat
             LIMIT 1;
         """, [about, user_id])
     else:
-        print("nulling")
         cur.execute("""
             UPDATE users
             SET about = NULL

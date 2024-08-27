@@ -32,11 +32,11 @@ def get_user_conversations(user_id: int) -> list[dict] | None:
     for i in range(len(res)):
         other_user_id: int | None = None
 
-        if (res[i]["senderid"] == user_id) and (res[i]["recipientid"] not in other_users):
-            other_user_id = res[i]["recipientid"]
+        if (res[i]["sender_id"] == user_id) and (res[i]["recipient_id"] not in other_users):
+            other_user_id = res[i]["recipient_id"]
 
-        elif (res[i]["recipientid"] == user_id) and (res[i]["senderid"] not in other_users):
-            other_user_id = res[i]["senderid"]
+        elif (res[i]["recipient_id"] == user_id) and (res[i]["sender_id"] not in other_users):
+            other_user_id = res[i]["sender_id"]
         
         if other_user_id:
             other_users.append(other_user_id)
@@ -46,28 +46,42 @@ def get_user_conversations(user_id: int) -> list[dict] | None:
             conversations.append({
                 "id": other_user_id,
                 "username": query.select_users(user_id=other_user_id, limit=1)[0]["username"],
-                "sender_id": message["senderid"],
-                "sender_username": query.select_users(user_id=message["senderid"], limit=1)[0]["username"],
+                "sender_id": message["sender_id"],
+                "sender_username": query.select_users(user_id=message["sender_id"], limit=1)[0]["username"],
                 "corpus": message["corpus"],
                 "date": message["date"]
             })
     
-    conversations = sorted(conversations, key=lambda d: d["date"], reverse=True)
+    conversations = sorted(conversations, key=lambda d: d["message_id"], reverse=True)
 
     return conversations
 
 
-def poll_incoming_messages(sender_id: int, recipient_id: int, last_message_id: int) -> list:
+def poll_incoming_messages(sender_id: int, recipient_id: int, last_message_id: int = 0) -> list[dict] | None:
     query = Query()
-    res: list = query.select_messages(start=last_message_id, sender_id=sender_id, recipient_id=recipient_id)
+    sent_messages: list[dict] | None = query.select_messages(start=last_message_id, sender_id=sender_id, recipient_id=recipient_id, order="ASC")
+    received_messages: list[dict] | None = query.select_messages(start=last_message_id, sender_id=recipient_id, recipient_id=sender_id, order="ASC")
 
-    if not res:
-        return [False]
-
-    else:
-        res.insert(0, True)
-        for i in range(1, len(res)):
-            res[i]["date"] = epoch_to_readable(res[i]["date"], True)
+    res: list[dict] | None = None
+    if received_messages and sent_messages:
+        messages = received_messages + sent_messages
+        res = sorted(messages, key=lambda m: m["message_id"])
+    elif received_messages:
+        res = received_messages
+    elif sent_messages:
+        res = sent_messages
+    
+    if res:
+        for i in range(len(res)):
+            res[i]["date"] = epoch_to_readable(res[i]["date"])
+            res[i]["last_seen"] = epoch_to_readable(res[i]["last_seen"])
             res[i]["corpus"] = Markup.escape(res[i]["corpus"])
+            res[i].pop("email")
+            res[i].pop("password")
+            res[i].pop("layout")
+            res[i].pop("join_date")
+            res[i].pop("page_views")
+            res[i].pop("private")
+            res[i].pop("visible")
 
     return res
