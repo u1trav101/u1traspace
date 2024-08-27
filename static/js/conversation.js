@@ -72,7 +72,6 @@ const receiveMessage = event => {
 const renderMessages = () => {
     for (let i = renderedMessages; i < messages.length; i++) {
         console.log("Rendering...");
-        console.log(messages);
         
         // creating new elements
         const newMessage = document.createElement("div");
