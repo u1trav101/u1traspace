@@ -18,9 +18,6 @@ USERCONTENT_DIR: str = os.path.join(DIR_NAME, "../../usercontent/")
 
 
 def preferences() -> Response | str:
-    if ("user_id") not in session:
-        return redirect(url_for("auth.login"))
-
     query = Query()
     res: dict = query.select_users(user_id=session["user_id"], limit=1)[0]
     selected_interface: str = res["layout"]

@@ -8,10 +8,7 @@ from web.forms import new_blog_form
 
 
 def _new(user_id: int) -> Response | str:
-    if ("user_id") not in session:
-        return redirect(url_for("auth.login"))
-
-    elif int(session["user_id"]) != int(user_id):
+    if int(session["user_id"]) != int(user_id):
         return redirect(url_for("user.page", user_id=user_id))
 
     form: FlaskForm = new_blog_form()

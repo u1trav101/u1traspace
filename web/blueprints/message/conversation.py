@@ -1,12 +1,9 @@
-from flask import redirect, session, url_for
+from flask import session
 from werkzeug import Response
 from messaging import Messages
 import json
 
 def conversation(recipient_id: int, ws) -> Response | None:
-    if ("user_id") not in session:
-        return redirect(url_for("auth.login"))
-
     messages = Messages(int(session["user_id"]), recipient_id)
     while True:
         check_sock(ws, messages)

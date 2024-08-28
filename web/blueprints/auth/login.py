@@ -8,9 +8,6 @@ import auth
 
 
 def _login() -> Response | str:
-    if ("user_id") in session:
-        return redirect(url_for("user.page", user_id=session["user_id"]))
-
     login_form: FlaskForm = forms.login_form()
 
     if login_form.validate_on_submit():

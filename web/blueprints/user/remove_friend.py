@@ -6,9 +6,6 @@ from db import Query
 
 
 def _remove_friend(user_id: int) -> Response:
-    if ("user_id") not in session:
-        return redirect(url_for("auth.login"))
-
     form: FlaskForm = friend_form()
 
     if form.validate_on_submit():
