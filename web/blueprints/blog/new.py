@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from werkzeug import Response
 from db import Query
 from profile import get_profile_properties
-from web.misc import render_template
+from web.overloads import render_template
 from web.forms import new_blog_form
 
 

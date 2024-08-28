@@ -1,7 +1,7 @@
 import typing
 from flask import Blueprint
 from werkzeug import Response
-from web.misc import validate_url_vars
+from web.decorators import validate_url_vars
 from web.blueprints.message.browse import _browse
 from web.blueprints.message.poll import _poll
 

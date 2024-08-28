@@ -2,7 +2,7 @@ from flask import redirect, session, url_for
 from flask_wtf import FlaskForm
 from werkzeug import Response
 from cdn import copy_default_avatar
-from web.misc import render_template
+from web.overloads import render_template
 import web.forms as forms
 import auth
 

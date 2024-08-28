@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for
 from werkzeug import Response
-from web.misc import validate_url_vars
+from web.decorators import validate_url_vars
 from web.blueprints.user.random import _random
 from web.blueprints.user.page import _page
 from web.blueprints.user.friends import _friends

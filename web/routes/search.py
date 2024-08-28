@@ -1,7 +1,7 @@
 from flask import request, escape
 from flask_wtf import FlaskForm
 from db.search import search as search_db
-from web.misc import render_template
+from web.overloads import render_template
 from web.forms import search_form
 from config import CONFIG
 import re

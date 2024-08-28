@@ -3,7 +3,7 @@ from werkzeug import Response
 from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
 from db import Query
-from web.misc import render_template
+from web.overloads import render_template
 from config import CONFIG
 import os
 import magic

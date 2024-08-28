@@ -1,7 +1,7 @@
 from flask import session, redirect, url_for
 from flask_wtf import FlaskForm
 from werkzeug import Response
-from web.misc import render_template
+from web.overloads import render_template
 from profile import get_profile_properties
 from web.forms import notification_action_form
 

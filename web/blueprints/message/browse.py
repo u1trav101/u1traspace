@@ -1,6 +1,6 @@
 from flask import session, redirect, url_for
 from werkzeug import Response
-from web.misc import render_template
+from web.overloads import render_template
 import profile
 import messaging
 

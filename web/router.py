@@ -2,7 +2,7 @@ from flask.app import Flask
 from flask_sock import Sock
 from werkzeug import Response
 from web.blueprints import auth_blueprint, blog_blueprint, message_blueprint, user_blueprint, conversation as _conversation
-import web.misc as misc
+from web.decorators import validate_url_vars, before_request as _before_request
 import web.routes as routes
 
 
@@ -14,14 +14,14 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     app.register_blueprint(user_blueprint, url_prefix="/user")
     
     @sock.route("/<user_id>", message_blueprint)
-    @misc.validate_url_vars
+    @validate_url_vars
     def conversation(ws, user_id) -> Response | None:
         return _conversation(user_id, ws)
     app.register_blueprint(message_blueprint, url_prefix="/msg")
 
     @app.before_request
     def before_request() -> None:
-        return misc.before_request()
+        return _before_request()
 
     @app.route("/")
     def index() -> str:
