@@ -1,0 +1,77 @@
+h3 {
+    font-style: italic;
+}
+
+.top {
+    display: flex;
+    align-items: center;
+}
+
+.top form {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.top form input {
+    margin: 0;
+    margin-left: 20px;
+}
+
+.top form input[type=text] {
+    flex-grow: 1;
+}
+
+.avatar {
+    margin: 20px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid darkgrey;
+}
+
+.avatar span {
+    margin-top: 10px;
+}
+
+.avatar .online {
+    border: 1px solid lawngreen;
+}
+
+.blog {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+    border: 1px solid grey;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.blog:hover, .blog:active {
+    border: 1px solid lightgrey;
+}
+
+.blog .content {
+    margin-top: 20px;
+    overflow-x: hidden;
+}
+
+.blog .content span {
+    font-size: 2.5rem;
+}
+
+.blog .content .title {
+    text-decoration: underline;
+}
+
+.blog .content .corpus {
+    margin: 20px 20px 20px 0;
+
+    font-family: "lotion";
+    font-size: 1.5rem;
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
