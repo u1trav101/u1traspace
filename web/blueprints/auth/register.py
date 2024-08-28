@@ -22,6 +22,6 @@ def _register() -> Response | str:
         return forms.register_commit(user_id)
 
     return render_template(
-        "register.html",
+        "auth/register.html",
         form=register_form,
     )

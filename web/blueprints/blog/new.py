@@ -20,7 +20,7 @@ def _new(user_id: int) -> Response | str:
         return redirect(url_for("user.blog.post", user_id=user_id, post_id=blog_id))
 
     return render_template(
-        "newblog.html",
+        "blog/new.html",
         form=form,
         properties=get_profile_properties(user_id)
     )

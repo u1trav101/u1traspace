@@ -1,7 +1,5 @@
 from web.routes.index import index
 from web.routes.search import search
-from web.routes.user_list import user_list
-from web.routes.notifications import notifications
 from web.routes.konata import konata
 from web.routes.news import news
 from web.routes.set_timezone import set_timezone

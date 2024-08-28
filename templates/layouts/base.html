@@ -27,7 +27,7 @@
                 <div class="nav-top">
                     <div class="nav-left">
                         <a href="{{ url_for('index') }}"><h1>u1traspace</h1></a>
-                        <a href="{{ url_for('user_list') }}">users</a>
+                        <a href="{{ url_for('user.browse') }}">users</a>
                         <a href="{{ url_for('search') }}">search</a>                        
                     </div>
                     {% if ("user_id") in session %}

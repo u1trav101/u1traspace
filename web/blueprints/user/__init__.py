@@ -1,6 +1,7 @@
-from flask import Blueprint, redirect, url_for
+from flask import Blueprint
 from werkzeug import Response
 from web.decorators import require_auth, validate_url_vars
+from web.blueprints.user.browse import _browse
 from web.blueprints.user.random import _random
 from web.blueprints.user.page import _page
 from web.blueprints.user.friends import _friends
@@ -11,8 +12,8 @@ from web.blueprints.user.remove_friend import _remove_friend
 user_blueprint = Blueprint("user", __name__)
 
 @user_blueprint.route("/")
-def redirect_to_user_list() -> Response:
-    return redirect(url_for("user_list"))
+def browse() -> str:
+    return _browse()
 
 @user_blueprint.route("/random/")
 def random() -> Response:

@@ -9,7 +9,7 @@ def _friends(user_id: int) -> Response | str:
     properties: dict = profile.get_profile_properties(user_id)
     friend_form: FlaskForm = forms.friend_form()
 
-    template: str = "friends.html"
+    template: str = "user/friends.html"
     match properties["layout"]:
         case "twitter":
             template = "twitter/friends.html"

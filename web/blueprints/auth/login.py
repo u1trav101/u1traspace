@@ -20,6 +20,6 @@ def _login() -> Response | str:
             return redirect(url_for("user.page", user_id=user_id))
 
     return render_template(
-        "login.html",
+        "auth/login.html",
         form=login_form
     )
