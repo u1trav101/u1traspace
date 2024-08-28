@@ -1,5 +1,5 @@
 from werkzeug import Response
-from web.misc import render_template
+from web.overloads import render_template
 from web.forms import friend_form
 import profile
 

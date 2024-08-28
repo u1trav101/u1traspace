@@ -1,6 +1,6 @@
 from db import Query
 from markupsafe import Markup
-from web.misc import epoch_to_readable
+from web.formatting import epoch_to_readable
 
 
 def get_incoming_senders(recipient_id: int) -> list[dict] | None:

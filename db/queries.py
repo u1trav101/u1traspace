@@ -1,3 +1,4 @@
+from typing import overload
 from mariadb import Connection
 import db.users as users
 import db.page_comments as page_comments

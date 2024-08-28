@@ -2,7 +2,7 @@ from flask import session, redirect, url_for, request
 from werkzeug import Response
 from flask_wtf import FlaskForm
 from db import Query
-from web.misc import render_template
+from web.overloads import render_template
 import web.forms as forms
 import profile
 import messaging

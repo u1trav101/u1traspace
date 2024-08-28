@@ -1,6 +1,6 @@
 from flask import Blueprint
 from werkzeug import Response
-from web.misc import validate_url_vars
+from web.decorators import validate_url_vars
 from web.blueprints.blog.browse import _browse
 from web.blueprints.blog.post import _post
 from web.blueprints.blog.new import _new
