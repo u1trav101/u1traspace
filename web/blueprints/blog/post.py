@@ -52,7 +52,7 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
             return redirect(url_for("user.blog.post", user_id=user_id, post_id=post_id))
 
     properties: dict = profile.get_profile_properties(user_id)
-    template: str = "blogpost.html"
+    template: str = "blog/post.html"
     match properties["layout"]:
         case "twitter":
             template = "twitter/blogpost.html"

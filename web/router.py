@@ -1,3 +1,5 @@
+from os import urandom
+from flask import redirect, url_for
 from flask.app import Flask
 from flask_sock import Sock
 from werkzeug import Response
@@ -33,8 +35,8 @@ def declare_routes(app: Flask, sock: Sock) -> None:
         return routes.set_timezone()
     
     @app.route("/users/")
-    def user_list() -> Response | str:
-        return routes.user_list()
+    def redirect_to_users() -> Response | str:
+        return redirect(url_for("user.browse"))
     
     @app.route("/news")
     def news() -> Response | str:

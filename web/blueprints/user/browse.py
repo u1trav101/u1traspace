@@ -4,12 +4,12 @@ import web.forms as forms
 import profile
 
 
-def user_list() -> str:
+def _browse() -> str:
     pagination_args: tuple = profile.users_paginator()
     search_form: FlaskForm = forms.search_form()
 
     return render_template(
-        "users.html",
+        "user/browse.html",
         users=pagination_args[0],
         page=pagination_args[1],
         per_page=pagination_args[2],

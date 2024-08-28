@@ -6,7 +6,7 @@ import messaging
 
 def _browse() -> Response | str:
     return render_template(
-        "messagelist.html",
+        "message/browse.html",
         conversations=messaging.get_user_conversations(int(session["user_id"])),
         friends=profile.get_user_friends(int(session["user_id"]))
     )
