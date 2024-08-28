@@ -6,9 +6,6 @@ from profile import send_friend_request
 
 
 def _add_friend(recipient_id: int) -> Response:
-    if ("user_id") not in session:
-        return redirect(url_for("auth.login"))
-
     form: FlaskForm = friend_form()
     sender_id: int = int(session["user_id"])
 

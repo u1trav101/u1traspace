@@ -1,6 +1,6 @@
 from flask import Blueprint
 from werkzeug import Response
-from web.decorators import validate_url_vars
+from web.decorators import require_auth, validate_url_vars
 from web.blueprints.blog.browse import _browse
 from web.blueprints.blog.post import _post
 from web.blueprints.blog.new import _new
@@ -20,5 +20,6 @@ def post(user_id: int, post_id: int) -> Response | str | tuple:
 
 @blog_blueprint.route("/new/", methods=["GET", "POST"])
 @validate_url_vars
+@require_auth
 def new(user_id: int) -> Response | str | tuple:
     return _new(user_id)

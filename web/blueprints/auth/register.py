@@ -1,4 +1,3 @@
-from flask import redirect, session, url_for
 from flask_wtf import FlaskForm
 from werkzeug import Response
 from cdn import copy_default_avatar
@@ -8,9 +7,6 @@ import auth
 
 
 def _register() -> Response | str:
-    if ("user_id") in session:
-        return redirect(url_for("user.page", user_id=session["user_id"]))
-
     register_form: FlaskForm = forms.register_form()
 
     if register_form.validate_on_submit():

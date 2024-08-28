@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for
 from werkzeug import Response
-from web.decorators import validate_url_vars
+from web.decorators import require_auth, validate_url_vars
 from web.blueprints.user.random import _random
 from web.blueprints.user.page import _page
 from web.blueprints.user.friends import _friends
@@ -30,10 +30,12 @@ def friends(user_id: int) -> Response | str:
 
 @user_blueprint.route("/<user_id>/add-friend/", methods=["POST"])
 @validate_url_vars
+@require_auth
 def add_friend(user_id: int) -> Response:
     return _add_friend(user_id)
 
 @user_blueprint.route("/<user_id>/remove-friend/", methods=["POST"])
 @validate_url_vars
+@require_auth
 def remove_friend(user_id: int) -> Response:
     return _remove_friend(user_id)

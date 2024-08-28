@@ -3,8 +3,7 @@ from werkzeug import Response
 
 
 def _logout() -> Response:
-    if ("user_id") in session:
-        session.pop("user_id")
+    session.pop("user_id")
 
     if request.referrer is None or url_for("auth.logout") in request.referrer:
         return redirect(url_for("auth.login"))

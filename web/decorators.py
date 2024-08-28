@@ -31,3 +31,25 @@ def validate_url_vars(func: Callable) -> Callable:
         return func(*args, **kwargs)
     
     return decorator
+
+# user must be logged in to access the route
+def require_auth(func: Callable) -> Callable:
+    @wraps(func)
+    def decorator(*args, **kwargs):
+        if ("user_id") not in session:
+            return redirect(url_for("auth.login"))
+        
+        return func(*args, **kwargs)
+
+    return decorator
+
+# user must not be logged in to access the route
+def reject_auth(func: Callable) -> Callable:
+    @wraps(func)
+    def decorator(*args, **kwargs):
+        if ("user_id") in session:
+            return redirect(url_for("user.page", user_id=session["user_id"]))
+        
+        return func(*args, **kwargs)
+    
+    return decorator
