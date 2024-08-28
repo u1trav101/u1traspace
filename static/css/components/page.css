@@ -2,6 +2,11 @@ main {
     background-color: rgba(0,0,0,0.2);
 }
 
+p {
+    font-family: "lotion", sans-serif;
+    font-size: 1.5rem;
+}
+
 .breadCrumb {
     display: flex;
     margin: 0 0 20px;
