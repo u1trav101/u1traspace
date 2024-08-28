@@ -102,9 +102,9 @@ const renderMessages = () => {
             const right = document.createElement("div");
             const author = document.createElement("h4");
             const date = document.createTextNode(`at ${messages[i]["date"]}`);
-            author.innerText = messages[i]["username"];
+            author.innerHTML = messages[i]["username"];
             const corpus = document.createElement("p");
-            corpus.innerText = messages[i]["corpus"];
+            corpus.innerHTML = messages[i]["corpus"];
             
             // applying classes to new elements
             avatar.classList = "avatar";
