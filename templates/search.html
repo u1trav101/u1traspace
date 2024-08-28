@@ -1,1 +1,35 @@
 {% extends "/layouts/base.html" %}
+{% block body %}
+    <div>
+        <div class="top">
+            <h2>search:</h2>
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                {{ form.corpus() }}
+                {{ form.submit() }}
+            </form>
+        </div>
+        {% if results %}
+            {% for key, value in results.items() %}
+                <h3>{{ key }}:</h3>
+                {% for result in value %}
+                    {% if key == "users" %}
+                        <a class="user {{ 'online' if current_time - result['last_seen'].timestamp() | round | int <= 300 }}">
+                            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ result['user_id'] }}.webp" alt="{{ result['username'] }}">
+                            <span>{{ result["username"] }}</span>
+                        </a>
+                    {% elif key == "blogs" %}
+                        <a>
+                            <div>
+                                <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ result['user_id'] }}.webp" alt="{{ result['username'] }}">
+                                <span>{{ result["username"] }}</span>
+                            </div>
+                            <span>{{ result["title"] }}</span>
+                            <span>{{ result["corpus"][:500] }}{{"..." if result["corpus"] | length > 500}}</span>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}
