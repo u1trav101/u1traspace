@@ -1,4 +1,5 @@
-from flask import request, escape
+from flask import redirect, request, escape, url_for
+from werkzeug import Response
 from flask_wtf import FlaskForm
 from db.search import search as search_db
 from web.overloads import render_template
@@ -10,7 +11,7 @@ import re
 RE_COMBINE_WHITESPACE = re.compile(r"\s+")
 
 
-def search() -> str | tuple:
+def search() -> Response | str | tuple:
     form: FlaskForm = search_form()
 
     if request.method == "GET":
@@ -24,7 +25,7 @@ def search() -> str | tuple:
 
     corpus: str | None = request.form.get("corpus")
     if not corpus:
-        return "No search term provided", 400
+        return redirect(url_for("search"))
     
     results: dict[str, list] | None = None
     if corpus.replace(" ", "") not in CONFIG.BLACKLISTED_SEARCHES:

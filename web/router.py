@@ -53,7 +53,7 @@ def declare_routes(app: Flask, sock: Sock) -> None:
         return routes.news()
 
     @app.route("/search/", methods=["GET", "POST"])
-    def search() -> str | tuple:
+    def search() -> Response | str | tuple:
         return routes.search()
     
     @app.route("/konata/")
