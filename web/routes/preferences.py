@@ -56,7 +56,7 @@ def preferences() -> Response | str:
             audio_uploading = True if check_task(task, "audio") is True else avatar_uploading
 
     return render_template(
-        "prefs.html",
+        "preferences.html",
         properties=properties,
         form=preferences_form,
         avatar_uploading=avatar_uploading,

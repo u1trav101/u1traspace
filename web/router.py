@@ -42,19 +42,10 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     def news() -> Response | str:
         return routes.news()
 
-    @app.route("/preferences/", methods=["GET", "POST"])
-    @require_auth
-    def preferences() -> Response | str:
-        return routes.preferences()
-
-    @app.route("/notifications/", methods=["GET", "POST"])
-    def notifications() -> Response | str:
-        return routes.notifications()
-
     @app.route("/search/", methods=["GET", "POST"])
     def search() -> str | tuple:
         return routes.search()
-
+    
     @app.route("/konata/")
     def konata() -> Response:
         return routes.konata()
@@ -66,3 +57,14 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     @app.route("/faq/")
     def faq() -> str:
         return routes.faq()
+
+    @app.route("/preferences/", methods=["GET", "POST"])
+    @require_auth
+    def preferences() -> Response | str:
+        return routes.preferences()
+    
+    @app.route("/remove-friend/<friend_id>", methods=["POST"])
+    @require_auth
+    @validate_url_vars
+    def remove_friend(friend_id: int) -> Response:
+        return routes.remove_friend(friend_id)

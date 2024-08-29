@@ -239,6 +239,12 @@ class _Query():
             approved=approved
         )
     
+    def remove_friend(self, friend_id: int) -> None:
+        friends.delete_friend(
+            self.cur,
+            friend_id=friend_id
+        )
+    
     # works on messages table
     def select_messages(
         self,

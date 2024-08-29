@@ -6,7 +6,6 @@ from web.blueprints.user.random import _random
 from web.blueprints.user.page import _page
 from web.blueprints.user.friends import _friends
 from web.blueprints.user.add_friend import _add_friend
-from web.blueprints.user.remove_friend import _remove_friend
 
 
 user_blueprint = Blueprint("user", __name__)
@@ -34,9 +33,3 @@ def friends(user_id: int) -> Response | str:
 @require_auth
 def add_friend(user_id: int) -> Response:
     return _add_friend(user_id)
-
-@user_blueprint.route("/<user_id>/remove-friend/", methods=["POST"])
-@validate_url_vars
-@require_auth
-def remove_friend(user_id: int) -> Response:
-    return _remove_friend(user_id)

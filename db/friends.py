@@ -57,3 +57,10 @@ def update_friend(cur:Cursor, sender_id:int, recipient_id:int, approved:bool) ->
         WHERE sender_id = ?
         AND recipient_id = ?
     """, [approved, sender_id, recipient_id])
+
+def delete_friend(cur:Cursor, friend_id:int) -> None:
+    cur.execute("""
+        DELETE FROM friends
+        WHERE friend_id = ?
+        LIMIT 1;
+    """, [friend_id])

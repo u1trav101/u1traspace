@@ -5,15 +5,13 @@ from web.forms import friend_form
 from db import Query
 
 
-def _remove_friend(user_id: int) -> Response:
+def remove_friend(friend_id: int) -> Response:
     form: FlaskForm = friend_form()
-
     if form.validate_on_submit():
         query = Query()
-        query.friend_reject_action(session["user_id"], user_id)
-        query.friend_reject_action(user_id, session["user_id"])
+        query.remove_friend(friend_id)
     
-    if request.referrer is None or url_for("user.remove_friend", user_id=user_id) in request.referrer:
+    if request.referrer is None or url_for("remove_friend", friend_id=friend_id) in request.referrer:
         return redirect(url_for("user.friends", user_id=session["user_id"]))
     
     return redirect(request.referrer)
