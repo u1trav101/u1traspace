@@ -9,10 +9,6 @@ import messaging
 
 
 def _post(user_id: int, post_id: int) -> Response | str | tuple:
-    blogpost: dict | None = profile.get_blogpost(user_id, post_id)
-    if not blogpost:
-        return redirect(url_for("user.blog.browse", user_id=user_id))
-
     comment_form: FlaskForm = forms.comment_form()
     delete_form: FlaskForm = forms.comment_delete_form()
     friend_form: FlaskForm = forms.friend_form()
@@ -64,7 +60,7 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
     return render_template(
         template,
         properties=properties,
-        blogpost=blogpost,
+        blogpost=profile.get_blogpost(user_id, post_id),
         blogposts=profile.get_all_user_blogposts(user_id),
         comments=profile.get_blogpost_comments(post_id),
         friends=profile.get_user_friends(user_id),

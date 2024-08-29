@@ -9,10 +9,6 @@ import messaging
 
 
 def _page(user_id: int) -> Response | str | tuple:
-    properties: dict | None = profile.get_profile_properties(user_id)
-    if not properties:
-        return redirect(url_for("user.browse"))
-
     comment_form: FlaskForm = forms.comment_form()
     delete_form: FlaskForm = forms.comment_delete_form()
     friend_form: FlaskForm = forms.friend_form()
@@ -45,6 +41,7 @@ def _page(user_id: int) -> Response | str | tuple:
 
     query.increase_page_views(user_id)
 
+    properties: dict = profile.get_profile_properties(user_id)
     template: str = "user/page.html"
     match properties["layout"]:
         case "twitter":
