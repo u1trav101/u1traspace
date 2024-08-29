@@ -31,10 +31,18 @@
     {% if friends %}
         <section class="friends">
             {% for friend in friends %}
-                <a class="user" href="{{ url_for('user.page', user_id=friend['user_id']) }}">
-                    <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
-                    <span>{{ friend["username"] }}</span>
-                </a>
+                <div class="user friend">
+                    <a href="{{ url_for('user.page', user_id=friend['user_id']) }}">
+                        <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
+                        <span>{{ friend["username"] }}</span>
+                    </a>
+                    {% if ("user_id") in session and session["user_id"] | int == properties['user_id'] %}
+                        <form action="{{ url_for('remove_friend', friend_id=friend['friend_id']) }}" method="post" novalidate>
+                            {{ friend_form.hidden_tag() }}
+                            <input id="friend" name="friend" type="submit" value="unfriend">
+                        </form>
+                    {% endif %}
+                </div>
             {% endfor %}
         </section>
     {% endif %}

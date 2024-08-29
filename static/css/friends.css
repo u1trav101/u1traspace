@@ -8,7 +8,20 @@
 .friend {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    align-items: center;
+}
 
-    border: 1px solid lightgrey;
+.friend a {
+    display: flex;
+    flex-direction: column;
+
+    border: none;
+}
+
+.friend a span {
+    font-size: 3rem;
+}
+
+.friend input[type=submit] {
+    margin: 20px 0 0;
 }
