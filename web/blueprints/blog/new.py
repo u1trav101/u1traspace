@@ -1,4 +1,4 @@
-from flask import session, redirect, url_for
+from flask import redirect, url_for
 from flask_wtf import FlaskForm
 from werkzeug import Response
 from db import Query
@@ -8,9 +8,6 @@ from web.forms import new_blog_form
 
 
 def _new(user_id: int) -> Response | str:
-    if int(session["user_id"]) != int(user_id):
-        return redirect(url_for("user.page", user_id=user_id))
-
     form: FlaskForm = new_blog_form()
     if form.validate_on_submit():
         query = Query()
