@@ -1,4 +1,3 @@
-from os import urandom
 from flask import redirect, url_for
 from flask.app import Flask
 from flask_sock import Sock
@@ -9,12 +8,10 @@ import web.routes as routes
 
 
 def declare_routes(app: Flask, sock: Sock) -> None:
+    # registering blueprints
     app.register_blueprint(auth_blueprint, url_prefix="/auth")
-    
     user_blueprint.register_blueprint(blog_blueprint, url_prefix="<user_id>/blog")
-    
     app.register_blueprint(user_blueprint, url_prefix="/user")
-    
     @sock.route("/<user_id>", message_blueprint)
     @validate_url_vars
     @require_auth
@@ -22,9 +19,22 @@ def declare_routes(app: Flask, sock: Sock) -> None:
         return _conversation(user_id, ws)
     app.register_blueprint(message_blueprint, url_prefix="/msg")
 
+    # defining function to be called before each request is processed
     @app.before_request
     def before_request() -> None:
         return _before_request()
+
+    # registering all other miscellaneous routes
+    @app.route("/preferences/", methods=["GET", "POST"])
+    @require_auth
+    def preferences() -> Response | str:
+        return routes.preferences()
+    
+    @app.route("/remove-friend/<friend_id>", methods=["POST"])
+    @require_auth
+    @validate_url_vars
+    def remove_friend(friend_id: int) -> Response:
+        return routes.remove_friend(friend_id)
 
     @app.route("/")
     def index() -> str:
@@ -57,14 +67,3 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     @app.route("/faq/")
     def faq() -> str:
         return routes.faq()
-
-    @app.route("/preferences/", methods=["GET", "POST"])
-    @require_auth
-    def preferences() -> Response | str:
-        return routes.preferences()
-    
-    @app.route("/remove-friend/<friend_id>", methods=["POST"])
-    @require_auth
-    @validate_url_vars
-    def remove_friend(friend_id: int) -> Response:
-        return routes.remove_friend(friend_id)

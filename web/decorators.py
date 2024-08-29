@@ -1,7 +1,6 @@
 from flask import session, request, redirect, url_for
 from functools import wraps
 from typing import Callable
-
 from werkzeug import Response
 from db import Query
 
@@ -18,16 +17,20 @@ def before_request() -> None:
 def validate_url_vars(func: Callable) -> Callable:
     @wraps(func)
     def decorator(*args, **kwargs) -> Response | Callable:
+        query = Query()
+
         if "user_id" in kwargs:
             try:
                 kwargs["user_id"] = int(kwargs["user_id"])
-            except ValueError:
+                query.select_users(user_id=kwargs["user_id"], limit=1)[0]
+            except (ValueError, IndexError):
                 return redirect(url_for("user.browse"))
         
         if "post_id" in kwargs:
             try:
                 kwargs["post_id"] = int(kwargs["post_id"])
-            except ValueError:
+                query.select_blogs(author_id=kwargs["user_id"], blog_id=kwargs["post_id"], limit=1)[0]
+            except (ValueError, IndexError):
                 return redirect(url_for("user.blog.browse", user_id=kwargs["user_id"]))
         
         if "friend_id" in kwargs:
