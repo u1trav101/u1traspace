@@ -21,9 +21,10 @@
     color: grey;
 }
 
-.blog-container a:hover {
+.blog-container a:hover, .blog-container a:active {
     color: #fefefe;
 }
+
 
 .blog-header {
     display: flex;
@@ -31,4 +32,8 @@
 
 .blog-header h4 {
     text-decoration: underline;
+}
+
+.delete-button {
+    margin-bottom: -30px;   
 }
