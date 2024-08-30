@@ -119,7 +119,12 @@ p {
 .comment {
     display: flex;
     align-items: start;
+
     border: 1px solid grey;
+}
+
+.comment div {
+    width: 100%;
 }
 
 .comment-container {
@@ -155,16 +160,21 @@ p {
     border-bottom: 1px solid #fefefe;
 }
 
-.comment-top button {
+.delete-button {
+    margin: 0 20px 0 auto;
+}
+
+.delete-button button {
     all: unset;
 
     background-color: rgba(0,0,0,0.2);
     border: 1px solid grey;
     cursor: pointer;
+    color: grey;
 }
 
-.deleteButton {
-    margin: 0 20px 0 auto;
+.delete-button button:hover, .delete-button button:active {
+    color: #fefefe;
 }
 
 .header {

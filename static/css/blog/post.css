@@ -3,12 +3,17 @@
 }
 
 .comments {
-
     border-top: 1px solid grey;
 }
 
 .comment-form {
     padding: 20px;
+    
+    border-bottom: 1px solid grey;
+}
+
+.comment-form div {
+    font-style: italic;
 }
 
 .comment-form form {
@@ -20,24 +25,15 @@
     width: 100%;
 }
 
+.number-of-comments {
+    border-bottom: 0;
+}
+
 .comment-top a h5 {
     margin: 0;
 }
 
-.comment-container {
-    display: flex;
-    padding: 20px;
-    width: auto;
-
-    border-top: 1px solid grey;
-}
-
-.comment-container div {
-    flex-grow: 1;
-    margin-top: 0;
-}
-
-.comment-form, .comment-container {
+.comment-form, .comment {
     background-color: rgba(0,0,0,0.2);
 }
 
