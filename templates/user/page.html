@@ -1,7 +1,6 @@
 {% extends "/layouts/page.html" %}
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/page.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% block props %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user/page.css') }}">
     <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
     <title>u1traspace - {{ properties["username"] }}</title>
 {% endblock %}
