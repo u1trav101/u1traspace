@@ -8,7 +8,7 @@ from web.blueprints.blog.new import _new
 
 blog_blueprint = Blueprint("blog", __name__)
 
-@blog_blueprint.route("/")
+@blog_blueprint.route("/", methods=["GET", "POST"])
 @validate_url_vars
 def browse(user_id: int) -> Response | str:
     return _browse(user_id)

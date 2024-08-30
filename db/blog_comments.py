@@ -53,3 +53,18 @@ def insert_blog_comment(cur:Cursor, blog_id:int, author_id:int, corpus:str) -> N
         INSERT INTO blog_comments (blog_id, author_id, corpus)
         VALUES (?, ?, ?);
     """, [blog_id, author_id, corpus])
+
+def delete_blog_comment(cur:Cursor, comment_id:int, soft:bool, limit:int) -> None:
+    if soft:
+        cur.execute("""
+            UPDATE blog_comments
+            SET visible = FALSE
+            WHERE comment_id = ?
+            LIMIT ?
+        """, [comment_id, limit])
+    else:
+        cur.execute("""
+            DELETE FROM blog_comments
+            WHERE comment_id = ?
+            LIMIT ?;
+        """, [comment_id, limit])

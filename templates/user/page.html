@@ -32,7 +32,7 @@
                                 {% if session["user_id"] == comment["author_id"] | string or session["user_id"] == properties["user_id"] | string %}
                                     <form class="deleteButton" action="" method="post" novalidate>
                                         {{delete_form.hidden_tag()}}
-                                        <button name="delete" value="{{comment.id}}" type="submit">delete</button>
+                                        <button name="delete" value="{{ comment['comment_id'] }}" type="submit">delete</button>
                                     </form>
                                 {%endif%}
                             </div>

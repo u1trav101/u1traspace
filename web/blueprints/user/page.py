@@ -17,7 +17,7 @@ def _page(user_id: int) -> Response | str | tuple:
     if ("user_id") in session:
         if comment_form.validate_on_submit():
             messaging.send_profile_comment(
-                session["user_id"],
+                int(session["user_id"]),
                 user_id,
                 comment_form.corpus.data
             )
@@ -28,10 +28,10 @@ def _page(user_id: int) -> Response | str | tuple:
                 return "Invalid value for field 'delete'", 400
 
             comment_id: int = int(res)
-            res = str(query.get_user_comment_author(user_id, comment_id))
+            comment: dict = query.select_page_comments(comment_id=int(res))[0]
 
-            if (session["user_id"] == user_id) or (session["user_id"] == res):
-                query.delete_user_comment(user_id, comment_id)
+            if (int(session["user_id"]) == user_id) or (int(session["user_id"]) == comment["author_id"]):
+                query.delete_page_comment(comment_id=comment_id, limit=1)
 
                 return redirect(url_for("user.page", user_id=user_id))
 

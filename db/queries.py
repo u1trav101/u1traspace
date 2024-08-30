@@ -113,6 +113,14 @@ class _Query():
             author_id=author_id,
             corpus=corpus
         )
+    
+    def delete_page_comment(self, comment_id:int, soft:bool=True, limit:int=1) -> None:
+        page_comments.delete_page_comment(
+            self.cur,
+            comment_id=comment_id,
+            soft=soft,
+            limit=limit
+        )
 
     # works on blogs table
     def select_blogs(
@@ -147,6 +155,14 @@ class _Query():
             author_id=author_id,
             title=title,
             corpus=corpus
+        )
+    
+    def delete_blog(self, blog_id:int, soft:bool=True, limit:int=1) -> None:
+        blogs.delete_blog(
+            self.cur,
+            blog_id=blog_id,
+            soft=soft,
+            limit=limit
         )
     
     # works on blog_comments table
@@ -200,6 +216,14 @@ class _Query():
             blog_id=blog_id,
             author_id=author_id,
             corpus=corpus
+        )
+    
+    def delete_blog_comment(self, comment_id:int, soft:bool=True, limit:int=1) -> None:
+        blog_comments.delete_blog_comment(
+            self.cur,
+            comment_id=comment_id,
+            soft=soft,
+            limit=limit
         )
     
     # works on friends table

@@ -11,7 +11,13 @@
             {% for blog in blogposts %}
                 <div class="blog-container">
                     <a class="blog" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blog['blog_id']) }}">
-                        <span class="blog-header"><h4>{{ blog["title"] }}</h4>&nbsp- {{ time(blog["date"]) }}</span>
+                        <div class="blog-header">
+                            <span><h4>{{ blog["title"] }}</h4>&nbsp- {{ time(blog["date"]) }}</span>
+                            <form action="" method="post" novalidate>
+                                {{ delete_form.hidden_tag() }}
+                                <button name="delete" value="{{ blog['blog_id'] }}" type="submit">delete</button>
+                            </form>
+                        </div>
                         <p>
                             {{ blog["corpus"] }}
                         </p>

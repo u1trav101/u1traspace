@@ -17,34 +17,24 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
         if comment_form.validate_on_submit():
             messaging.send_blog_comment(
                 session["user_id"], post_id, comment_form.corpus.data)
+            
+            return redirect(url_for("user.blog.post", user_id=user_id, post_id=post_id))
 
         elif delete_form.validate_on_submit():
-            delete_value: str | None = request.form.get("delete")
-            query = Query()
+            comment_id: str | None = request.form.get("delete")
+            
+            if comment_id:
+                try:
+                    int(comment_id)
+                except ValueError:
+                    return redirect(url_for("user.blog.post", user=user_id, post_id=post_id))
 
-            if delete_value == "blog":
-                query.delete_blogpost(user_id, post_id)
+                query = Query()
+                comments: list[dict] = query.select_blog_comments(comment_id=int(comment_id), limit=1)
+                if comments:
+                    if (int(session["user_id"]) == user_id) or (int(session["user_id"]) == comments[0]["author_id"]):
+                        query.delete_blog_comment(comment_id=int(comment_id))
 
-                return redirect(url_for("user.page", user_id=user_id))
-            elif delete_value == "blog_comment":
-                res: str = str(query.get_blog_comment_author(
-                    user_id,
-                    post_id,
-                    delete_value
-                ))
-
-                if (session["user_id"] == user_id) or (session["user_id"] == res):
-                    query.delete_blog_comment(post_id, delete_value)
-
-                    return redirect(url_for(
-                        "blog.post",
-                        user_id=user_id,
-                        post_id=post_id
-                    ))
-            else:
-                return "Invalid value for field 'delete'", 400
-
-        if request.method == "POST":
             return redirect(url_for("user.blog.post", user_id=user_id, post_id=post_id))
 
     properties: dict = profile.get_profile_properties(user_id)

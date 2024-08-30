@@ -19,7 +19,7 @@
                                 <a class="{{ 'active' if request.path[-4:-1] == 'new' }}" href="{{ url_for('user.blog.new', user_id=properties['user_id']) }}">new</a>/
                             {% endif %}
                             {% if blogpost is defined %}
-                                {% if request.path[-7:-1] == "blog/" + blogpost["blog_id"] | string %}
+                                {% if "blog/" + blogpost["blog_id"] | string in request.path %}
                                     <a class="active" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blogpost['blog_id']) }}">{{ blogpost["title"] }}</a>/
                                 {% endif %}
                             {% endif %}
