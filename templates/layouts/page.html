@@ -1,6 +1,8 @@
 {% extends "/layouts/base.html" %}
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts/page.css') }}">
+    {% block props %}
+    {% endblock %}
 {% endblock %}
 {% block body %}
     <div id="container" class="container">
