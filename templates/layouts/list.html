@@ -1,0 +1,11 @@
+{% extends "/layouts/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts/list.css') }}">
+    {% block props %}{% endblock %}
+{% endblock %}
+{% block body %}
+    <div class="top">
+        {% block top %}{% endblock %}
+    </div>
+    {% block content %}{% endblock %}
+{% endblock %}

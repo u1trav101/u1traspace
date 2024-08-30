@@ -2,26 +2,6 @@ h3 {
     font-style: italic;
 }
 
-.top {
-    display: flex;
-    align-items: center;
-}
-
-.top form {
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-}
-
-.top form input {
-    margin: 0;
-    margin-left: 20px;
-}
-
-.top form input[type=text] {
-    flex-grow: 1;
-}
-
 .avatar {
     margin: 20px;
     padding: 5px;

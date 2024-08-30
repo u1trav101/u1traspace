@@ -1,0 +1,25 @@
+.top {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.top h2 {
+    margin: 10px 0 0;
+}
+
+.top form {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.top form input {
+    margin: 0;
+    margin-left: 20px;
+}
+
+.top form input[type=text] {
+    flex-grow: 1;
+}
