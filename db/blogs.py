@@ -40,3 +40,18 @@ def insert_blog(cur:Cursor, author_id:int, title:str, corpus:str) -> None:
         INSERT INTO blogs (author_id, title, corpus)
         VALUES (?, ?, ?);
     """, [author_id, title, corpus])
+
+def delete_blog(cur:Cursor, blog_id:int, soft:bool, limit:int) -> None:
+    if soft:
+        cur.execute("""
+            UPDATE blogs
+            SET visible = FALSE
+            WHERE blog_id = ?
+            LIMIT ?;
+        """, [blog_id, limit])
+    else:
+        cur.execute("""
+            DELETE FROM blogs
+            WHERE blog_id = ?
+            LIMIT ?;
+        """, [blog_id, limit])

@@ -32,3 +32,18 @@ def insert_page_comment(cur:Cursor, page_id:int, author_id:int, corpus:str) -> N
         INSERT INTO page_comments (page_id, author_id, corpus)
         VALUES (?, ?, ?);
     """, [page_id, author_id, corpus])
+
+def delete_page_comment(cur:Cursor, comment_id:int, soft:bool, limit:int) -> None:
+    if soft:
+        cur.execute("""
+            UPDATE page_comments
+            SET visible = FALSE
+            WHERE comment_id = ?
+            LIMIT ?;
+        """, [comment_id, limit])
+    else:
+        cur.execute("""
+            DELETE FROM page_comments
+            WHERE comment_id = ?
+            LIMIT ?;
+        """, [comment_id, limit])
