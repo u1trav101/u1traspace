@@ -1,69 +1,47 @@
-{% extends "/layouts/base.html" %}
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/nav.css') }}">
+{% extends "/layouts/options.html" %}
+{% block props %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/message/browse.css') }}">
+    <script src="{{ url_for('static', filename='js/conversation.js') }}"></script>
     <title>u1traspace - messages</title>
 {% endblock %}
-{% block body %}
-    {% set conversation_user_ids = [] %}
-    <div class="messages-container">
-        <nav class="nav-categories">
-            {% for i in range(conversations | length) %}
-                {% set conversation_user_ids = conversation_user_ids.append(conversations[i]["user_id"]) %}
-                <span onclick="changeConversation({{ conversations[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
-            {% endfor %}
-            {% for i in range(friends | length) %}
-                {% if friends[i]["user_id"] not in conversation_user_ids %}
-                    <span onclick="changeConversation({{ friends[i]['user_id'] }})">{{ friends[i]["username"] }}</span>
-                {% endif %}
-            {% endfor %}
-        </nav>
-        <div>
-            {% for i in range(conversations | length) %}
-                <aside class="nav-category {{ 'hidden' if (request.args.get('c') | int != conversations[i]['user_id']) and request.args.get('c') != '' }}" id="{{ conversations[i]['user_id'] }}">
-                    <a class="message-header" href="{{ url_for('user.page', user_id=conversations[i]['user_id']) }}">
-                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ conversations[i]['user_id'] }}.webp" alt="{{ conversations[i]['username'] }}">
-                        <h2>{{ conversations[i]["username"] }}</h2>
-                    </a>
-                    <div id="messages-{{ conversations[i]['user_id'] }}" class="messages"></div>
-                    <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
-                        <textarea name="message-box" id="message-box"></textarea>
-                        <input type="submit" value="send">
-                    </form>
-                </aside>
-            {% endfor %}
-            {% for i in range(friends | length) %}
-                {% if friends[i]["user_id"] not in conversation_user_ids %}
-                    <aside class="nav-category {{ 'hidden' if (request.args.get('c') | int != friends[i]['user_id']) and request.args.get('c') != '' }}" id="{{ friends[i]['user_id'] }}">
-                        <a class="message-header" href="{{ url_for('user.page', user_id=friends[i]['user_id']) }}">
-                            <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" alt="{{ friends[i]['username'] }}">
-                            <h2>{{ friends[i]["username"] }}</h2>
-                        </a>
-                        <div id="messages-{{ friends[i]['user_id'] }}" class="messages"></div>
-                        <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
-                            <textarea name="message-box" id="message-box"></textarea>
-                            <input type="submit" value="send">
-                        </form>
-                    </aside>
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>
+{% block categories %}
+    {% for i in range(conversations | length) %}
+        {% set conversation_user_ids = conversation_user_ids.append(conversations[i]["user_id"]) %}
+        <span onclick="changeConversation({{ conversations[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
+    {% endfor %}
+    {% for i in range(friends | length) %}
+        {% if friends[i]["user_id"] not in conversation_user_ids %}
+            <span onclick="changeConversation({{ friends[i]['user_id'] }})">{{ friends[i]["username"] }}</span>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
-{% block script %}
-    <script>
-        const changeConversation = (userID) => {
-            changeCategory(userID);
-            createSocket(userID);
-        }
-
-        window.onload = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get("c")) {
-                createSocket(urlParams.get("c"));
-            }
-        }
-    </script>
-    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/conversation.js') }}"></script>
+{% block content %}
+    {% for i in range(conversations | length) %}
+        <aside class="{{ 'hidden' if (request.args.get('c') | int != conversations[i]['user_id']) and request.args.get('c') != '' }}" id="{{ conversations[i]['user_id'] }}">
+            <a class="message-header" href="{{ url_for('user.page', user_id=conversations[i]['user_id']) }}">
+                <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ conversations[i]['user_id'] }}.webp" alt="{{ conversations[i]['username'] }}">
+                <h2>{{ conversations[i]["username"] }}</h2>
+            </a>
+            <div id="messages-{{ conversations[i]['user_id'] }}" class="messages"></div>
+            <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
+                <textarea name="message-box" id="message-box"></textarea>
+                <input type="submit" value="send">
+            </form>
+        </aside>
+    {% endfor %}
+    {% for i in range(friends | length) %}
+        {% if friends[i]["user_id"] not in conversation_user_ids %}
+            <aside class="{{ 'hidden' if (request.args.get('c') | int != friends[i]['user_id']) and request.args.get('c') != '' }}" id="{{ friends[i]['user_id'] }}">
+                <a class="message-header" href="{{ url_for('user.page', user_id=friends[i]['user_id']) }}">
+                    <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" alt="{{ friends[i]['username'] }}">
+                    <h2>{{ friends[i]["username"] }}</h2>
+                </a>
+                <div id="messages-{{ friends[i]['user_id'] }}" class="messages"></div>
+                <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
+                    <textarea name="message-box" id="message-box"></textarea>
+                    <input type="submit" value="send">
+                </form>
+            </aside>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
