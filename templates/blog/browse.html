@@ -19,7 +19,7 @@
                             <span><h4>{{ blog["title"] }}</h4>&nbsp- {{ time(blog["date"]) }}</span>
                         </div>
                         <p>
-                            {{ blog["corpus"] }}
+                            {{ blog["corpus"] | truncate(500) }}
                         </p>
                     </a>
                 </div>

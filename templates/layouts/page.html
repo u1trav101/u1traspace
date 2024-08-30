@@ -20,7 +20,7 @@
                             {% endif %}
                             {% if blogpost is defined %}
                                 {% if "blog/" + blogpost["blog_id"] | string in request.path %}
-                                    <a class="active" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blogpost['blog_id']) }}">{{ blogpost["title"] }}</a>/
+                                    <a class="active" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blogpost['blog_id']) }}">{{ blogpost["title"] | truncate(40) }}</a>/
                                 {% endif %}
                             {% endif %}
                         </div>

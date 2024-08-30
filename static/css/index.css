@@ -79,8 +79,15 @@ main {
     margin-bottom: 20px;
 }
 
-.purpose, .user {
+.purpose {
     margin-top: -150px;
+}
+
+.user {
+    max-width: 270px;
+    max-height: 400px;
+    height: fit-content;
+    margin: -150px 0 0;
 }
 
 .user a {
@@ -90,6 +97,16 @@ main {
     
     border: none;
     text-align: center;
+}
+
+.user h3 {
+    margin: 20px 0 40px;
+
+    text-align: center;
+}
+
+.user h4 {
+    margin: 40px 0 20px;
 }
 
 .user img {
