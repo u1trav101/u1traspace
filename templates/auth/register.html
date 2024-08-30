@@ -1,6 +1,8 @@
-{% extends "/layouts/base.html" %}
+{% extends "/layouts/form.html" %}
+{% block props %}
     <title>u1traspace - register</title>
-{% block body %}
+{% endblock %}
+{% block main %}
     <h2>register:</h2>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}

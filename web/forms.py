@@ -9,7 +9,7 @@ from wtforms.validators import DataRequired, Length, EqualTo
 class login_form(FlaskForm):
     email: EmailField = EmailField("email", validators=[DataRequired(), Length(2, 100)])
     password: PasswordField = PasswordField("password", validators=[DataRequired(), Length(2, 30)])
-    submit: SubmitField = SubmitField("login", validators=[DataRequired()])
+    submit: SubmitField = SubmitField("submit", validators=[DataRequired()])
 
 
 class register_form(FlaskForm):
@@ -17,7 +17,7 @@ class register_form(FlaskForm):
     username: StringField = StringField("username", validators=[DataRequired(), Length(2, 30)])
     password: PasswordField = PasswordField("password", validators=[DataRequired(), Length(2, 64)])
     confirm: PasswordField = PasswordField("confirm", validators=[DataRequired(), Length(2, 64), EqualTo("password")])
-    submit: SubmitField = SubmitField("register", validators=[DataRequired()])
+    submit: SubmitField = SubmitField("submit", validators=[DataRequired()])
 
 
 def register_commit(user_id: int) -> Response:
