@@ -3,7 +3,7 @@
     <title>u1traspace - register</title>
 {% endblock %}
 {% block main %}
-    <h2>register:</h2>
+    <h2 class="glitch" data-text="register:">register:</h2>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         {{ form.email(placeholder="email") }}
@@ -12,4 +12,6 @@
         {{ form.confirm(placeholder="confirm password") }}
         {{ form.submit() }}
     </form>
+    <span class="disclaimer">by registering for an u1traspace account, you are confirming that you have read and agree to all the rules laid out <a href="{{ url_for('rules') }}">here</a></span>
+    <span class="redirect">already have an account? login <a href="{{ url_for('auth.login') }}">here</a></span>
 {% endblock %}

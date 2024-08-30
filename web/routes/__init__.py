@@ -4,6 +4,6 @@ from web.routes.konata import konata
 from web.routes.news import news
 from web.routes.set_timezone import set_timezone
 from web.routes.rss import rss
-from web.routes.faq import faq
+from web.routes.rules import rules
 from web.routes.preferences import preferences
 from web.routes.remove_friend import remove_friend
