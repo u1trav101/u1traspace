@@ -96,15 +96,15 @@
                     </audio>
                 </div>
             </div>
-            <div class="blogs">
-                {% if blogposts %}
-                <h4>{{ properties['username'] }}'s blogs:</h4>
+            {% if blogposts %}
+                <div class="blogs">
+                    <h4>{{ properties['username'] }}'s blogs:</h4>
                     {% for blog in blogposts %}
                         <a class="blog-preview" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blog['blog_id']) }}">
                             <h5>{{ blog["title"] | truncate(40) }}</h5>&nbsp- {{ time(blog["date"]) | string }}
                         </a>
                     {% endfor %}
-                {% endif %}
-            </div>
-        </section>    
+                </div>
+            {% endif %}
+        </section>
 {% endblock %}
