@@ -1,16 +1,5 @@
-main {
-    padding: 0;
-    height: calc(100% - 86px);
-}
-
-.prefs-container {
-    display: flex;
-    height: 100%;
-}
-
-.prefs-container form {
+form {
     width: 100%;
-    margin: 30px;
 }
 
 aside .row.audio {
@@ -35,6 +24,10 @@ aside h3 {
 
 aside textarea {
     height: 30px;
+}
+
+.options-content {
+    margin: 20px;
 }
 
 .avatar-upload-container {
@@ -77,7 +70,7 @@ aside textarea {
 
 .comment-input {
     width: 80%;
-    margin: 0 0 0 auto;
+    margin: 0 auto;
 
     color: grey;
 }

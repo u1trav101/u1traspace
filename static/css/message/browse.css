@@ -2,14 +2,6 @@ body {
     overflow: hidden;
 }
 
-main {
-    padding: 0;
-}
-
-main div {
-    width: calc(100%);
-}
-
 h2 {
     text-decoration: underline;
 }
@@ -29,16 +21,11 @@ img {
     height: 75px;
 }
 
-.nav-categories {
-    height: calc(100vh - 86px);
-    min-width: 292px;
-}
-
-.nav-category {
+aside {
     border-left: 1px solid #fefefe;
 }
 
-.nav-category form {
+aside form {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -47,12 +34,12 @@ img {
     align-items: flex-start;
 }
 
-.nav-category textarea {
+aside textarea {
     flex-grow: 1;
     margin: 0;
 }
 
-.nav-category input[type=submit] {
+aside input[type=submit] {
     margin: 0;
     height: 80px;
     padding-top: 0;

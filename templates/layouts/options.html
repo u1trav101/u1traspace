@@ -1,0 +1,33 @@
+{% extends "/layouts/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts/options.css') }}">
+    <script src="{{ url_for('static', filename='js/options.js') }}"></script>
+    {% block props %}
+    {% endblock %}
+{% endblock %}
+{% set conversation_user_ids = [] %}
+{% block body %}
+    <div class="options-container">
+        <div class="categories">        
+            {% block categories %}{% endblock %}
+        </div>
+        <div class="options-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        const changeConversation = (userID) => {
+            changeCategory(userID);
+            createSocket(userID);
+        }
+
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get("c")) {
+                createSocket(urlParams.get("c"));
+            }
+        }
+    </script>
+{% endblock %}
