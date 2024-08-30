@@ -45,11 +45,9 @@ def _page(user_id: int) -> Response | str | tuple:
     template: str = "user/page.html"
     match properties["layout"]:
         case "twitter":
-            template = "twitter/profile.html"
-        case "classic":
-            template = "classic/profile.html"
+            template = "twitter/user/page.html"
         case "myspace":
-            template = "myspace/profile.html"
+            template = "myspace93/user/page.html"
 
     return render_template(
         template,

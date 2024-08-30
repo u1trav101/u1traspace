@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
     `page_views` int NOT NULL DEFAULT 0,
     `visible` bool NOT NULL DEFAULT TRUE,
     `private` bool NOT NULL DEFAULT FALSE,
-    `layout` enum('u1traspace', 'myspace', 'twitter') NOT NULL DEFAULT 'u1traspace',
+    `layout` enum('u1traspace', 'myspace93', 'twitter') NOT NULL DEFAULT 'u1traspace',
     `about` varchar(4096) DEFAULT NULL,
     FULLTEXT KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

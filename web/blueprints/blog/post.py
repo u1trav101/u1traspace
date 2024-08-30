@@ -51,11 +51,9 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
     template: str = "blog/post.html"
     match properties["layout"]:
         case "twitter":
-            template = "twitter/blogpost.html"
-        case "classic":
-            template = "classic/blogpost.html"
+            template = "twitter/blog/post.html"
         case "myspace":
-            template = "myspace/blogpost.html"
+            template = "myspace93/blog/post.html"
 
     return render_template(
         template,
