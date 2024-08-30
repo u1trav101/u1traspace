@@ -64,6 +64,6 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     def rss(request: str) -> Response | str | tuple:
         return routes.rss(request)
     
-    @app.route("/faq/")
-    def faq() -> str:
-        return routes.faq()
+    @app.route("/rules/")
+    def rules() -> str:
+        return routes.rules()

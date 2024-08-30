@@ -10,4 +10,5 @@
         {{ form.password(placeholder="password") }}
         {{ form.submit() }}
     </form>
+    <span class="redirect">don't have an account? sign up <a href="{{ url_for('auth.register') }}">here</a></span>
 {% endblock %}
