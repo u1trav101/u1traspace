@@ -1,13 +1,13 @@
-{% extends "/layouts/base.html" %}
-{% block head %}
+{% extends "/layouts/form.html" %}
+{% block props %}
     <title>u1traspace - login</title>
 {% endblock %}
-{% block body %}
-    <h2>login:</h2>
+{% block main %}
+    <h2 class="glitch" data-text="login:">login:</h2>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         {{ form.email(placeholder="email") }}
-        {{ form.password(placeholder='password') }}
-        {{ form.submit }}
+        {{ form.password(placeholder="password") }}
+        {{ form.submit() }}
     </form>
 {% endblock %}
