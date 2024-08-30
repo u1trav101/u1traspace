@@ -35,7 +35,7 @@
                         </div>
                         <div class="content">
                             <span><span class="title">{{ result["title"] }}</span> - <span>{{ result["date"] }}</span></span>
-                            <p class="corpus">{{ result["corpus"][:500] }}{{"..." if result["corpus"] | length > 500}}</p>
+                            <p class="corpus">{{ result["corpus"] | truncate(500) }}</p>
                         </div>
                     </a>
                 {% endif %}
