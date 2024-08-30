@@ -12,11 +12,9 @@ def _friends(user_id: int) -> Response | str:
     template: str = "user/friends.html"
     match properties["layout"]:
         case "twitter":
-            template = "twitter/friends.html"
+            template = "twitter/user/friends.html"
         case "myspace":
-            template = "myspace/friends.html"
-        case "classic":
-            template = "classic/friends.html"
+            template = "myspace93/user/friends.html"
 
     return render_template(
         template,
