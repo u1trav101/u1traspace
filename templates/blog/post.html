@@ -11,7 +11,7 @@
         </div>
         <div class="comText">
             {% for line in blogpost['corpus'].split('\n') %}
-                <span>{{ line | escape | regex_replace("javascript:", "javashcript:") | markdown}}</span><br>
+                <span>{{ line | escape | regex_replace("javascript:", "javashcript:") | markdown | safe}}</span><br>
             {% endfor %}
         </div>
     </section>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="comment-corpus">
                             <p>
-                                {{ comment["corpus"] | escape | regex_replace('javascript:','javashcript:') | markdown }}
+                                {{ comment["corpus"] | escape | regex_replace('javascript:','javashcript:') | markdown | safe }}
                             </p>
                         </div>
                     </div>

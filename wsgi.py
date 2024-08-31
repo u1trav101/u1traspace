@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_limiter.util import get_remote_address
-from flask_misaka import Misaka
 from flask_sock import Sock
 from flask_limiter import Limiter
 from werkzeug.middleware.proxy_fix import ProxyFix
+from markdown import markdown
 from celery import Celery
 from tasks import celery_init_app
 from web import declare_routes, regex_replace
@@ -34,7 +34,6 @@ if not CONFIG.DEBUG:
 
 # initialising flask extensions
 CORS(app)
-Misaka(app, autolink=True)
 sock = Sock(app)
 Limiter(
     app=app,
@@ -47,6 +46,7 @@ celery: Celery = celery_init_app(app)
 
 # declaring jinja filters
 app.add_template_filter(regex_replace)
+app.add_template_filter(markdown)
 
 # declaring the app URL endpoints
 declare_routes(app, sock)
