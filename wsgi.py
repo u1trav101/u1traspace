@@ -1,7 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_limiter.util import get_remote_address
 from flask_misaka import Misaka
 from flask_sock import Sock
+from flask_limiter import Limiter
 from celery import Celery
 from tasks import celery_init_app
 from web import declare_routes, regex_replace
@@ -28,6 +30,12 @@ app.config.from_object(CONFIG)
 CORS(app)
 Misaka(app, autolink=True)
 sock = Sock(app)
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address,
+    storage_uri=CONFIG.REDIS_BROKER_URL,
+    default_limits=["3 per second"]
+)
 
 celery: Celery = celery_init_app(app)
 
