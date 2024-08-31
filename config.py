@@ -28,6 +28,9 @@ class CONFIG:
     MARIADB_DATABASE: str = "u1traspace"
     SELECT_LIMIT: int = 999
 
+    REDIS_BROKER_URL: str = "redis://127.0.0.1:6379/0"
+    REDIS_RESULT_URL: str = "redis://127.0.0.1:6379/1" 
+
     CDN_URI: str = "https://cdn.u1trav101.net/u1traspace"
     INSECURE_CDN_URI: str = "http://cdn.u1trav101.net/ultraspace"
 
@@ -51,8 +54,8 @@ class CONFIG:
     S3_BUCKET_NAME: str = "u1trav101"
 
     CELERY: dict[str, str | bool] = dict(
-        broker_url="redis://127.0.0.1:6379/0",
-        result_backend="redis://127.0.0.1:6379/1",
+        broker_url=REDIS_BROKER_URL,
+        result_backend=REDIS_RESULT_URL,
         task_ignore_result=True,
     )
 
