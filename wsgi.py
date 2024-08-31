@@ -4,6 +4,7 @@ from flask_limiter.util import get_remote_address
 from flask_misaka import Misaka
 from flask_sock import Sock
 from flask_limiter import Limiter
+from werkzeug.middleware.proxy_fix import ProxyFix
 from celery import Celery
 from tasks import celery_init_app
 from web import declare_routes, regex_replace
@@ -21,16 +22,21 @@ os.makedirs(os.path.dirname("./usercontent/img/rsz/32px"), exist_ok=True)
 os.makedirs(os.path.dirname("./usercontent/audio"), exist_ok=True)
 os.makedirs(os.path.dirname("./usercontent/css"), exist_ok=True)
 
+# instialising wsgi app instance
 app: Flask = Flask("u1traspace")
 
 # applying configs from config class
 app.config.from_object(CONFIG)
 
+# fixing rate_limiter key_func if in prod (deployed behind reverse proxy)
+if not CONFIG.DEBUG:
+    ProxyFix(app.wsgi_app, x_for=CONFIG.NUM_OF_PROXIES)
+
 # initialising flask extensions
 CORS(app)
 Misaka(app, autolink=True)
 sock = Sock(app)
-limiter = Limiter(
+Limiter(
     app=app,
     key_func=get_remote_address,
     storage_uri=CONFIG.REDIS_BROKER_URL,
