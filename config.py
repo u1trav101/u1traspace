@@ -19,6 +19,7 @@ client.access_token_login(open(".bitwarden-access-token", "r").readline())
 class CONFIG:
     DEBUG: bool = True
     PORT: int = 5000
+    NUM_OF_PROXIES: int = 1
 
     MARIADB_HOST: str = "127.0.0.1"
     MARIADB_PORT: int = 3306
