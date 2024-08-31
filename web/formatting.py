@@ -26,4 +26,3 @@ def regex_replace(text: str, find: str, replace: str) -> str:
     regex: re.Pattern[str] = re.compile(re.escape(find), re.IGNORECASE)
 
     return regex.sub(repl=replace, string=text)
-

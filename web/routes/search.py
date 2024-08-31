@@ -1,4 +1,5 @@
-from flask import redirect, request, escape, url_for
+from flask import redirect, request, url_for
+from markupsafe import escape
 from werkzeug import Response
 from flask_wtf import FlaskForm
 from db.search import search as search_db
