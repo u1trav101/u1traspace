@@ -4,12 +4,12 @@ import os
 
 def get_profile_properties(user_id: int) -> dict | None:
     query = Query()
-    res: dict = query.select_users(user_id=user_id, limit=1)[0]
+    res: dict = query.select_users(user_id=user_id, limit=1)
 
     if not res:
         return None
     
-    return res
+    return res[0]
 
 
 def get_profile_comments(page_id: int) -> list[dict] | None:

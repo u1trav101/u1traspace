@@ -1,4 +1,4 @@
-from typing import overload
+from typing import Any
 from mariadb import Connection
 import db.users as users
 import db.page_comments as page_comments
@@ -27,7 +27,9 @@ class _Query():
         visible: bool = True, 
         order_by: str = "user_id", 
         order: str = "DESC", 
-        limit: int = CONFIG.SELECT_LIMIT, 
+        limit: int = CONFIG.SELECT_LIMIT,
+        random: bool = False,
+        seed: int | None = None,
         email: str | None = None, 
         user_id: int | None = None
     ) -> list | int:
@@ -41,6 +43,8 @@ class _Query():
             order_by=order_by,
             order=order,
             limit=limit,
+            random=random,
+            seed=seed,
             email=email,
             user_id=user_id
         )
