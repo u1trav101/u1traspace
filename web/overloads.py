@@ -1,4 +1,5 @@
 from flask import request, render_template as real_render_template
+from wtforms.validators import DataRequired as _DataRequired, Length as _Length
 from time import time
 from config import CONFIG
 from web.formatting import epoch_to_readable
@@ -16,4 +17,18 @@ def render_template(*args, **kwargs) -> str:
         cdn_uri=CDN_URI,
         current_time=round(time()),
         time=epoch_to_readable,
+    )
+
+def DataRequired(name: str, *args, **kwargs) -> _DataRequired:
+    return _DataRequired(
+        message = CONFIG.STRINGS["errors"]["validation"]["missing_input"].format(name),
+        **kwargs
+    )
+
+def Length(name: str, *args, **kwargs) -> _Length:
+    return _Length(
+        message=CONFIG.STRINGS["errors"]["validation"]["bad_length"].format(name, args[0], args[1]),
+        min=args[0],
+        max=args[1],
+        **kwargs
     )

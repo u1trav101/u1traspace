@@ -31,7 +31,7 @@
                                 <span>{{ time(comment["date"]) }}</span>
                                 {% if session["user_id"] == comment["author_id"] | string or session["user_id"] == properties["user_id"] | string %}
                                     <form class="deleteButton delete-button" action="" method="post" novalidate>
-                                        {{delete_form.hidden_tag()}}
+                                        {{ forms.delete_comment.hidden_tag() }}
                                         <button name="delete" value="{{ comment['comment_id'] }}" type="submit">delete</button>
                                     </form>
                                 {%endif%}
@@ -51,9 +51,9 @@
                 <div class="commentForm">
                     <form action="" method="post" novalidate>
                         {% if ('user_id') in session %}
-                            {{ comment_form.hidden_tag() }}
-                            {{ comment_form.corpus(placeholder="leave a comment...", class="comment-input", oninput="textAreaAdjust(this)")}}
-                            {{ comment_form.submit(class="commentPost", id="commentPost", value=" ") }}
+                            {{ forms.comment.hidden_tag() }}
+                            {{ forms.comment.corpus(placeholder="leave a comment...", class="comment-input", oninput="textAreaAdjust(this)")}}
+                            {{ forms.comment.submit(class="commentPost", id="commentPost", value=" ") }}
                         {% else %}
                             <textarea class="comment-input" placeholder="please login to leave a comment" disabled></textarea>
                             <input type="submit" value="&nbsp;" disabled>
@@ -64,7 +64,7 @@
                     {% if (session.get("user_id") != None) and (session.get("user_id") | int != properties["user_id"] | int) %}
                         {% if not session.get('user_id') | int in friends | map(attribute="recipient_id")%}
                             <form action="{{ url_for('user.add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
-                                {{friend_form.hidden_tag()}}
+                                {{ forms.friend.hidden_tag() }}
                                 <input id="friend" name="friend" type="submit" value="send friend request">
                             </form>
                             <button disabled>message</button>

@@ -54,7 +54,7 @@
             {% elif ("user_id") in session and session["user_id"] | int != properties["user_id"] %}
                 {% if not is_friends %}
                     <form class="add-friend" action="{{ url_for('user.add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
-                        {{ friend_form.hidden_tag() }}
+                        {{ forms.friend.hidden_tag() }}
                         <input id="friend" name="friend" type="submit" value="send friend request">
                     </form>
                 {% endif %}

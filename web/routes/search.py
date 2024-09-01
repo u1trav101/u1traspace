@@ -4,7 +4,7 @@ from werkzeug import Response
 from flask_wtf import FlaskForm
 from db.search import search as search_db
 from web.overloads import render_template
-from web.forms import search_form
+from web.forms import input_form
 from config import CONFIG
 import re
 
@@ -13,18 +13,20 @@ RE_COMBINE_WHITESPACE = re.compile(r"\s+")
 
 
 def search() -> Response | str | tuple:
-    form: FlaskForm = search_form()
+    search_form: FlaskForm = input_form()
 
     if request.method == "GET":
         return render_template(
             "search.html",
-            form=form,
-            results=None,
-            search_term=None,
-            search_terms=None
+            results = None,
+            search_term = None,
+            search_terms = None,
+            forms = {
+                "search": search_form
+            }
         )
 
-    corpus: str | None = request.form.get("corpus")
+    corpus: str | None = search_form.corpus.data
     if not corpus:
         return redirect(url_for("search"))
     
@@ -39,8 +41,10 @@ def search() -> Response | str | tuple:
 
     return render_template(
         "search.html",
-        form=form,
-        results=results,
-        search_term=search_term,
-        search_terms=search_terms
+        results = results,
+        search_term = search_term,
+        search_terms = search_terms,
+        forms = {
+            "search": search_form
+        }
     )

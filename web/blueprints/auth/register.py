@@ -1,6 +1,6 @@
+from flask import session, redirect, url_for
 from flask_wtf import FlaskForm
 from werkzeug import Response
-from cdn import copy_default_avatar
 from web.overloads import render_template
 import web.forms as forms
 import auth
@@ -17,11 +17,13 @@ def _register() -> Response | str:
             register_form.password.data
         )
 
-        copy_default_avatar.delay(user_id)
+        session["user_id"] = int(user_id)
 
-        return forms.register_commit(user_id)
+        return redirect(url_for("user.page", user_id=user_id))
 
     return render_template(
         "auth/register.html",
-        form=register_form,
+        forms = {
+            "register": register_form
+        }
     )

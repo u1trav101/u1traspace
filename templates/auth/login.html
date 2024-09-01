@@ -5,10 +5,10 @@
 {% block main %}
     <h2 class="glitch" data-text="login:">login:</h2>
     <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        {{ form.email(placeholder="email") }}
-        {{ form.password(placeholder="password") }}
-        {{ form.submit() }}
+        {{ forms.login.hidden_tag() }}
+        {{ forms.login.email(placeholder="email") }}
+        {{ forms.login.password(placeholder="password") }}
+        {{ forms.login.submit() }}
     </form>
     <span class="redirect">don't have an account? sign up <a href="{{ url_for('auth.register') }}">here</a></span>
 {% endblock %}

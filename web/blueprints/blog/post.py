@@ -9,9 +9,8 @@ import messaging
 
 
 def _post(user_id: int, post_id: int) -> Response | str | tuple:
-    comment_form: FlaskForm = forms.comment_form()
-    delete_form: FlaskForm = forms.comment_delete_form()
-    friend_form: FlaskForm = forms.friend_form()
+    comment_form: FlaskForm = forms.input_form()
+    delete_form: FlaskForm = forms.blank_form()
 
     if ("user_id") in session:
         if comment_form.validate_on_submit():
@@ -21,7 +20,7 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
             return redirect(url_for("user.blog.post", user_id=user_id, post_id=post_id))
 
         elif delete_form.validate_on_submit():
-            comment_id: str | None = request.form.get("delete")
+            comment_id: str | None = request.form.get("value")
             
             if comment_id:
                 try:
@@ -47,13 +46,15 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
 
     return render_template(
         template,
-        properties=properties,
-        blogpost=profile.get_blogpost(user_id, post_id),
-        blogposts=profile.get_all_user_blogposts(user_id),
-        comments=profile.get_blogpost_comments(post_id),
-        friends=profile.get_user_friends(user_id),
-        is_friends=profile.is_friends(user_id),
-        comment_form=comment_form,
-        delete_form=delete_form,
-        friend_form=friend_form
+        properties = properties,
+        blogpost = profile.get_blogpost(user_id, post_id),
+        blogposts = profile.get_all_user_blogposts(user_id),
+        comments = profile.get_blogpost_comments(post_id),
+        friends = profile.get_user_friends(user_id),
+        is_friends = profile.is_friends(user_id),
+        forms = {
+            "comment": comment_form,
+            "delete_post": delete_form,
+            "friend": forms.forms.blank_form()
+        }
     )
