@@ -24,7 +24,7 @@
             </a>
             <div id="messages-{{ conversations[i]['user_id'] }}" class="messages"></div>
             <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
-                <textarea name="message-box" id="message-box"></textarea>
+                <textarea name="message-box" id="message-box" placeholder="message..."></textarea>
                 <input type="submit" value="send">
             </form>
         </aside>
@@ -38,7 +38,7 @@
                 </a>
                 <div id="messages-{{ friends[i]['user_id'] }}" class="messages"></div>
                 <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
-                    <textarea name="message-box" id="message-box"></textarea>
+                    <textarea name="message-box" id="message-box" placeholder="message..."></textarea>
                     <input type="submit" value="send">
                 </form>
             </aside>

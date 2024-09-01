@@ -1,6 +1,6 @@
 errors:
   validation:
-    missing_input: "{0} input is required"
+    missing_input: "{0} is required"
     email_taken: "that email is already in use"
     password_mismatch: "passwords do not match"
     auth_failure: "login details are incorrect"

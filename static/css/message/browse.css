@@ -29,7 +29,7 @@ aside form {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: calc(100% - 292px);
+    width: calc(100% - 302px);
     flex-direction: row;
     align-items: flex-start;
 }
