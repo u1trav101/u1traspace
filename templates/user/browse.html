@@ -19,8 +19,9 @@
 {% endblock %}
 {% block content %}
     <a class="rainbow" href="{{ url_for('user.random') }}">random user</a>
+    {{ pagination.paginator.links }}
     <div class="users">
-        {% for user in users %}
+        {% for user in pagination.users %}
             <a href="{{ url_for('user.page', user_id=user['user_id']) }}" class="user {{ 'online' if current_time - user['last_seen'].timestamp() | round | int <= 300 }}">
                 <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ user['user_id'] }}.webp" alt="{{ user['username'] }}">
                 <span>{{ user['username'] }}</span>

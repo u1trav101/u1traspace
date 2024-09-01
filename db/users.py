@@ -5,28 +5,25 @@ from mariadb import Cursor
 def select_users(cur:Cursor, count:bool, online:bool, start:int, visible:bool, order_by:str, order:str, limit:int, random:bool, email:str|None, user_id:int|None, seed:int|None) -> list | int:
     select: str = "COUNT(*)" if count else "*"
 
-    params: list = [
-        start,
-        visible,
-    ]
+    params: list = [visible]
     if email:
         params.append(email)
     if user_id:
         params.append(user_id)
+    params.append(start)
     params.append(limit)
 
     cur.execute(f"""
         SELECT {select}
         FROM users
         WHERE last_seen > {"NOW() - INTERVAL 5 MINUTE" if online else 0}
-        AND user_id > ?
         AND visible = ?
         {"AND email = ?" if email else ""}
         {"AND user_id = ?" if user_id else ""}
         {f"ORDER BY {order_by} {order}" if not random else ""}
         {"ORDER BY RAND()" if (random and not seed) else ""}
         {f"ORDER BY RAND({seed})" if (random and seed) else ""}
-        LIMIT ?;
+        LIMIT ?, ?;
     """, params)
 
     return cur.fetchone()["COUNT(*)"] if count else cur.fetchall()
