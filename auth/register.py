@@ -13,3 +13,5 @@ def register_user(email: str, username: str, password: str) -> int:
 
     new_user: dict =  query.select_users(order="DESC", limit=1)[0]
     copy_default_avatar.delay(new_user["user_id"])
+
+    return new_user["user_id"]

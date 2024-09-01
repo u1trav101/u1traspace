@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField, EmailField, BooleanField
 from wtforms.validators import EqualTo
-from web.overloads import DataRequired, Length
+from web.overloads import DataRequired, Length, Email
 from web.forms.validators import email_not_taken
 from config import CONFIG
 
@@ -10,7 +10,8 @@ from config import CONFIG
 class login_form(FlaskForm):
     email: EmailField = EmailField("email", validators=[
         DataRequired("email"),
-        Length("email", 2, 100)
+        Length("email", 2, 100),
+        Email()
     ])
     password: PasswordField = PasswordField("password", validators=[
         DataRequired("password"), 
@@ -23,6 +24,7 @@ class register_form(FlaskForm):
     email: EmailField = EmailField("email", validators=[
         DataRequired("email"),
         Length("length", 2, 100),
+        Email(),
         email_not_taken
     ])
     username: StringField = StringField("username", validators=[
