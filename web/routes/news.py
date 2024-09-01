@@ -18,5 +18,5 @@ def news() -> Response | str:
     
     return render_template(
         "news.html",
-        new_posts=blogs
+        new_posts = blogs
     )

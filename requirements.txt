@@ -8,7 +8,9 @@ flask_paginate==2022.1.8
 flask_sock==0.7.0
 flask_wtf==1.2.1
 mariadb==1.1.4
+Markdown==3.7
 MarkupSafe==2.1.5
 python_magic==0.4.27
+PyYAML==6.0.2
 Werkzeug==3.0.4
 WTForms==3.1.2

@@ -1,13 +1,13 @@
 from flask import session, redirect, url_for, request
 from flask_wtf import FlaskForm
 from werkzeug import Response
-from web.forms import friend_form
+from web.forms import blank_form
 from db import Query
 
 
 def remove_friend(friend_id: int) -> Response:
-    form: FlaskForm = friend_form()
-    if form.validate_on_submit():
+    friend_form: FlaskForm = blank_form()
+    if friend_form.validate_on_submit():
         query = Query()
         query.remove_friend(friend_id)
     

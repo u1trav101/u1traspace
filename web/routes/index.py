@@ -19,8 +19,7 @@ def index() -> str:
 
     return render_template(
         "index.html",
-        new_posts=res,
-        form=search_form,
-        user_of_the_day=user_of_the_day,
-        user=get_profile_properties(user_of_the_day)
+        new_posts = res,
+        user_of_the_day = user_of_the_day,
+        user = get_profile_properties(user_of_the_day)
     )

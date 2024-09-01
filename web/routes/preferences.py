@@ -57,10 +57,12 @@ def preferences() -> Response | str:
 
     return render_template(
         "preferences.html",
-        properties=properties,
-        form=preferences_form,
-        avatar_uploading=avatar_uploading,
-        audio_uploading=audio_uploading
+        properties = properties,
+        avatar_uploading = avatar_uploading,
+        audio_uploading = audio_uploading,
+        forms = {
+            "preferences": preferences_form
+        }
     )
 
 

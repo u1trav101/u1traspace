@@ -11,7 +11,7 @@
             {% for blog in blogposts %}
                 <div class="blog-container">
                     <form class="deleteButton delete-button" action="" method="post" novalidate>
-                        {{ delete_form.hidden_tag() }}
+                        {{ forms.delete_post.hidden_tag() }}
                         <button name="delete" value="{{ blog['blog_id'] }}" type="submit">delete</button>
                     </form>
                     <a class="blog" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blog['blog_id']) }}">

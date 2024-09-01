@@ -10,9 +10,9 @@
 {% block top %}
     <h2>search:</h2>
     <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        {{ form.corpus() }}
-        {{ form.submit(value="🔍") }}
+        {{ forms.search.hidden_tag() }}
+        {{ forms.search.corpus() }}
+        {{ forms.search.submit(value="🔍") }}
     </form>
 {% endblock %}
 {% block content %}

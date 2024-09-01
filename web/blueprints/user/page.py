@@ -9,9 +9,8 @@ import messaging
 
 
 def _page(user_id: int) -> Response | str | tuple:
-    comment_form: FlaskForm = forms.comment_form()
-    delete_form: FlaskForm = forms.comment_delete_form()
-    friend_form: FlaskForm = forms.friend_form()
+    comment_form: FlaskForm = forms.input_form(textarea=True)
+    comment_delete_form: FlaskForm = forms.blank_form()
     query = Query()
 
     if ("user_id") in session:
@@ -22,10 +21,10 @@ def _page(user_id: int) -> Response | str | tuple:
                 comment_form.corpus.data
             )
 
-        elif delete_form.validate_on_submit():
-            res: str | None = request.form.get("delete")
+        elif comment_delete_form.validate_on_submit():
+            res: str | None = request.form.get("value")
             if not res:
-                return "Invalid value for field 'delete'", 400
+                return redirect(url_for("user.page", user_id=user_id))
 
             comment_id: int = int(res)
             comment: dict = query.select_page_comments(comment_id=int(res))[0]
@@ -51,12 +50,14 @@ def _page(user_id: int) -> Response | str | tuple:
 
     return render_template(
         template,
-        properties=properties,
-        comments=profile.get_profile_comments(user_id),
-        blogposts=profile.get_all_user_blogposts(user_id),
-        friends=profile.get_user_friends(user_id),
-        is_friends=profile.is_friends(user_id),
-        comment_form=comment_form,
-        delete_form=delete_form,
-        friend_form=friend_form
+        properties = properties,
+        comments = profile.get_profile_comments(user_id),
+        blogposts = profile.get_all_user_blogposts(user_id),
+        friends = profile.get_user_friends(user_id),
+        is_friends = profile.is_friends(user_id),
+        forms = {
+            "comment": comment_form,
+            "delete_comment": comment_delete_form,
+            "friend": forms.blank_form()
+        }
     )

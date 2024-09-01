@@ -13,7 +13,7 @@
     {% endblock %}
     {% block content %}
         <form enctype="multipart/form-data" method="post" action="" novalidate>
-            {{ form.hidden_tag() }}
+            {{ forms.preferences.hidden_tag() }}
             <aside class="{{ 'hidden' if (request.args.get('c') != 'appearance') and request.args.get('c') != None }}" id="appearance">
                 <h2>appearance settings:</h2>
                 <div class="row">
@@ -28,7 +28,7 @@
                                 <img id="avatar-preview" src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.webp?n={{ range(1, 99999) | random }}" alt="">
                             {% endif %}
                         </label>
-                        {{ form.avatar(class="avatar-upload", id="avatar-upload") }}
+                        {{ forms.preferences.avatar(class="avatar-upload", id="avatar-upload") }}
                     </div>
                     <textarea class="abtForm comment-input" placeholder="write a little about yourself (supports markdown)" id="bio" name="bio" oninput="textAreaAdjust(this)">{{ properties["about"] if properties["about"] else "" }}</textarea>
                 </div>
@@ -36,18 +36,18 @@
                     {% if audio_uploading %}
                         <img src="{{ cdn_uri }}/static/img/transfer.gif" alt="audio is being updated">
                         <span>your song is still updating...</span>
-                        {{ form.audio(class="audio-upload hidden") }}
+                        {{ forms.preferences.audio(class="audio-upload hidden") }}
                     {% else %}
                         <audio src="{{ cdn_uri }}/usercontent/audio/{{ properties['user_id'] }}.mp3?n={{ range(1, 99999) | random }}" controls></audio>
                         <label for="audio-upload" class="audio-upload-label" id="audio-upload-label">upload song</label>
                         <img class="cancel-audio hidden" id="cancel-audio" src="{{ cdn_uri }}/static/img/x.svg" alt="cancel song upload" onclick="cancelAudioAction()">
-                        {{ form.audio(id="audio-upload", class="audio-upload") }}
+                        {{ forms.preferences.audio(id="audio-upload", class="audio-upload") }}
                     {% endif %}
                 </div>
                 <label for="css"><h3>custom css:</h3></label>
                 <textarea class="hidden" id="css" name="css">{{ properties["css"] if properties["css"] else "" }}</textarea>
                 <div id="ace"></div>
-                {{ form.submit() }}
+                {{ forms.preferences.submit() }}
                 <span class="edit-disclaimer">* your edits may not be visible immediately, try refreshing if your settings haven't updated</span>
                 <a class="markdown-help" href="https://www.markdownguide.org/cheat-sheet/" target="_blank" rel="noreferrer noopener">markdown cheat sheet</a>
                 <a class="css-help" href="https://www.geeksforgeeks.org/css-cheat-sheet-a-basic-guide-to-css/" target="_blank" rel="noreferrer noopener">css cheat sheet</a>
@@ -57,11 +57,11 @@
                 <div class="row">
                     <h3>private account:</h3>
                     <label class="switch">
-                        {{ form.privacy(class="private") }}
+                        {{ forms.preferences.privacy(class="private") }}
                         <span class="slider"></span>
                     </label>
                 </div>
-                {{ form.submit() }}
+                {{ forms.preferences.submit() }}
             </aside>
         </form>
     {% endblock %}

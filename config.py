@@ -1,4 +1,6 @@
 from bitwarden_sdk import BitwardenClient, DeviceType, client_settings_from_dict
+from yaml import safe_load
+from pathlib import Path
 import os
 
 client: BitwardenClient = BitwardenClient(
@@ -60,6 +62,7 @@ class CONFIG:
         task_ignore_result=True,
     )
 
+    STRINGS = safe_load(Path("strings.yml").read_text())
     BLACKLISTED_SEARCHES: list[str] = [
         "and"
     ]

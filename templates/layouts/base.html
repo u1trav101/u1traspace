@@ -56,7 +56,7 @@
     // automatically adjusts the height of textarea elements to match their content
     const textAreaAdjust = (element) => {
         element.style.height = "auto";
-        element.style.height = element.scrollHeight - 20 + "px";
+        if (element.scrollHeight - 20 > 30) element.style.height = element.scrollHeight - 20 + "px";
     }
 
     const elements = document.getElementsByClassName("comment-input");

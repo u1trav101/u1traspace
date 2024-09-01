@@ -15,11 +15,11 @@
                     <span>{{ friend["username"] }}</span>
                     <div class="actions">
                         <form action="{{ url_for('user.add_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
-                            {{ friend_form.hidden_tag() }}
+                            {{ forms.friend.hidden_tag() }}
                             <input id="friend" name="friend" type="submit" value="approve">
                         </form>
                         <form action="{{ url_for('user.remove_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
-                            {{ friend_form.hidden_tag() }}
+                            {{ forms.friend.hidden_tag() }}
                             <input id="friend" name="friend" type="submit" value="deny">
                         </form>
                     </div>
@@ -37,7 +37,7 @@
                     </a>
                     {% if ("user_id") in session and session["user_id"] | int == properties['user_id'] %}
                         <form action="{{ url_for('remove_friend', friend_id=friend['friend_id']) }}" method="post" novalidate>
-                            {{ friend_form.hidden_tag() }}
+                            {{ forms.friend.hidden_tag() }}
                             <input id="friend" name="friend" type="submit" value="unfriend">
                         </form>
                     {% endif %}

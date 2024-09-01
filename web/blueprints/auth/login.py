@@ -21,5 +21,7 @@ def _login() -> Response | str:
 
     return render_template(
         "auth/login.html",
-        form=login_form
+        forms = {
+            "login": login_form
+        }
     )
