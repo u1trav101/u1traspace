@@ -1,7 +1,8 @@
+from typing import Any
 from mariadb import Cursor
 
 
-def select_users(cur:Cursor, count:bool, online:bool, start:int, visible:bool, order_by:str, order:str, limit:int, email:str|None, user_id:int|None) -> list | int:
+def select_users(cur:Cursor, count:bool, online:bool, start:int, visible:bool, order_by:str, order:str, limit:int, random:bool, email:str|None, user_id:int|None, seed:int|None) -> list | int:
     select: str = "COUNT(*)" if count else "*"
 
     params: list = [
@@ -22,7 +23,9 @@ def select_users(cur:Cursor, count:bool, online:bool, start:int, visible:bool, o
         AND visible = ?
         {"AND email = ?" if email else ""}
         {"AND user_id = ?" if user_id else ""}
-        ORDER BY {order_by} {order}
+        {f"ORDER BY {order_by} {order}" if not random else ""}
+        {"ORDER BY RAND()" if (random and not seed) else ""}
+        {f"ORDER BY RAND({seed})" if (random and seed) else ""}
         LIMIT ?;
     """, params)
 
