@@ -53,6 +53,9 @@
                         {% if ('user_id') in session %}
                             {{ forms.comment.hidden_tag() }}
                             {{ forms.comment.corpus(placeholder="leave a comment...", class="comment-input", oninput="textAreaAdjust(this)")}}
+                            {% for error in forms.comment.corpus.errors %}
+                                <span class="error">* {{ error }} *</span>
+                            {% endfor %}
                             {{ forms.comment.submit(class="commentPost", id="commentPost", value=" ") }}
                         {% else %}
                             <textarea class="comment-input" placeholder="please login to leave a comment" disabled></textarea>

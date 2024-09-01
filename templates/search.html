@@ -12,6 +12,9 @@
     <form action="" method="post" novalidate>
         {{ forms.search.hidden_tag() }}
         {{ forms.search.corpus() }}
+        {% for error in forms.search.corpus.errors %}
+            <span class="error">* {{ error }} *</span>
+        {% endfor %}
         {{ forms.search.submit(value="🔍") }}
     </form>
 {% endblock %}

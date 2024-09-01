@@ -1,17 +1,13 @@
 from random import randint, seed
 from datetime import date
-from flask_wtf import FlaskForm
 from web.overloads import render_template
 from profile.properties import get_profile_properties
 from db import Query
-import web.forms as forms
 
 
 def index() -> str:
     query = Query()
     res: list[dict] = query.select_blogs(limit=6)
-
-    search_form:FlaskForm = forms.search_form()
 
     number_of_users:int = query.select_users(count=True)
     seed(str(date.today()))

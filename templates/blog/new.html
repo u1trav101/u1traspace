@@ -11,11 +11,11 @@
             {{ forms.new_blog.hidden_tag() }}
             {{ forms.new_blog.title(placeholder="title") }}
             {% for error in forms.new_blog.title.errors %}
-                <span class="error">{{ error }}</span>
+                <span class="error">* {{ error }} *</span>
             {% endfor %}
             {{ forms.new_blog.corpus(placeholder="write your blog here...", oninput="textAreaAdjust(this)", class="comment-input") }}
             {% for error in forms.new_blog.corpus.errors %}
-                <span class="error">{{ error }}</span>
+                <span class="error">* {{ error }} *</span>
             {% endfor %}
             {{ forms.new_blog.submit() }}
         </form>
