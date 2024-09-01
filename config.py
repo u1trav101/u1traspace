@@ -63,6 +63,9 @@ class CONFIG:
     )
 
     STRINGS = safe_load(Path("strings.yml").read_text())
+    
+    USERS_PER_PAGE = 20
+    
     BLACKLISTED_SEARCHES: list[str] = [
         "and"
     ]
