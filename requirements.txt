@@ -8,6 +8,7 @@ flask_limiter==3.8.0
 flask_paginate==2022.1.8
 flask_sock==0.7.0
 flask_wtf==1.2.1
+gunicorn==23.0.0
 mariadb==1.1.4
 Markdown==3.7
 MarkupSafe==2.1.5
