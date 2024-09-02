@@ -25,7 +25,7 @@ class CONFIG:
 
     MARIADB_HOST: str = "127.0.0.1"
     MARIADB_PORT: int = 3306
-    MARIADB_USER: str = "backend"
+    MARIADB_USER: str = "u1traspace"
     MARIADB_PASSWORD: str = client.secrets().get("bf0630d0-d130-479c-b8c4-b173001c9148").data.value
     MARIADB_ROOT_PASSWORD: str = client.secrets().get("e653a440-6388-4406-bd72-b17101589fe1").data.value
     MARIADB_DATABASE: str = "u1traspace"
