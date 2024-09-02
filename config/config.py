@@ -62,38 +62,11 @@ class CONFIG:
         task_ignore_result=True,
     )
 
-    STRINGS = safe_load(Path("strings.yml").read_text())
-    
     USERS_PER_PAGE = 20
     
-    BLACKLISTED_SEARCHES: list[str] = [
-        "and"
-    ]
-
-    ALLOWED_IMAGE_UPLOAD_EXTENSIONS: list[str] = [
-        ".gif",
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".webp"
-    ]
-    ALLOWED_IMAGE_MIME_TYPES: list[str] = [
-        "image/gif",
-        "image/jpeg",
-        "image/png",
-        "image/apng",
-        "image/webp"
-    ]
-    ALLOWED_AUDIO_UPLOAD_EXTENSIONS: list[str] = [
-        ".mp3",
-        ".ogg",
-        ".m4a",
-        ".xm"
-    ]
-    ALLOWED_AUDIO_MIME_TYPES: list[str] = [
-        "audio/mp3",
-        "audio/mpeg",
-        "audio/ogg",
-        "audio/mp4",
-        "audio/x-mod"
-    ]
+    STRINGS: dict = safe_load(Path("config/strings.yml").read_text())
+    BLACKLISTED_SEARCHES: list[str] = safe_load(Path("config/search-blacklist.yml").read_text())
+    ALLOWED_IMAGE_UPLOAD_EXTENSIONS: list[str] = safe_load(Path("config/img-ext-whitelist.yml").read_text())
+    ALLOWED_IMAGE_MIME_TYPES: list[str] = safe_load(Path("config/img-mime-whitelist.yml").read_text())
+    ALLOWED_AUDIO_UPLOAD_EXTENSIONS: list[str] = safe_load(Path("config/audio-ext-whitelist.yml").read_text())
+    ALLOWED_AUDIO_MIME_TYPES: list[str] = safe_load(Path("config/audio-mime-whitelist.yml").read_text())
