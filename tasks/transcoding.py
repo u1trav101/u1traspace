@@ -18,10 +18,11 @@ def transcode_and_upload_images(file_path: str, usercontent_dir: str, user_id: i
     _transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 100)
     _transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 200)
 
-    os.system(f"ffmpeg -loglevel error -hide_banner -loop 0 -i {file_path} -y {usercontent_dir}img/raw/{user_id}.webp")
+    print(file_path)
+    print(file_path.split(".")[-1])
     cdn.upload_image(
-        f"{usercontent_dir}img/raw/{user_id}.webp",
-        f"u1traspace/usercontent/img/raw/{user_id}.webp"
+        file_path,
+        f"u1traspace/usercontent/img/raw/{user_id}.{file_path.split(".")[-1]}"
     )
 
 
