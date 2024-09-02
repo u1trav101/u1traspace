@@ -2,18 +2,18 @@
 {% block props %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog/new.css') }}">
     <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
-    <title>u1traspace - new blog</title>
+    <title>u1traspace - new blog post</title>
 {% endblock %}
 {% block main %}
     <section class="new-blog">
-        <h3>new blog:</h3>
+        <h3>new blog post:</h3>
         <form action="" method="post" novalidate>
             {{ forms.new_blog.hidden_tag() }}
             {{ forms.new_blog.title(placeholder="title") }}
             {% for error in forms.new_blog.title.errors %}
                 <span class="error">* {{ error }} *</span>
             {% endfor %}
-            {{ forms.new_blog.corpus(placeholder="write your blog here...", oninput="textAreaAdjust(this)", class="comment-input") }}
+            {{ forms.new_blog.corpus(placeholder="post content... (markdown)", oninput="textAreaAdjust(this)", class="comment-input") }}
             {% for error in forms.new_blog.corpus.errors %}
                 <span class="error">* {{ error }} *</span>
             {% endfor %}
