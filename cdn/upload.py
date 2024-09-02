@@ -16,11 +16,7 @@ def upload_image(file_path: str, destination: str) -> None:
     client.upload_file(
         file_path,
         CONFIG.S3_BUCKET_NAME,
-        destination,
-        ExtraArgs={
-            "ACL": "public-read",
-            "ContentType": "image/gif"
-        }
+        destination
     )
 
 
@@ -28,11 +24,7 @@ def upload_audio(file_path: str, destination: str) -> None:
     client.upload_file(
         file_path,
         CONFIG.S3_BUCKET_NAME,
-        destination,
-        ExtraArgs={
-            "ACL": "public-read",
-            "ContentType": "audio/mpeg"
-        }
+        destination
     )
 
 
@@ -40,9 +32,5 @@ def upload_css(file_path: str, destination: str) -> None:
     client.upload_file(
         file_path,
         CONFIG.S3_BUCKET_NAME,
-        destination,
-        ExtraArgs={
-            "ACL": "public-read",
-            "ContentType": "text/css"
-        }
+        destination
     )
