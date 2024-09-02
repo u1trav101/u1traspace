@@ -3,6 +3,7 @@ from yaml import safe_load
 from pathlib import Path
 import os
 
+
 client: BitwardenClient = BitwardenClient(
     client_settings_from_dict(
         {
@@ -14,7 +15,6 @@ client: BitwardenClient = BitwardenClient(
     )
 )
 
-organisation_id: str | None = os.getenv("ORGANISATION_ID")
 client.access_token_login(open(".bitwarden-access-token", "r").readline())
 
 
