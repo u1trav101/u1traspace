@@ -6,6 +6,20 @@ const audioUpload = document.getElementById("audio-upload");
 const cancelAudio = document.getElementById("cancel-audio");
 const cssTextArea = document.getElementById("css");
 
+// initiialises ace code editor for css editing
+const editor = ace.edit("ace");
+    editor.setTheme("ace/theme/dracula");
+    editor.session.setMode("ace/mode/css");
+    editor.session.setValue(cssTextArea.value);
+    editor.session.on("change", () => {
+    cssTextArea.value = editor.session.getValue();
+});
+    editor.setOptions({
+    minLines: 5,
+    maxLines: 20,
+    fontSize: "1rem",
+    fontFamily: "fira-code"
+});
 
 // cancels audio upload
 const cancelAudioAction = () => {
@@ -13,21 +27,6 @@ const cancelAudioAction = () => {
     audioUploadLabel.innerText = "upload song";
     cancelAudio.classList = "cancel-audio hidden";
 }
-
-// initiialises ace code editor for css editing
-const editor = ace.edit("ace");
-editor.setTheme("ace/theme/dracula");
-editor.session.setMode("ace/mode/css");
-editor.session.setValue(cssTextArea.value);
-editor.session.on("change", () => {
-    cssTextArea.value = editor.session.getValue();
-});
-editor.setOptions({
-    minLines: 5,
-    maxLines: 20,
-    fontSize: "1rem",
-    fontFamily: "fira-code"
-});
 
 // responsively changes the user avatar to match the selected file
 avatarUpload.addEventListener("change", (event) => {

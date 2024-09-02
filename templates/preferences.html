@@ -1,8 +1,8 @@
 {% extends "/layouts/options.html" %}
 {% block props %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/preferences.css') }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.34.2/ace.js" integrity="sha512-WdJDvPkK4mLIW1kpkWRd7dFtAF6Z0xnfD3XbfrNsK2/f36vMNGt/44iqYQuliJZwCFw32CrxDRh2hpM2TJS1Ew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ url_for('static', filename='js/preferences.js') }}"></script>
+    <script defer id="ace-js" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.34.2/ace.js" integrity="sha512-WdJDvPkK4mLIW1kpkWRd7dFtAF6Z0xnfD3XbfrNsK2/f36vMNGt/44iqYQuliJZwCFw32CrxDRh2hpM2TJS1Ew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="{{ url_for('static', filename='js/preferences.js') }}"></script>
     <title>u1traspace - preferences</title>
 {% endblock %}
 {% block main %}
@@ -43,6 +43,7 @@
                         <audio src="{{ cdn_uri }}/usercontent/audio/{{ properties['user_id'] }}.mp3?n={{ range(1, 99999) | random }}" controls></audio>
                         <label for="audio-upload" class="audio-upload-label" id="audio-upload-label">upload song</label>
                         <img class="cancel-audio hidden" id="cancel-audio" src="{{ cdn_uri }}/static/img/x.svg" alt="cancel song upload" onclick="cancelAudioAction()">
+                        {{ forms.preferences.audio(id="audio-upload", class="audio-upload") }}
                     {% endif %}
                     {{ forms.preferences.audio(class="audio-upload hidden") }}
                     {% for error in forms.preferences.audio.errors %}
