@@ -38,8 +38,21 @@
                 </a>
                 <div id="messages-{{ conversations[i]['user_id'] }}" class="messages"></div>
                 <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
-                    <textarea name="message-box" id="message-box" placeholder="message..."></textarea>
-                    <input type="submit" value="send">
+                    {% set is_friend = namespace(value=False) %}
+                    {% for friend in friends %}
+                        {% if not is_friend.value %}
+                            {% if friend["user_id"] == conversations[i]["user_id"] %}
+                                {% set is_friend.value = True %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if is_friend.value %}
+                        <textarea name="message-box" id="message-box" placeholder="message..."></textarea>
+                        <input type="submit" value="send">
+                    {% else %}
+                        <textarea name="message-box" id="message-box" placeholder="you can't send messages to users you aren't friends with" disabled></textarea>
+                        <input type="submit" value="send" disabled>
+                    {% endif %}
                 </form>
             </aside>
         {% endfor %}
