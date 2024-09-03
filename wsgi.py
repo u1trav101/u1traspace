@@ -13,8 +13,6 @@ import os
 
 
 # create necessary directories
-os.makedirs(os.path.dirname("./.tmp/img"), exist_ok=True)
-os.makedirs(os.path.dirname("./.tmp/audio"), exist_ok=True)
 os.makedirs(os.path.dirname("./usercontent/img/raw"), exist_ok=True)
 os.makedirs(os.path.dirname("./usercontent/img/rsz/200px"), exist_ok=True)
 os.makedirs(os.path.dirname("./usercontent/img/rsz/100px"), exist_ok=True)
