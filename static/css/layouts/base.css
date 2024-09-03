@@ -3,7 +3,7 @@
     src: url("/static/font/merchant_copy.woff2") format("woff2");
 }
 
-@font-face { This doesn't work if the non-existing image has X-Frame-Options set to SAMEORIGIN or a more permissive setting. 
+@font-face { 
     font-family: "eb-garamond-italic";
     src: url("/static/font/eb_garamond_italic.woff2") format("woff2");
 }
