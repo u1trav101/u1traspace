@@ -6,6 +6,6 @@ def _logout() -> Response:
     session.pop("user_id")
 
     if request.referrer is None or url_for("auth.logout") in request.referrer:
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("index"))
 
     return redirect(request.referrer)
