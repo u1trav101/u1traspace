@@ -27,13 +27,27 @@
             {% for result in value %}
                 {% if key == "users" %}
                     <a class="user {{ 'online' if current_time - result['last_seen'].timestamp() | round | int <= 300 }}" href="{{ url_for('user.page', user_id=result['user_id']) }}">
-                        <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ result['user_id'] }}.webp" alt="{{ result['username'] }}">
+                        <object
+                        data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ result['user_id'] }}.webp"
+                        type="image/webp"
+                        aria-label="{{ result['username'] }}"
+                        width="200"
+                        height="200">
+                            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ result['username'] }}">
+                        </object>
                         <span>{{ result["username"] }}</span>
                     </a>
                 {% elif key == "blogs" %}
                     <a class="blog" href="{{ url_for('user.blog.post', user_id=result['author_id'], post_id=result['blog_id']) }}">
                         <div class="avatar {{ 'online' if current_time - result['last_seen'].timestamp() | round | int <= 300 }}">
-                            <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ result['user_id'] }}.webp" alt="{{ result['username'] }}">
+                            <object 
+                            data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ result['user_id'] }}.webp" 
+                            type="image/webp"
+                            aria-label="{{ result['username'] }}"
+                            width="100"
+                            height="100">
+                                <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" alt="{{ result['username'] }}">
+                            </object>
                             <span>{{ result["username"] }}</span>
                         </div>
                         <div class="content">
