@@ -220,7 +220,7 @@ input:checked + .slider:before {
     border: 1px solid #fefefe;
 }
 
-.user img {
+.user object {
     width: 200px;
     height: 200px;
 
@@ -234,4 +234,12 @@ input:checked + .slider:before {
 
 .user.online, .avatar.online {
     border: 1px solid lawngreen;
+}
+
+.avatar.twohundred {
+    border: 2px solid #fefefe;
+}
+
+.avatar.twohundred.online {
+    border: 2px solid lawngreen;
 }
