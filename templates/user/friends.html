@@ -11,7 +11,14 @@
         <section class="pending">
             {% for friend in friend_requests %}
                 <a class="user" href="{{ url_for('user.page', user_id=friend['user_id']) }}">
-                    <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
+                    <object 
+                    data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" 
+                    type="image/webp"
+                    aria-label="{{ friend['username'] }}"
+                    width="200"
+                    height="200">
+                        <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ friend['username'] }}">
+                    </object>
                     <span>{{ friend["username"] }}</span>
                     <div class="actions">
                         <form action="{{ url_for('user.add_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
@@ -32,7 +39,14 @@
             {% for friend in friends %}
                 <div class="user friend">
                     <a href="{{ url_for('user.page', user_id=friend['user_id']) }}">
-                        <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" alt="{{ friend['username'] }}">
+                        <object 
+                        data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" 
+                        type="image/webp"
+                        aria-label="{{ friend['username'] }}"
+                        width="200"
+                        height="200">
+                            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ friend['username'] }}">
+                        </object>
                         <span>{{ friend["username"] }}</span>
                     </a>
                     {% if ("user_id") in session and session["user_id"] | int == properties['user_id'] %}

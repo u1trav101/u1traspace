@@ -39,7 +39,18 @@
             {% for comment in comments %}
                 <div class="comment">
                     <a class="avatar-container" href="{{ url_for('user.page', user_id=comment['author_id']) }}">
-                        <img class="avatar {{ 'online' if current_time - comment['last_seen'].timestamp() | round | int <= 300 }}" src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['user_id'] }}.webp" alt="{{ comment['username'] }}">
+                        <object 
+                        data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['user_id'] }}.webp" 
+                        type="image/webp"
+                        aria-label="{{ comment['username'] }}"
+                        width="200"
+                        height="200"
+                        class="avatar {{ 'online' if current_time - comment['last_seen'].timestamp() | round | int <= 300 }}">
+                            <img 
+                            class="avatar {{ 'online' if current_time - comment['last_seen'].timestamp() | round | int <= 300 }}" 
+                            src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" 
+                            alt="{{ comment['username'] }}">
+                        </object>
                     </a>
                     <div>
                         <div class="comment-top">

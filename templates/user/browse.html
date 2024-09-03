@@ -23,7 +23,14 @@
     <div class="users">
         {% for user in pagination.users %}
             <a href="{{ url_for('user.page', user_id=user['user_id']) }}" class="user {{ 'online' if current_time - user['last_seen'].timestamp() | round | int <= 300 }}">
-                <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ user['user_id'] }}.webp" alt="{{ user['username'] }}">
+                <object 
+                data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ user['user_id'] }}.webp" 
+                type="image/webp"
+                aria-label="{{ user['username'] }}"
+                width="200"
+                height="200">
+                    <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ user['username'] }}">
+                </object>
                 <span>{{ user['username'] }}</span>
             </a>
         {% endfor %}     

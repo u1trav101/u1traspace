@@ -4,6 +4,7 @@ let messagesDiv = null;
 let renderedMessages = 0;
 let messageCounts = {};
 let recipientID = null;
+let avatarImages = {};
 
 
 const createSocket = recipientID => {
@@ -89,6 +90,34 @@ const receiveMessage = event => {
     }
 }
 
+const renderAvatars = (userID) => {
+    console.log("Rendering profile pictures...")
+    const avatarElms = document.getElementsByClassName(`avatar ${userID}`);
+    
+    for (let i = 0; i < avatarElms.length; i++) {
+        avatarElms[i].setAttribute("src", avatarImages[userID] ? 
+            `https://cdn.u1trav101.net/u1traspace/usercontent/img/rsz/100px/${userID}.webp` :
+            "https://cdn.u1trav101.net/u1traspace/usercontent/img/rsz/100px/default.webp"
+        );
+    }
+}
+
+const avatarExists = async (userID, callback) => {
+    fetch(`https://cdn.u1trav101.net/u1traspace/usercontent/img/rsz/100px/${userID}.webp`, { 
+        method: "head",
+        mode: "cors",
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        }
+    })
+    .then(status => {
+        callback(status.ok);
+    })
+    .catch(() => {
+        callback(true);
+    });
+  }
+
 const renderMessages = () => {
     if ((!messageCounts[userID]) || messages.length > messageCounts[userID]) {
         console.log("Rendering...");
@@ -96,18 +125,32 @@ const renderMessages = () => {
         for (let i = renderedMessages; i < messages.length; i++) {
             // creating new elements
             const newMessage = document.createElement("div");
-            const avatar = document.createElement("img");
-            avatar.setAttribute("src", `https://cdn.u1trav101.net/u1traspace/usercontent/img/rsz/100px/${messages[i]["user_id"]}.webp`)
+            const avatar = document.createElement("img"); // checking whether the message author has a profile picture
+            if (avatarImages[messages[i]["user_id"]] === true) {
+                avatar.setAttribute("src", `https://cdn.u1trav101.net/u1traspace/usercontent/img/rsz/100px/${messages[i]["user_id"]}.webp`);
+            } else {
+                if (!avatarImages[messages[i]["user_id"]] && avatarImages[[messages[i]["user_id"]]] !== "pending") {
+                    avatarImages[messages[i]["user_id"]] = "pending";
+                    console.log(`Checking if user ${messages[i]["user_id"]} has a profile picture...`);
+
+                    avatarExists(`${messages[i]["user_id"]}`, exists => {
+                        avatarImages[messages[i]["user_id"]] = exists;
+                        console.log(`User ${messages[i]["user_id"]} ${exists ? "has" : "doesn't have"} a profile picture.`);
+                        
+                        renderAvatars(messages[i]["user_id"]);
+                    });
+                }
+            }
             const top = document.createElement("span");
             const right = document.createElement("div");
             const author = document.createElement("h4");
-            const date = document.createTextNode(`at ${messages[i]["date"]}`);
             author.innerHTML = messages[i]["username"];
+            const date = document.createTextNode(`at ${messages[i]["date"]}`);
             const corpus = document.createElement("p");
             corpus.innerHTML = messages[i]["corpus"];
             
             // applying classes to new elements
-            avatar.classList = "avatar";
+            avatar.classList = `avatar ${messages[i]["user_id"]}`;
             newMessage.classList = "message";
             top.classList = "top";
             right.classList = "right"

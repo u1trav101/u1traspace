@@ -7,7 +7,18 @@
 {% block body %}
     <div id="container" class="container">
         <section class="profile-top">
-            <img class="avatar {{ 'online' if current_time - properties['last_seen'].timestamp() | round | int <= 300 }}" src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.webp" alt="">
+            <object 
+            data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.webp" 
+            type="image/webp"
+            aria-label="{{ properties['user_id'] }}"
+            width="200"
+            height="200"
+            class="avatar {{ 'online' if current_time - properties['last_seen'].timestamp() | round | int <= 300 }}">
+                <img 
+                class="avatar {{ 'online' if current_time - properties['last_seen'].timestamp() | round | int <= 300 }}" 
+                src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" 
+                alt="{{ properties['user_id'] }}">
+            </object>
             <div>
                 <h2 id="breadCrumb" class="breadCrumb">
                     /<a href="{{ url_for('user.browse') }}">user</a>/
