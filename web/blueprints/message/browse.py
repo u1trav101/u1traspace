@@ -5,6 +5,7 @@ from profile import get_user_friends
 from messaging import get_user_conversations
 
 def _browse() -> Response | str:
+    print(get_user_conversations(int(session["user_id"])))
     return render_template(
         "message/browse.html",
         conversations = get_user_conversations(int(session["user_id"])),

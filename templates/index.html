@@ -46,7 +46,14 @@
         <section class="user">
             <h3>random user of the day :0</h3>
             <a href="{{ url_for('user.page', user_id=user['user_id']) }}">
-                <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ user['user_id'] }}.webp" alt="{{ user['username'] }}'s profile picture">
+                <object 
+                data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ user['user_id'] }}.webp"
+                type="image/webp"
+                aria-label="{{ user['username'] }}'s profile picture"
+                width="200"
+                height="200">
+                    <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ user['username'] }}">
+                </object>
                 <h4>{{ user['username'] }}</h4>
             </a>
         </section>

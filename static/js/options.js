@@ -1,5 +1,4 @@
 const optionContent = document.getElementsByTagName("aside");
-console.log(optionContent);
 
 
 // switches the view to only show the selected pref category

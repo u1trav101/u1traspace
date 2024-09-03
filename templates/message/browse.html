@@ -5,7 +5,7 @@
     <title>u1traspace - messages</title>
 {% endblock %}
 {% block categories %}
-    {% if categories %}
+    {% if conversations %}
         {% for i in range(conversations | length) %}
             {% set conversation_user_ids = conversation_user_ids.append(conversations[i]["user_id"]) %}
             <span onclick="changeConversation({{ conversations[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
@@ -24,7 +24,16 @@
         {% for i in range(conversations | length) %}
             <aside class="{{ 'hidden' if (request.args.get('c') | int != conversations[i]['user_id']) and request.args.get('c') != '' }}" id="{{ conversations[i]['user_id'] }}">
                 <a class="message-header" href="{{ url_for('user.page', user_id=conversations[i]['user_id']) }}">
-                    <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ conversations[i]['user_id'] }}.webp" alt="{{ conversations[i]['username'] }}">
+                    <object 
+                    data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ conversations[i]['user_id'] }}.webp" 
+                    type="image/webp"
+                    aria-label="{{ conversations[i]['username'] }}"
+                    width="75"
+                    height="75">
+                        <img 
+                        src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" 
+                        alt="{{ conversations[i]['username'] }}">
+                    </object>
                     <h2>{{ conversations[i]["username"] }}</h2>
                 </a>
                 <div id="messages-{{ conversations[i]['user_id'] }}" class="messages"></div>
@@ -40,7 +49,16 @@
             {% if friends[i]["user_id"] not in conversation_user_ids %}
                 <aside class="{{ 'hidden' if (request.args.get('c') | int != friends[i]['user_id']) and request.args.get('c') != '' }}" id="{{ friends[i]['user_id'] }}">
                     <a class="message-header" href="{{ url_for('user.page', user_id=friends[i]['user_id']) }}">
-                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" alt="{{ friends[i]['username'] }}">
+                        <object 
+                        data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" 
+                        type="image/webp"
+                        aria-label="{{ friends[i]['username'] }}"
+                        width="75"
+                        height="75">
+                            <img 
+                            src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" 
+                            alt="{{ friends[i]['username'] }}">
+                        </object>
                         <h2>{{ friends[i]["username"] }}</h2>
                     </a>
                     <div id="messages-{{ friends[i]['user_id'] }}" class="messages"></div>

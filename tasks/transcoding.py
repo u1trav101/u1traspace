@@ -17,7 +17,6 @@ def transcode_and_upload_image(file_path: str, usercontent_dir: str, user_id: in
         f"u1traspace/usercontent/img/rsz/{size}px/{user_id}.webp"
     )
     
-    print(f"removing: {usercontent_dir}img/rsz/{size}px/{user_id}.webp")
     os.remove(f"{usercontent_dir}img/rsz/{size}px/{user_id}.webp")
 
 
