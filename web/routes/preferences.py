@@ -13,7 +13,7 @@ import tasks
 
 
 DIR_NAME: str = os.path.dirname(__file__)
-TEMP_DIR: str = os.path.join(DIR_NAME, "../../.tmp/")
+TEMP_DIR: str = os.path.join(DIR_NAME, "/tmp")
 USERCONTENT_DIR: str = os.path.join(DIR_NAME, "../../usercontent/")
 
 
@@ -92,7 +92,7 @@ def form_handler(query: Query, preferences_form: FlaskForm) -> None:
         file_extension: str = os.path.splitext(secure_filename(avatar.filename))[-1]
         if file_extension in CONFIG.ALLOWED_IMAGE_UPLOAD_EXTENSIONS:
 
-            file_name: str = f"img/{session['user_id'] + file_extension}"
+            file_name: str = f"{session['user_id'] + file_extension}"
             file_path: str = os.path.join(TEMP_DIR, file_name)
             avatar.save(file_path)
 
@@ -108,7 +108,7 @@ def form_handler(query: Query, preferences_form: FlaskForm) -> None:
         file_extension: str = os.path.splitext(secure_filename(audio.filename))[-1]
         if file_extension in CONFIG.ALLOWED_AUDIO_UPLOAD_EXTENSIONS:
 
-            file_name: str = f"audio/{session['user_id'] + file_extension}"
+            file_name: str = f"{session['user_id'] + file_extension}"
             file_path: str = os.path.join(TEMP_DIR, file_name)
             audio.save(file_path)
 
