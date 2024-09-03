@@ -3,13 +3,15 @@ from werkzeug import Response
 from messaging import Messages
 import json
 
+from profile.friend import is_friends
+
 def conversation(recipient_id: int, ws) -> Response | None:
     messages = Messages(int(session["user_id"]), recipient_id)
     while True:
-        check_sock(ws, messages)
+        check_sock(ws, messages, recipient_id)
 
 
-def check_sock(ws, messages) -> None:
+def check_sock(ws, messages: Messages, recipient_id: int) -> None:
     received: str | None = ws.receive()
     if received: # if a request is received from the client
         res_json: dict = json.loads(received)
@@ -25,14 +27,15 @@ def check_sock(ws, messages) -> None:
 
             case "post": # if the client sent a request for all data
                 if res_json["resource"] == "messages": # if the user sent a new message
-                    messages.add_message(res_json["data"])
-                    messages.refresh()
+                    if is_friends(recipient_id):
+                        messages.add_message(res_json["data"])
+                        messages.refresh()
 
-                    ws.send(json.dumps({
-                        "type": "post",
-                        "resource": "messages",
-                        "data": messages.get_messages()[-1]
-                    }))
+                        ws.send(json.dumps({
+                            "type": "post",
+                            "resource": "messages",
+                            "data": messages.get_messages()[-1]
+                        }))
 
             case "poll": # if the client is polling new messages
                 if res_json["resource"] == "messages":
