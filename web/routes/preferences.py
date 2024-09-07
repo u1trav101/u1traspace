@@ -13,7 +13,7 @@ import tasks
 
 
 DIR_NAME: str = os.path.dirname(__file__)
-TEMP_DIR: str = os.path.join(DIR_NAME, "/tmp")
+TEMP_DIR: str = os.path.join(DIR_NAME, "/tmp/u1traspace")
 USERCONTENT_DIR: str = os.path.join(DIR_NAME, "../../usercontent/")
 
 

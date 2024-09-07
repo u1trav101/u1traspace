@@ -9,16 +9,10 @@ from celery import Celery
 from tasks import celery_init_app
 from web import declare_routes, regex_replace
 from config import CONFIG
-import os
-
+from setup import create_dirs
 
 # create necessary directories
-os.makedirs(os.path.dirname("./usercontent/img/raw"), exist_ok=True)
-os.makedirs(os.path.dirname("./usercontent/img/rsz/200px"), exist_ok=True)
-os.makedirs(os.path.dirname("./usercontent/img/rsz/100px"), exist_ok=True)
-os.makedirs(os.path.dirname("./usercontent/img/rsz/32px"), exist_ok=True)
-os.makedirs(os.path.dirname("./usercontent/audio"), exist_ok=True)
-os.makedirs(os.path.dirname("./usercontent/css"), exist_ok=True)
+create_dirs()
 
 # instialising wsgi app instance
 app: Flask = Flask("u1traspace")
