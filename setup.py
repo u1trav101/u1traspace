@@ -18,3 +18,6 @@ def create_dirs() -> None:
         with open(Path(Path(directory).resolve() / "stub").resolve(), "w") as stub:
             stub.write("stub")
             stub.close()
+
+if __name__ == "__main__":
+    create_dirs()
