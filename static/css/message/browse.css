@@ -1,0 +1,100 @@
+body {
+    overflow: hidden;
+}
+
+h2 {
+    text-decoration: underline;
+}
+
+h2, h3 {
+    width: fit-content;
+    margin: 0;
+    padding: 20px;
+}
+
+h3 {
+    font-size: 3rem;
+}
+
+img {
+    width: 75px;
+    height: 75px;
+}
+
+aside {
+    border-left: 1px solid #fefefe;
+}
+
+aside form {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - 302px);
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+aside textarea {
+    flex-grow: 1;
+    margin: 0;
+}
+
+aside input[type=submit] {
+    margin: 0;
+    height: 80px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.message-header {
+    display: flex;
+    padding: 10px 20px;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.messages-container {
+    display: flex;
+}
+
+.messages {
+    height: calc(100vh - 263px);
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.message {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 20px 0 0;
+    padding: 0 0 10px 20px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.message h4 {
+    margin: 0 10px 0 0;
+    text-decoration: underline;
+}
+
+.message .top {
+    display: flex;
+
+    font-size: 1.5rem;
+}
+
+.message .avatar {
+    margin-right: 20px;
+
+    border: 1px solid lightgrey;
+}
+
+.message .corpus {
+    margin: 10px 430px 0 0;
+}

@@ -1,0 +1,39 @@
+.blogs-header {
+    padding: 30px;
+    margin: 0;
+
+    font-family: "eb-garamond-italic";
+    background-image: url("http://cdn.u1trav101.net/u1traspace/static/img/stars_colourful.gif");
+}
+
+.blogs p, .blogs h4 {
+    margin: 0;
+}
+
+.blogs p {
+    padding-top: 20px;
+}
+
+.blog-container {
+    padding: 30px;
+    border-top: 1px solid grey;
+
+    color: grey;
+}
+
+.blog-container a:hover, .blog-container a:active {
+    color: #fefefe;
+}
+
+
+.blog-header {
+    display: flex;
+}
+
+.blog-header h4 {
+    text-decoration: underline;
+}
+
+.delete-button {
+    margin-bottom: -30px;   
+}

@@ -1,0 +1,20 @@
+{% extends "/layouts/form.html" %}
+{% block props %}
+    <title>u1traspace - login</title>
+{% endblock %}
+{% block main %}
+    <h2 class="glitch" data-text="login:">login:</h2>
+    <form action="" method="post" novalidate>
+        {{ forms.login.hidden_tag() }}
+        {{ forms.login.email(placeholder="email") }}
+        {% for error in forms.login.email.errors %}
+            <span class="error">* {{ error }} *</span>
+        {% endfor %}
+        {{ forms.login.password(placeholder="password") }}
+        {% for error in forms.login.password.errors %}
+            <span class="error">* {{ error }} *</span>
+        {% endfor %}
+        {{ forms.login.submit() }}
+    </form>
+    <span class="redirect">don't have an account? sign up <a href="{{ url_for('auth.register') }}">here</a></span>
+{% endblock %}

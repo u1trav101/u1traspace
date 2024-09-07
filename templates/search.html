@@ -1,0 +1,62 @@
+{% extends "/layouts/list.html" %}
+{% block props %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+    {% if search_term %}
+        <title>u1traspace - search for '{{ search_term }}'</title>
+    {% else %}
+        <title>u1traspace - search</title>
+    {% endif %}
+{% endblock %}
+{% block top %}
+    <h2>search:</h2>
+    <form action="" method="post" novalidate>
+        {{ forms.search.hidden_tag() }}
+        {{ forms.search.corpus() }}
+        {% for error in forms.search.corpus.errors %}
+            <span class="error">* {{ error }} *</span>
+        {% endfor %}
+        {{ forms.search.submit(value="🔍") }}
+    </form>
+{% endblock %}
+{% block content %}
+    {% if results %}
+        {% for key, value in results.items() %}
+            {% if value %}
+                <h3>{{ key }}:</h3>
+            {% endif %}
+            {% for result in value %}
+                {% if key == "users" %}
+                    <a class="user {{ 'online' if current_time - result['last_seen'].timestamp() | round | int <= 300 }}" href="{{ url_for('user.page', user_id=result['user_id']) }}">
+                        <object
+                        data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ result['user_id'] }}.webp"
+                        type="image/webp"
+                        aria-label="{{ result['username'] }}"
+                        width="200"
+                        height="200">
+                            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ result['username'] }}">
+                        </object>
+                        <span>{{ result["username"] }}</span>
+                    </a>
+                {% elif key == "blogs" %}
+                    <a class="blog" href="{{ url_for('user.blog.post', user_id=result['author_id'], post_id=result['blog_id']) }}">
+                        <div class="avatar {{ 'online' if current_time - result['last_seen'].timestamp() | round | int <= 300 }}">
+                            <object 
+                            data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ result['user_id'] }}.webp" 
+                            type="image/webp"
+                            aria-label="{{ result['username'] }}"
+                            width="100"
+                            height="100">
+                                <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" alt="{{ result['username'] }}">
+                            </object>
+                            <span>{{ result["username"] }}</span>
+                        </div>
+                        <div class="content">
+                            <span><span class="title">{{ result["title"] }}</span> - <span>{{ result["date"] }}</span></span>
+                            <p class="corpus">{{ result["corpus"] | truncate(500) }}</p>
+                        </div>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

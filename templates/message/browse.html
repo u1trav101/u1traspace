@@ -1,0 +1,86 @@
+{% extends "/layouts/options.html" %}
+{% block props %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/message/browse.css') }}">
+    <script src="{{ url_for('static', filename='js/conversation.js') }}"></script>
+    <title>u1traspace - messages</title>
+{% endblock %}
+{% block categories %}
+    {% if conversations %}
+        {% for i in range(conversations | length) %}
+            {% set conversation_user_ids = conversation_user_ids.append(conversations[i]["user_id"]) %}
+            <span onclick="changeConversation({{ conversations[i]['user_id'] }})">{{ conversations[i]["username"] }}</span>
+        {% endfor %}
+    {% endif %}
+    {% if friends %}
+        {% for i in range(friends | length) %}
+            {% if friends[i]["user_id"] not in conversation_user_ids %}
+                <span onclick="changeConversation({{ friends[i]['user_id'] }})">{{ friends[i]["username"] }}</span>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+{% block content %}
+    {% if conversations %}
+        {% for i in range(conversations | length) %}
+            <aside class="{{ 'hidden' if (request.args.get('c') | int != conversations[i]['user_id']) and request.args.get('c') != '' }}" id="{{ conversations[i]['user_id'] }}">
+                <a class="message-header" href="{{ url_for('user.page', user_id=conversations[i]['user_id']) }}">
+                    <object 
+                    data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ conversations[i]['user_id'] }}.webp" 
+                    type="image/webp"
+                    aria-label="{{ conversations[i]['username'] }}"
+                    width="75"
+                    height="75">
+                        <img 
+                        src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" 
+                        alt="{{ conversations[i]['username'] }}">
+                    </object>
+                    <h2>{{ conversations[i]["username"] }}</h2>
+                </a>
+                <div id="messages-{{ conversations[i]['user_id'] }}" class="messages"></div>
+                <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
+                    {% set is_friend = namespace(value=False) %}
+                    {% for friend in friends %}
+                        {% if not is_friend.value %}
+                            {% if friend["user_id"] == conversations[i]["user_id"] %}
+                                {% set is_friend.value = True %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if is_friend.value %}
+                        <textarea name="message-box" id="message-box" placeholder="message..."></textarea>
+                        <input type="submit" value="send">
+                    {% else %}
+                        <textarea name="message-box" id="message-box" placeholder="you can't send messages to users you aren't friends with" disabled></textarea>
+                        <input type="submit" value="send" disabled>
+                    {% endif %}
+                </form>
+            </aside>
+        {% endfor %}
+    {% endif %}
+    {% if friends %}
+        {% for i in range(friends | length) %}
+            {% if friends[i]["user_id"] not in conversation_user_ids %}
+                <aside class="{{ 'hidden' if (request.args.get('c') | int != friends[i]['user_id']) and request.args.get('c') != '' }}" id="{{ friends[i]['user_id'] }}">
+                    <a class="message-header" href="{{ url_for('user.page', user_id=friends[i]['user_id']) }}">
+                        <object 
+                        data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ friends[i]['user_id'] }}.webp" 
+                        type="image/webp"
+                        aria-label="{{ friends[i]['username'] }}"
+                        width="75"
+                        height="75">
+                            <img 
+                            src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" 
+                            alt="{{ friends[i]['username'] }}">
+                        </object>
+                        <h2>{{ friends[i]["username"] }}</h2>
+                    </a>
+                    <div id="messages-{{ friends[i]['user_id'] }}" class="messages"></div>
+                    <form action="javascript:;" onsubmit="sendMessage(this.children[0]);" novalidate>
+                        <textarea name="message-box" id="message-box" placeholder="message..."></textarea>
+                        <input type="submit" value="send">
+                    </form>
+                </aside>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

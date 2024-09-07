@@ -1,0 +1,53 @@
+{% extends "/layouts/list.html" %}
+{% block props %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user/browse.css') }}">
+    <title>u1traspace - users</title>
+{% endblock %}
+{% block top %}
+    <h2>all users:</h2>
+    <div class="options">
+        <h3>filter online:</h3>
+        <input type="checkbox" name="online" onclick="filterUsers(this.checked)" {{ "checked" if request.args.get("f") == "online" }}>
+        <h3>sort:</h3>
+        <select name="sort" id="sort" onchange="sortUsers(this.value)" onfocus="this.selectedIndex = -1;">
+            <option value="new" {{ "selected" if request.args.get("s") ==  "new" }}>newest to oldest</option>
+            <option value="old" {{ "selected" if request.args.get("s") ==  "old" }}>oldest to newest</option>
+            <option value="mviews" {{ "selected" if request.args.get("s") ==  "mviews" }}>most page views</option>
+            <option value="lviews" {{ "selected" if request.args.get("s") ==  "lviews" }}>least page views</option>
+        </select>
+    </div>
+{% endblock %}
+{% block content %}
+    <a class="rainbow" href="{{ url_for('user.random') }}">random user</a>
+    {{ pagination.paginator.links }}
+    <div class="users">
+        {% for user in pagination.users %}
+            <a href="{{ url_for('user.page', user_id=user['user_id']) }}" class="user {{ 'online' if current_time - user['last_seen'].timestamp() | round | int <= 300 }}">
+                <object 
+                data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ user['user_id'] }}.webp" 
+                type="image/webp"
+                aria-label="{{ user['username'] }}"
+                width="200"
+                height="200">
+                    <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ user['username'] }}">
+                </object>
+                <span>{{ user['username'] }}</span>
+            </a>
+        {% endfor %}     
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        const filterUsers = (online) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set("f", online ? "online" : "")
+            window.location.search = urlParams.toString();
+        }
+
+        const sortUsers = (value) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set("s", value);
+            window.location.search = urlParams.toString();
+        }
+    </script>
+{% endblock %}

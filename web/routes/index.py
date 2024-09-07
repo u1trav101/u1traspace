@@ -1,16 +1,19 @@
-from web.misc import render_template
-import web.forms as forms
+from datetime import date
+from web.overloads import render_template
+from profile.properties import get_profile_properties
 from db import Query
 
 
-def index():
+def index() -> str:
     query = Query()
-    res = query.select_blogs(limit=6)
 
-    search_form = forms.search_form()
+    try:
+        user_of_the_day: list[dict] = query.select_users(limit=1, random=True, seed=int(date.today().strftime("%d%m%Y")))[0]
+        return render_template(
+            "index.html",
+            user_of_the_day = user_of_the_day,
+            user = get_profile_properties(user_of_the_day["user_id"])
+        )
+    except IndexError:
+        return render_template("index.html")
 
-    return render_template(
-        "index.html",
-        new_posts=res,
-        form=search_form
-    )

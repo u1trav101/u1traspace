@@ -1,9 +1,9 @@
-from boto3 import session
+from boto3 import Session, session
 from config import CONFIG
 
 
-session = session.Session()
-client = session.client(
+sess: Session = session.Session()
+client = sess.client(
     "s3",
     region_name=CONFIG.S3_REGION_NAME,
     endpoint_url=CONFIG.S3_ENDPOINT_NAME,
@@ -12,37 +12,25 @@ client = session.client(
 )
 
 
-def upload_image(file_path, destination):
+def upload_image(file_path: str, destination: str) -> None:
     client.upload_file(
         file_path,
-        CONFIG.S3_ACCESS_ID,
-        destination,
-        ExtraArgs={
-            "ACL": "public-read",
-            "ContentType": "image/gif"
-        }
+        CONFIG.S3_BUCKET_NAME,
+        destination
     )
 
 
-def upload_audio(file_path, destination):
+def upload_audio(file_path: str, destination: str) -> None:
     client.upload_file(
         file_path,
-        CONFIG.S3_ACCESS_ID,
-        destination,
-        ExtraArgs={
-            "ACL": "public-read",
-            "ContentType": "audio/ogg"
-        }
+        CONFIG.S3_BUCKET_NAME,
+        destination
     )
 
 
-def upload_css(file_path, destination):
+def upload_css(file_path: str, destination: str) -> None:
     client.upload_file(
         file_path,
-        CONFIG.S3_ACCESS_ID,
-        destination,
-        ExtraArgs={
-            "ACL": "public-read",
-            "ContentType": "text/css"
-        }
+        CONFIG.S3_BUCKET_NAME,
+        destination
     )

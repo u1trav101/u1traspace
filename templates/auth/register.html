@@ -1,0 +1,29 @@
+{% extends "/layouts/form.html" %}
+{% block props %}
+    <title>u1traspace - register</title>
+{% endblock %}
+{% block main %}
+    <h2 class="glitch" data-text="register:">register:</h2>
+    <form action="" method="post" novalidate>
+        {{ forms.register.hidden_tag() }}
+        {{ forms.register.email(placeholder="email") }}
+        {% for error in forms.register.email.errors %}
+            <span class="error">* {{ error }} *</span>
+        {% endfor %}
+        {{ forms.register.username(placeholder="username") }}
+        {% for error in forms.register.username.errors %}
+            <span class="error">* {{ error }} *</span>
+        {% endfor %}
+        {{ forms.register.password(placeholder="password") }}
+        {% for error in forms.register.password.errors %}
+            <span class="error">* {{ error }} *</span>
+        {% endfor %}
+        {{ forms.register.confirm(placeholder="confirm password") }}
+        {% for error in forms.register.confirm.errors %}
+            <span class="error">* {{ error }} *</span>
+        {% endfor %}
+        {{ forms.register.submit() }}
+    </form>
+    <span class="disclaimer">by registering for an u1traspace account, you are confirming that you have read and agree to all the rules laid out <a href="{{ url_for('rules') }}">here</a></span>
+    <span class="redirect">already have an account? login <a href="{{ url_for('auth.login') }}">here</a></span>
+{% endblock %}

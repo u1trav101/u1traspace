@@ -1,114 +1,69 @@
 from flask import redirect, url_for
-import web.misc as misc
+from flask.app import Flask
+from flask_sock import Sock
+from werkzeug import Response
+from web.blueprints import auth_blueprint, blog_blueprint, message_blueprint, user_blueprint, conversation as _conversation
+from web.decorators import validate_url_vars, require_auth, before_request as _before_request
 import web.routes as routes
-from profile import get_notification_counters
 
 
-def declare_routes(app):
+def declare_routes(app: Flask, sock: Sock) -> None:
+    # registering blueprints
+    app.register_blueprint(auth_blueprint, url_prefix="/auth")
+    user_blueprint.register_blueprint(blog_blueprint, url_prefix="<user_id>/blog")
+    app.register_blueprint(user_blueprint, url_prefix="/user")
+    @sock.route("/<user_id>", message_blueprint)
+    @validate_url_vars
+    @require_auth
+    def conversation(ws, user_id) -> Response | None:
+        return _conversation(user_id, ws)
+    app.register_blueprint(message_blueprint, url_prefix="/msg")
+
+    # defining function to be called before each request is processed
     @app.before_request
-    def before_request():
-        return misc.before_request()
+    def before_request() -> None:
+        return _before_request()
+
+    # registering all other miscellaneous routes
+    @app.route("/preferences/", methods=["GET", "POST"])
+    @require_auth
+    def preferences() -> Response | str:
+        return routes.preferences()
+    
+    @app.route("/remove-friend/<friend_id>", methods=["POST"])
+    @require_auth
+    @validate_url_vars
+    def remove_friend(friend_id: int) -> Response:
+        return routes.remove_friend(friend_id)
 
     @app.route("/")
-    def index():
+    def index() -> str:
         return routes.index()
     
     @app.route("/set-timezone", methods=["POST"])
-    def set_timezone():
+    def set_timezone() -> str:
         return routes.set_timezone()
-
-    @app.route("/auth/login/", methods=["GET", "POST"])
-    def login():
-        return routes.login()
-
-    @app.route("/auth/logout/")
-    def logout():
-        return routes.logout()
-
-    @app.route("/auth/register/", methods=["GET", "POST"])
-    def register():
-        return routes.register()
-
+    
     @app.route("/users/")
-    def user_list():
-        return routes.user_list()
-
-    @app.route("/users/random/")
-    def random_user():
-        return routes.random_user()
+    def redirect_to_users() -> Response | str:
+        return redirect(url_for("user.browse"))
     
     @app.route("/news")
-    def news():
+    def news() -> Response | str:
         return routes.news()
 
-    @app.route("/id/")
-    def redirect_to_user_list():
-        return redirect(url_for("user_list"))
-
-    @app.route("/id/<user_id>/", methods=["GET", "POST"])
-    def user_profile(user_id):
-        return routes.user_profile(user_id)
-    
-    @app.route("/id/<user_id>/blog/")
-    def blog_list(user_id):
-        return routes.blog_list(user_id)
-
-    @app.route("/id/<user_id>/blog/<post_id>/", methods=["GET", "POST"])
-    def blog(user_id, post_id):
-        return routes.blog(user_id, post_id)
-
-    @app.route("/id/<user_id>/blog/new/", methods=["GET", "POST"])
-    def new_blog(user_id):
-        return routes.new_blog(user_id)
-
-    @app.route("/id/<user_id>/friends/")
-    def friend_list(user_id):
-        return routes.friend_list(user_id)
-
-    @app.route("/id/<user_id>/add-friend/", methods=["POST"])
-    def add_friend(user_id):
-        return routes.add_friend(user_id)
-
-    @app.route("/id/<user_id>/remove-friend/", methods=["POST"])
-    def remove_friend(user_id):
-        return routes.remove_friend(user_id)
-
-    @app.route("/preferences/", methods=["GET", "POST"])
-    def user_preferences():
-        return routes.user_preferences()
-
-    @app.route("/notifications/", methods=["GET", "POST"])
-    def notifications():
-        return routes.notifications()
-
-    @app.route("/notifications/poll")
-    def notification_poll():
-        return get_notification_counters()
-
-    @app.route("/msg/")
-    def message_list():
-        return routes.message_list()
-
-    @app.route("/msg/<recipient_id>/", methods=["GET", "POST"])
-    def direct_message(recipient_id):
-        return routes.direct_message(recipient_id)
-
-    @app.route("/msg/<recipient_id>/poll")
-    def message_poll(recipient_id):
-        return routes.message_poll(recipient_id)
-
     @app.route("/search/", methods=["GET", "POST"])
-    def search():
+    def search() -> Response | str | tuple:
         return routes.search()
-
+    
     @app.route("/konata/")
-    def konata():
+    def konata() -> Response:
         return routes.konata()
     
-    @app.route("/rss/<req_str>")
-    def rss(req_str):
-        return routes.rss(req_str)
+    @app.route("/rss/<request>")
+    def rss(request: str) -> Response | str | tuple:
+        return routes.rss(request)
     
-    @app.route("/faq/")
-    def faq():
-        return routes.faq()
+    @app.route("/rules/")
+    def rules() -> str:
+        return routes.rules()

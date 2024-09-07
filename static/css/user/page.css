@@ -1,0 +1,99 @@
+.about {
+    font-family: "lotion";
+}
+
+.about h3 {
+    margin-top: 0;
+    padding-top: 30px;
+}
+
+.about {
+    padding: 0 30px 30px;
+
+    border-bottom: 1px solid grey;
+    text-align: center;
+}
+
+.about img {
+    border: none;
+}
+
+.profile-bottom {
+    display: flex;
+    justify-content: space-around;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.profile-bottom section {
+    width: 50%;
+}
+
+.profile-bottom-right .top {
+    height: fit-content;
+
+    background-color: rgba(0,0,0,0.2);
+}
+.profile-bottom-right h4 {
+    margin-bottom: 20px;
+
+    font-family: "eb-garamond-italic";
+}
+
+.profile-bottom-right .top {
+    padding: 30px;
+
+    border-bottom: 1px solid grey;
+    border-left: 1px solid grey;
+}
+
+.interaction {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.interaction button, .interaction input[type=submit] {
+    all: unset;
+    padding: 10px;
+    font-size: 2rem;
+
+    background-color: rgba(0,0,0,0.4);
+    border: 1px solid grey;
+    cursor: pointer;
+}
+
+.interaction a {
+    border: none;
+}
+
+.songName {
+    width: fit-content;
+    margin: 30px auto 0;
+    padding: 10px;
+
+    border: 1px solid grey;
+    background-image: url("https://cdn.u1trav101.net/u1traspace/static/img/stars_moving.gif");
+}
+
+.songName h4 {
+    margin-top: 0;
+}
+
+.blogs {
+    padding: 30px;
+    border-left: 1px solid grey;
+}
+
+.blogs h4 {
+    margin: 0 0 30px;
+}
+
+.blog-preview{
+    display: flex;
+    width: fit-content;
+    margin: 10px 0;
+}
+
+.blog-preview h5 {
+    margin: 0;
+}

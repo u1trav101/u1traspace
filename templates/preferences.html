@@ -1,0 +1,85 @@
+{% extends "/layouts/options.html" %}
+{% block props %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/preferences.css') }}">
+    <script defer id="ace-js" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.34.2/ace.js" integrity="sha512-WdJDvPkK4mLIW1kpkWRd7dFtAF6Z0xnfD3XbfrNsK2/f36vMNGt/44iqYQuliJZwCFw32CrxDRh2hpM2TJS1Ew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="{{ url_for('static', filename='js/preferences.js') }}"></script>
+    <title>u1traspace - preferences</title>
+{% endblock %}
+{% block main %}
+    {% block categories %}
+        <span onclick="changeCategory('appearance')">appearance</span>
+        <span href="" onclick="changeCategory('privacy')">privacy</span>
+        <span href="" onclick="changeCategory('security')">security</span>            
+    {% endblock %}
+    {% block content %}
+        <form enctype="multipart/form-data" method="post" action="" novalidate>
+            {{ forms.preferences.hidden_tag() }}
+            <aside class="{{ 'hidden' if (request.args.get('c') != 'appearance') and request.args.get('c') != None }}" id="appearance">
+                <h2>appearance settings:</h2>
+                <div class="row">
+                    <div class="avatar-upload-container">
+                        <label 
+                        for="avatar-upload"
+                        class="avatar-upload-label">
+                            <span>change avatar</span>
+                            {% if avatar_uploading %}
+                                <img src="{{ cdn_uri }}/static/img/transfer.gif" alt="avatar is being updated">
+                            {% else %}
+                                <object 
+                                data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.webp?n={{ range(1, 99999) | random }}" 
+                                type="image/webp"
+                                aria-label="{{ properties['username'] }}'s profile picture"
+                                class="avatar-preview">
+                                    <img id="avatar-preview" src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ properties['username'] }}">
+                                </object>
+                            {% endif %}
+                        </label>
+                        {{ forms.preferences.avatar(class="avatar-upload", id="avatar-upload") }}
+                        {% for error in forms.preferences.avatar.errors %}
+                            <span class="error">* {{ error }} *</span>
+                        {% endfor %}
+                    </div>
+                    <textarea class="abtForm comment-input" placeholder="write a little about yourself (supports markdown)" id="bio" name="bio" oninput="textAreaAdjust(this)">{{ properties["about"] if properties["about"] else "" }}</textarea>
+                </div>
+                <div class="row audio">
+                    {% if audio_uploading %}
+                        <img src="{{ cdn_uri }}/static/img/transfer.gif" alt="audio is being updated">
+                        <span>your song is still updating...</span>
+                    {% else %}
+                        <audio src="{{ cdn_uri }}/usercontent/audio/{{ properties['user_id'] }}.mp3?n={{ range(1, 99999) | random }}" controls></audio>
+                        <label for="audio-upload" class="audio-upload-label" id="audio-upload-label">upload song</label>
+                        <img class="cancel-audio hidden" id="cancel-audio" src="{{ cdn_uri }}/static/img/x.svg" alt="cancel song upload" onclick="cancelAudioAction()">
+                        {{ forms.preferences.audio(id="audio-upload", class="audio-upload") }}
+                    {% endif %}
+                    {{ forms.preferences.audio(class="audio-upload hidden") }}
+                    {% for error in forms.preferences.audio.errors %}
+                        <span class="error">* {{ error }} *</span>
+                    {% endfor %}
+                </div>
+                <label for="css"><h3>custom css:</h3></label>
+                <textarea class="hidden" id="css" name="css">{{ properties["css"] if properties["css"] else "" }}</textarea>
+                <div id="ace"></div>
+                {{ forms.preferences.submit() }}
+                <span class="edit-disclaimer">* your edits may not be visible immediately, try refreshing if your settings haven't updated</span>
+                <a class="markdown-help" href="https://www.markdownguide.org/cheat-sheet/" target="_blank" rel="noreferrer noopener">markdown cheat sheet</a>
+                <a class="css-help" href="https://www.geeksforgeeks.org/css-cheat-sheet-a-basic-guide-to-css/" target="_blank" rel="noreferrer noopener">css cheat sheet</a>
+            </aside>
+            <aside class="{{ 'hidden' if request.args.get('c') != 'privacy' }}" id="privacy">
+                <h2>privacy settings:</h2>
+                <div class="row">
+                    <h3>private account:</h3>
+                    <label class="switch">
+                        {{ forms.preferences.privacy(class="private") }}
+                        <span class="slider"></span>
+                    </label>
+                    {% for error in forms.preferences.privacy.errors %}
+                        <span class="error">* {{ error }} *</span>
+                    {% endfor %}
+                </div>
+                {{ forms.preferences.submit() }}
+            </aside>
+        </form>
+    {% endblock %}
+{% endblock %}
+{% block js %}
+{% endblock %}

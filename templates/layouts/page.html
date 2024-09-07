@@ -1,0 +1,76 @@
+{% extends "/layouts/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts/page.css') }}">
+    {% block props %}
+    {% endblock %}
+{% endblock %}
+{% block body %}
+    <div id="container" class="container">
+        <section class="profile-top">
+            <object 
+            data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.webp" 
+            type="image/webp"
+            aria-label="{{ properties['user_id'] }}"
+            width="200"
+            height="200"
+            class="avatar twohundred {{ 'online' if current_time - properties['last_seen'].timestamp() | round | int <= 300 }}">
+                <img 
+                src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" 
+                alt="{{ properties['user_id'] }}">
+            </object>
+            <div>
+                <h2 id="breadCrumb" class="breadCrumb">
+                    /<a href="{{ url_for('user.browse') }}">user</a>/
+                    <a class="user-crumb {{'active' if request.path[6:-1] | int == properties['user_id'] | int }}" href="{{ url_for('user.page', user_id=properties['user_id']) }}">{{ properties['username'] }}</a>
+                    <div class="end">
+                        <div class="blog-crumb">
+                            /<a class="{{ 'active' if request.path[-5:-1] == 'blog' }}" href="{{ url_for('user.blog.browse', user_id=properties['user_id']) }}">blog</a>/
+                            {% if (session.get("user_id") | int == properties['user_id'] | int) and (request.path[-5:-1] == "blog" or request.path[-4:-1] == "new") %}
+                                <a class="{{ 'active' if request.path[-4:-1] == 'new' }}" href="{{ url_for('user.blog.new', user_id=properties['user_id']) }}">new</a>/
+                            {% endif %}
+                            {% if blogpost is defined %}
+                                {% if "blog/" + blogpost["blog_id"] | string in request.path %}
+                                    <a class="active" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blogpost['blog_id']) }}">{{ blogpost["title"] | truncate(40) }}</a>/
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <div>
+                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('user.friends', user_id=properties['user_id']) }}">friends</a>/
+                        </div>
+                    </div>
+                </h2>
+                {% if request.path[6:-1] | int == properties["user_id"] | int %}
+                    <h4><span>joined: </span><i>{{ time(properties['join_date']) }}</i></h4>
+                    <h4><span>last seen: </span><i>{{ time(properties['last_seen']) }}</i></h4>
+                    <h4><span>views: </span><i>{{ properties['page_views'] }}</i></h4>
+                {% elif request.path[-5:-1] == "blog" %}
+                    {% if blogposts %}
+                        <h4><span>last posted: </span><i>{{ time(blogposts[0]["date"]) }}</i></h4>
+                        <h4><span>total blogs: </span><i>{{ blogposts | length }}</i></h4>
+                    {% else %}
+                        <h4><span>last posted: </span><i>never</i></h4>
+                        <h4><span>total blogs: </span><i>0</i></h4>
+                    {% endif %}
+                {% elif blogpost is defined %}
+                    {% if request.path[-7:-1] == "blog/" + blogpost["blog_id"] | string %}
+                        <h4><span>posted: </span><i>{{ time(blogpost["date"]) }}</i></h4>
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% if ("user_id") in session and session["user_id"] | int == properties["user_id"] %}
+                <a class="settings" href="{{ url_for('preferences') }}">
+                    <img src="{{ cdn_uri }}/static/img/gears.gif" alt="user preferences">
+                </a>
+            {% elif ("user_id") in session and session["user_id"] | int != properties["user_id"] %}
+                {% if not is_friends %}
+                    <form class="add-friend" action="{{ url_for('user.add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
+                        {{ forms.friend.hidden_tag() }}
+                        <input id="friend" name="friend" type="submit" value="send friend request">
+                    </form>
+                {% endif %}
+            {% endif %}
+        </section>
+        {% block main %}
+        {% endblock %}
+    </div>
+{% endblock %}

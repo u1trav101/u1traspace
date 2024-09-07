@@ -1,0 +1,136 @@
+form {
+    width: 100%;
+}
+
+aside .row.audio {
+    justify-content: unset;
+}
+
+aside .row.audio audio {
+    margin-right: 20px;
+}
+
+aside .row.audio span {
+    margin-left: 20px;
+}
+
+aside h2 {
+    margin-top: 10px;
+}
+
+aside h3 {
+    margin: 0 0 20px 0;
+}
+
+aside textarea {
+    height: 30px;
+}
+
+.options-content {
+    margin: 20px;
+}
+
+.avatar-upload-container {
+    width: 200px;
+    height: 200px;
+
+    border: 2px solid grey;
+    color: grey;
+}
+
+.avatar-upload-container:hover {
+    border: 2px solid #fefefe;
+    color: #fefefe;
+}
+
+.avatar-upload {
+    visibility: hidden;
+}
+
+.avatar-upload-label {
+    width: 200px;
+    height: 200px;
+
+    background-size: cover;
+    cursor: pointer;
+}
+
+.avatar-upload-label img {
+    height: 200px;
+    width: 200px;
+}
+
+.avatar-upload-label span {
+    position: absolute;
+    margin-top: 88px;
+    margin-left: 26px;
+
+    background-color: rgba(0,0,0,0.7);
+}
+
+.comment-input {
+    width: 80%;
+    margin: 0 auto;
+
+    color: grey;
+}
+
+.comment-input:focus {
+    color: #fefefe;
+}
+
+.audio-upload-label {
+    cursor: pointer;
+    padding: 10px;
+    height: fit-content;
+
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid grey;
+    color: grey;
+}
+
+.audio-upload-label:hover {
+    color: #fefefe;
+    border: 1px solid #fefefe;
+}
+
+.audio-upload {
+    content-visibility: hidden;
+}
+
+.cancel-audio {
+    color: 1px solid grey;
+    border: 1px solid grey;
+}
+
+.cancel-audio:hover {
+    color: 1px solid #fefefe;
+    border: 1px solid #fefefe;
+}
+
+.ace_editor {
+    margin-bottom: 40px;
+
+    border: 1px solid grey;
+}
+
+.edit-disclaimer {
+    color: grey;
+}
+
+.markdown-help, .css-help {
+    width: fit-content;
+    margin: 10px 0 0;
+
+    border-bottom: 1px solid grey;
+    color: grey;
+}
+
+.css-help {
+    margin-bottom: 20px;
+}
+
+.markdown-help:hover, .css-help:hover {
+    border-bottom: 1px solid #fefefe;
+    color: #fefefe;
+}

@@ -1,0 +1,35 @@
+.new-blog {
+    padding: 30px;
+}
+
+.new-blog h3 {
+    margin-top: 0;
+
+    font-family: "eb-garamond-italic";
+}
+
+.new-blog form, .new-blog textarea, .new-blog input {
+    width: 100%;
+}
+
+.new-blog input {
+    padding: 10px;
+    margin-bottom: 0;
+
+    border: 1px solid grey;
+}
+
+.new-blog textarea {
+    margin-top: 20px;
+}
+
+.new-blog input, .new-blog textarea {
+    background-image: url("http://cdn.u1trav101.net/u1traspace/static/img/stars_moving.gif");
+}
+
+.new-blog input[type=submit] {
+    margin: 20px;
+    width: fit-content;
+
+    background-image: unset;
+}

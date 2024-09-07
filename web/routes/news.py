@@ -1,11 +1,12 @@
 from flask import request, session, redirect, url_for
-from web.misc import render_template
+from werkzeug import Response
+from web.overloads import render_template
 from db import Query
 
 
-def news():
+def news() -> Response | str:
     query = Query()
-    blogs = None
+    blogs: list[dict] | None = None
 
     if request.args.get("show") == "friends":
         if ("user_id") not in session:
@@ -17,5 +18,5 @@ def news():
     
     return render_template(
         "news.html",
-        new_posts=blogs
+        new_posts = blogs
     )

@@ -1,0 +1,78 @@
+{% extends "/layouts/page.html" %}
+{% block props %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/blog/post.css') }}">
+    <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
+    <title>u1traspace - {{ blogpost["title"] }}</title>
+{% endblock %}
+{% block main %}
+    <section class="blogContent blog-content">
+        <div class="blog-header">
+            {{ blogpost["title"] }}&nbsp- {{ time(blogpost["date"]) }}
+        </div>
+        <div class="comText">
+            {% for line in blogpost['corpus'].split('\n') %}
+                <span>{{ line | escape | regex_replace("javascript:", "javashcript:") | markdown | safe}}</span><br>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="comments">
+        <div class="commentForm comment-form">
+            <div class="boxHead box-head">
+                <b>leave a comment:</b>
+            </div>
+            <form action="" method="post" novalidate>
+                {%if ('user_id') in session%}
+                    {{ forms.comment.hidden_tag() }}
+                    {{ forms.comment.corpus(placeholder="leave a comment...", class="comment-input", oninput="textAreaAdjust(this)") }}
+                    {% for error in forms.comment.corpus.errors %}
+                        <span class="error">* {{ error }} *</span>
+                    {% endfor %}
+                    {{ forms.comment.submit(class="commentPost comment-post", value=" ") }}
+                {%else%}
+                    <textarea disabled placeholder="please login to leave a comment"></textarea>
+                    <input type="submit" value="&nbsp" disabled>
+                {%endif%}
+            </form>
+        </div>
+        <h4 class="header number-of-comments">{{ comments | length if comments else 0 }} comments:</h4>
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="comment">
+                    <a 
+                    class="avatar hundred {{ 'online' if current_time - comment['last_seen'].timestamp() | round | int <= 300 }}" 
+                    href="{{ url_for('user.page', user_id=comment['author_id']) }}">
+                        <object 
+                        data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ comment['user_id'] }}.webp" 
+                        type="image/webp"
+                        aria-label="{{ comment['username'] }}"
+                        width="100"
+                        height="100">
+                            <img 
+                            src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" 
+                            alt="{{ comment['username'] }}">
+                        </object>
+                    </a>
+                    <div>
+                        <div class="comment-top">
+                            <a href="{{ url_for('user.page', user_id=comment['author_id']) }}">
+                                <h5>{{ comment["username"] }}</h5>
+                            </a>
+                            <span>{{ time(comment["date"]) }}</span>
+                            {% if session["user_id"] == comment["author_id"] | string or session["user_id"] == properties["user_id"] | string %}
+                                <form class="deleteButton delete-button" action="" method="post" novalidate>
+                                    {{ forms.delete_post.hidden_tag() }}
+                                    <button name="delete" value="{{ comment['comment_id'] }}" type="submit">delete</button>
+                                </form>
+                            {%endif%}
+                        </div>
+                        <div class="comment-corpus">
+                            <p>
+                                {{ comment["corpus"] | escape | regex_replace('javascript:','javashcript:') | markdown | safe }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </section>
+{% endblock %}

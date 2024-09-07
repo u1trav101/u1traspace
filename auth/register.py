@@ -2,7 +2,7 @@ from werkzeug.security import generate_password_hash
 from db import Query
 
 
-def register_user(email, username, password):
+def register_user(email: str, username: str, password: str) -> int:
     query = Query()
     query.insert_user(
         email, 
@@ -10,7 +10,6 @@ def register_user(email, username, password):
         generate_password_hash(password)
     )
 
-    return query.select_users(
-        order="DESC",
-        limit=1
-    )[0]["user_id"]
+    new_user: dict =  query.select_users(order="DESC", limit=1)[0]
+
+    return new_user["user_id"]

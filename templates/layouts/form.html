@@ -1,0 +1,13 @@
+{% extends "/layouts/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/glitch-text.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts/form.css') }}">
+    {% block props %}
+    {% endblock %}
+{% endblock %}
+{% block body %}
+    <div class="form-container">
+        {% block main %}
+        {% endblock %}
+    </div>
+{% endblock %}

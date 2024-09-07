@@ -3,32 +3,44 @@ import cdn
 import os
 
 
+
+def cleanup(file_path: str) -> None:
+    os.remove(file_path)
+
+
 @shared_task()
-def _transcode_and_upload_image(file_path, usercontent_dir, user_id, size):
-    os.system(f"ffmpeg -loglevel error -hide_banner -i {file_path} -filter_complex '[0:v] scale={size}:-1:flags=lanczos,split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse' -y {usercontent_dir}img/rsz/{size}px/{user_id}.gif")
+def transcode_and_upload_image(file_path: str, usercontent_dir: str, user_id: int, size: int) -> None:
+    os.system(f"ffmpeg -loglevel error -hide_banner -loop 0 -i {file_path} -y -vf scale={size}:{size} {usercontent_dir}img/rsz/{size}px/{user_id}.webp")
+    
     cdn.upload_image(
-        f"{usercontent_dir}img/rsz/{size}px/{user_id}.gif",
-        f"usercontent/img/rsz/{size}px/{user_id}.gif"
+        f"{usercontent_dir}img/rsz/{size}px/{user_id}.webp",
+        f"u1traspace/usercontent/img/rsz/{size}px/{user_id}.webp"
+    )
+    
+    os.remove(f"{usercontent_dir}img/rsz/{size}px/{user_id}.webp")
+
+
+@shared_task(link=transcode_and_upload_image)
+def transcode_and_upload_images(file_path: str, usercontent_dir: str, user_id: int) -> str:
+    transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 32)
+    transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 100)
+    transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 200)
+
+    cdn.upload_image(
+        file_path,
+        f"u1traspace/usercontent/img/raw/{user_id}.{file_path.split(".")[-1]}"
     )
 
-
-@shared_task()
-def transcode_and_upload_images(file_path, usercontent_dir, user_id):
-    _transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 32)
-    _transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 100)
-    _transcode_and_upload_image.delay(file_path, usercontent_dir, user_id, 200)
-
-    os.system(f"ffmpeg -loglevel error -hide_banner -i {file_path} -filter_complex '[0:v] scale=-1:-1:flags=lanczos,split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse' -y {usercontent_dir}img/raw/{user_id}.gif")
-    cdn.upload_image(
-        f"{usercontent_dir}img/raw/{user_id}.gif",
-        f"usercontent/img/raw/{user_id}.gif"
-    )
+    return file_path
 
 
 @shared_task()
-def transcode_and_upload_audio(file_path, usercontent_dir, user_id):
-    os.system(f"ffmpeg -loglevel error -i {file_path} -y {usercontent_dir}audio/{user_id}.ogg")
+def transcode_and_upload_audio(file_path: str, usercontent_dir: str, user_id: int) -> str:
+    os.system(f"ffmpeg -loglevel error -loop 0 -i {file_path} -y {usercontent_dir}audio/{user_id}.mp3")
+    
     cdn.upload_audio(
-        f"{usercontent_dir}audio/{user_id}.ogg",
-        f"usercontent/audio/{user_id}.ogg"
+        f"{usercontent_dir}audio/{user_id}.mp3",
+        f"u1traspace/usercontent/audio/{user_id}.mp3"
     )
+
+    return file_path
