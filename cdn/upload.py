@@ -1,7 +1,9 @@
 from boto3 import Session, session
 from config import CONFIG
+import magic
 
 
+mime = magic.Magic(mime=True)
 sess: Session = session.Session()
 client = sess.client(
     "s3",
@@ -12,25 +14,14 @@ client = sess.client(
 )
 
 
-def upload_image(file_path: str, destination: str) -> None:
+def upload(file_path: str, destination: str) -> None:
+    mime_type = mime.from_file(file_path)
     client.upload_file(
         file_path,
         CONFIG.S3_BUCKET_NAME,
-        destination
-    )
-
-
-def upload_audio(file_path: str, destination: str) -> None:
-    client.upload_file(
-        file_path,
-        CONFIG.S3_BUCKET_NAME,
-        destination
-    )
-
-
-def upload_css(file_path: str, destination: str) -> None:
-    client.upload_file(
-        file_path,
-        CONFIG.S3_BUCKET_NAME,
-        destination
+        destination,
+        ExtraArgs = {
+            "ACL": "public-read",
+            "ContentType": mime_type if not "text/plain" else "text/css"
+        }
     )

@@ -25,7 +25,7 @@
                             {{ forms.friend.hidden_tag() }}
                             <input id="friend" name="friend" type="submit" value="approve">
                         </form>
-                        <form action="{{ url_for('user.remove_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
+                        <form action="{{ url_for('remove_friend', user_id=friend['sender_id']) }}" method="post" novalidate>
                             {{ forms.friend.hidden_tag() }}
                             <input id="friend" name="friend" type="submit" value="deny">
                         </form>
