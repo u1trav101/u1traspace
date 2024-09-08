@@ -1,4 +1,4 @@
-from flask import redirect, session, url_for
+from flask import redirect, session, url_for, request
 from werkzeug import Response
 from db import Query
 from web.overloads import render_template
@@ -11,7 +11,7 @@ def _browse(user_id: int) -> Response | str:
 
     if ("user_id") in session:
         if post_delete_form.validate_on_submit():
-            blog_id: str | None = post_delete_form.value.data
+            blog_id: str | None = request.form.get("delete")
             
             if blog_id:
                 try:

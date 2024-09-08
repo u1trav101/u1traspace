@@ -22,7 +22,7 @@ def _page(user_id: int) -> Response | str | tuple:
             )
 
         elif comment_delete_form.validate_on_submit():
-            res: str | None = request.form.get("value")
+            res: str | None = request.form.get("delete")
             if not res:
                 return redirect(url_for("user.page", user_id=user_id))
 

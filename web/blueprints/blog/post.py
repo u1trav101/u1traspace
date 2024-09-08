@@ -20,7 +20,7 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
             return redirect(url_for("user.blog.post", user_id=user_id, post_id=post_id))
 
         elif delete_form.validate_on_submit():
-            comment_id: str | None = request.form.get("value")
+            comment_id: str | None = request.form.get("delete")
             
             if comment_id:
                 try:
@@ -28,6 +28,7 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
                 except ValueError:
                     return redirect(url_for("user.blog.post", user=user_id, post_id=post_id))
 
+                print(comment_id)
                 query = Query()
                 comments: list[dict] = query.select_blog_comments(comment_id=int(comment_id), limit=1)
                 if comments:
