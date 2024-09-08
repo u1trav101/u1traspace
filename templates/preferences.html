@@ -46,7 +46,7 @@
                         <img src="{{ cdn_uri }}/static/img/transfer.gif" alt="audio is being updated">
                         <span>your song is still being processed...</span>
                     {% else %}
-                        <audio src="{{ cdn_uri }}/usercontent/audio/{{ properties['user_id'] }}.mp3?n={{ range(1, 99999) | random }}" controls></audio>
+                        <audio src="{{ cdn_uri }}/usercontent/audio/{{ properties['user_id'] }}.mp3?n={{ range(1, 99999) | random }}" controls loop></audio>
                         <label for="audio-upload" class="audio-upload-label" id="audio-upload-label">upload song</label>
                         <img class="cancel-audio hidden" id="cancel-audio" src="{{ cdn_uri }}/static/img/x.svg" alt="cancel song upload" onclick="cancelAudioAction()">
                         {{ forms.preferences.audio(id="audio-upload", class="audio-upload") }}
