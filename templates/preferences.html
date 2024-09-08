@@ -23,7 +23,7 @@
                         class="avatar-upload-label">
                             <span>change avatar</span>
                             {% if avatar_uploading %}
-                                <img src="{{ cdn_uri }}/static/img/transfer.gif" alt="avatar is being updated">
+                                <img src="{{ cdn_uri }}/static/img/transfer.gif" alt="your profile picture is still being processed">
                             {% else %}
                                 <object 
                                 data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ properties['user_id'] }}.webp?n={{ range(1, 99999) | random }}" 
@@ -44,7 +44,7 @@
                 <div class="row audio">
                     {% if audio_uploading %}
                         <img src="{{ cdn_uri }}/static/img/transfer.gif" alt="audio is being updated">
-                        <span>your song is still updating...</span>
+                        <span>your song is still being processed...</span>
                     {% else %}
                         <audio src="{{ cdn_uri }}/usercontent/audio/{{ properties['user_id'] }}.mp3?n={{ range(1, 99999) | random }}" controls></audio>
                         <label for="audio-upload" class="audio-upload-label" id="audio-upload-label">upload song</label>
