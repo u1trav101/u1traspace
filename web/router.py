@@ -30,11 +30,11 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     def preferences() -> Response | str:
         return routes.preferences()
     
-    @app.route("/remove-friend/<friend_id>", methods=["POST"])
+    @app.route("/remove-friend/<user_id>", methods=["POST"])
     @require_auth
     @validate_url_vars
-    def remove_friend(friend_id: int) -> Response:
-        return routes.remove_friend(friend_id)
+    def remove_friend(user_id: int) -> Response:
+        return routes.remove_friend(user_id)
 
     @app.route("/")
     def index() -> str:

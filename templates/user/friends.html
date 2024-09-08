@@ -50,7 +50,7 @@
                         <span>{{ friend["username"] }}</span>
                     </a>
                     {% if ("user_id") in session and session["user_id"] | int == properties['user_id'] %}
-                        <form action="{{ url_for('remove_friend', friend_id=friend['friend_id']) }}" method="post" novalidate>
+                        <form action="{{ url_for('remove_friend', user_id=friend['friend_id']) }}" method="post" novalidate>
                             {{ forms.friend.hidden_tag() }}
                             <input id="friend" name="friend" type="submit" value="unfriend">
                         </form>
