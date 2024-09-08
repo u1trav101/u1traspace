@@ -9,7 +9,7 @@ import messaging
 
 
 def _post(user_id: int, post_id: int) -> Response | str | tuple:
-    comment_form: FlaskForm = forms.input_form()
+    comment_form: FlaskForm = forms.input_form(textarea=True)
     delete_form: FlaskForm = forms.blank_form()
 
     if ("user_id") in session:
