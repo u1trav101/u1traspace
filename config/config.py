@@ -19,6 +19,8 @@ client.access_token_login(open(".bitwarden-access-token", "r").readline().strip(
 
 
 class CONFIG:
+    VERSION: str = "1.0.3"
+
     DEBUG: bool = True
     PORT: int = 5000
     NUM_OF_PROXIES: int = 1
