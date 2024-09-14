@@ -1,4 +1,5 @@
 from datetime import date
+from config.config import CONFIG
 from web.overloads import render_template
 from profile.properties import get_profile_properties
 from db import Query
@@ -12,7 +13,8 @@ def index() -> str:
         return render_template(
             "index.html",
             user_of_the_day = user_of_the_day,
-            user = get_profile_properties(user_of_the_day["user_id"])
+            user = get_profile_properties(user_of_the_day["user_id"]),
+            version=CONFIG.VERSION
         )
     except IndexError:
         return render_template("index.html")
