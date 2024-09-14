@@ -11,10 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts/base.css') }}">
     <link rel="shortcut icon" href="{{ cdn_uri }}/static/favicon.gif" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='img/icons/57px.png') }}">
     {% block head %}
     {% endblock %}
     <style>
-        html, body {
+        html, body, header {
             display: block !important;
         }
     </style>
