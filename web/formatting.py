@@ -5,7 +5,7 @@ import re
 
 
 # converts unix time to human readable time format
-def epoch_to_readable(time: datetime, short=False) -> str:
+def epoch_to_readable(time: datetime, short=False, obj=False) -> str:
     strf: str = "%H:%M:%S" if short else "%d/%m/%Y %H:%M:%S"
 
     readable_time: str = datetime(
@@ -17,9 +17,11 @@ def epoch_to_readable(time: datetime, short=False) -> str:
         time.second,
         time.microsecond,
         tzinfo=ZoneInfo(session["timezone"] if ("timezone") in session else "Etc/UTC")
-    ).strftime(strf)
+    )
 
-    return readable_time
+    if obj:
+        return readable_time
+    return readable_time.strftime(strf)
 
 # escapes characters with potential for XSS (e.g. 'javascript:')
 def regex_replace(text: str, find: str, replace: str) -> str:
