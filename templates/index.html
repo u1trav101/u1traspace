@@ -1,7 +1,11 @@
 {% extends "/layouts/base.html" %}
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <meta name="description" content="do you miss the old internet? is social media draining your soul? do you wish you could fully express yourself online? then become an exclusive member of the coolest internet club right here (⌐■_■).">
+    <meta property="og:title" content="u1traspace">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('index', _external=True, _scheme='https') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="canonical" href="{{ url_for('index', _external=True, _scheme='https') }}">
     <title>u1traspace</title>
 {% endblock %}
 {% block body %}

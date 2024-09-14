@@ -1,8 +1,12 @@
 {% extends "/layouts/page.html" %}
 {% block props %}
+    <meta property="og:title" content="u1traspace - new blog post">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('user.blog.new', user_id=properties['user_id'], _external=True, _scheme='https') }}">
+    <meta name="description" content="create a new post for your blog.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog/new.css') }}">
     <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
-    <meta name="description" content="create a new post for your blog.">
+    <link rel="canonical" href="{{ url_for('user.blog.new', user_id=properties['user_id'], _external=True, _scheme='https') }}">
     <title>u1traspace - new blog post</title>
 {% endblock %}
 {% block main %}

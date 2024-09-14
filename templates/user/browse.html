@@ -1,7 +1,11 @@
 {% extends "/layouts/list.html" %}
 {% block props %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/user/browse.css') }}">
     <meta name="description" content="here you can browse the pages of all the users on u1traspace, or select a random page.">
+    <meta property="og:title" content="u1traspace - users">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('user.browse', _external=True, _scheme='https') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user/browse.css') }}">
+    <link rel="canonical" href="{{ url_for('user.browse', _external=True, _scheme='https') }}">
     <title>u1traspace - users</title>
 {% endblock %}
 {% block top %}

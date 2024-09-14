@@ -25,8 +25,8 @@
                     <div class="end">
                         <div class="blog-crumb">
                             /<a class="{{ 'active' if request.path[-5:-1] == 'blog' }}" href="{{ url_for('user.blog.browse', user_id=properties['user_id']) }}">blog</a>/
-                            {% if (session.get("user_id") | int == properties['user_id'] | int) and (request.path[-5:-1] == "blog" or request.path[-4:-1] == "new") %}
-                                <a class="{{ 'active' if request.path[-4:-1] == 'new' }}" href="{{ url_for('user.blog.new', user_id=properties['user_id']) }}">new</a>/
+                            {% if (session.get("user_id") | int == properties['user_id'] | int) and (request.path[-5:-1] == "blog" or request.path[-3:] == "new") %}
+                                <a class="{{ 'active' if request.path[-3:] == 'new' }}" href="{{ url_for('user.blog.new', user_id=properties['user_id']) }}">new</a>
                             {% endif %}
                             {% if blogpost is defined %}
                                 {% if "blog/" + blogpost["blog_id"] | string in request.path %}
@@ -35,7 +35,7 @@
                             {% endif %}
                         </div>
                         <div>
-                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('user.friends', user_id=properties['user_id']) }}">friends</a>/
+                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('user.friends', user_id=properties['user_id']) }}">friends</a>
                         </div>
                     </div>
                 </h2>

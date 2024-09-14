@@ -1,7 +1,11 @@
 {% extends "/layouts/list.html" %}
 {% block props %}
-    <title>u1traspace - news</title>
     <meta name="description" content="a list of all the newest blog posts by u1traspace users.">
+    <meta property="og:title" content="u1traspace - news">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('news', _external=True, _scheme='https') }}">
+    <link rel="canonical" href="{{ url_for('news', _external=True, _scheme='https') }}">
+    <title>u1traspace - news</title>
 {% endblock %}
 {% block top %}
     <h2>news:</h2>

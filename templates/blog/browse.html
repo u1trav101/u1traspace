@@ -1,12 +1,16 @@
 {% extends "/layouts/page.html" %}
 {% block props %}
+    <meta property="og:title" content="u1traspace - {{ properties['username'] }}'s blog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('user.blog.browse', user_id=properties['user_id'], _external=True, _scheme='https') }}">
+    <meta name="description" content="a collection of all posts on {{ properties['username'] }}'s blog.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog/browse.css') }}">
     <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
-    <meta name="description" content="a collection of all posts on {{ properties['username'] }}'s blog.">
-    <title>u1traspace - {{ properties["username"] }}'s blogs</title>
+    <link rel="canonical" href="{{ url_for('user.blog.browse', user_id=properties['user_id'], _external=True, _scheme='https') }}">
+    <title>u1traspace - {{ properties["username"] }}'s blog</title>
 {% endblock %}
 {% block main %}
-    <h3 class="blogs-header header">{{ properties["username"] }}'s blogs:</h3>
+    <h3 class="blogs-header header">{{ properties["username"] }}'s blog:</h3>
     <section class="blogs">
         {% if blogposts %}
             {% for blog in blogposts %}
