@@ -17,7 +17,7 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     @require_auth
     def conversation(ws, user_id) -> Response | None:
         return _conversation(user_id, ws)
-    app.register_blueprint(message_blueprint, url_prefix="/msg")
+    app.register_blueprint(message_blueprint, url_prefix="/message")
 
     # defining function to be called before each request is processed
     @app.before_request
@@ -25,7 +25,7 @@ def declare_routes(app: Flask, sock: Sock) -> None:
         return _before_request()
 
     # registering all other miscellaneous routes
-    @app.route("/preferences/", methods=["GET", "POST"])
+    @app.route("/preferences", methods=["GET", "POST"])
     @require_auth
     def preferences() -> Response | str:
         return routes.preferences()
@@ -60,6 +60,6 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     def rss(request: str) -> Response | str | tuple:
         return routes.rss(request)
     
-    @app.route("/rules/")
+    @app.route("/rules")
     def rules() -> str:
         return routes.rules()
