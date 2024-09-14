@@ -2,6 +2,7 @@
 {% block props %}
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/blog/post.css') }}">
     <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
+    <meta name="description" content="{{ blogpost['corpus'] | truncate(150)}}">
     <title>u1traspace - {{ blogpost["title"] }}</title>
 {% endblock %}
 {% block main %}

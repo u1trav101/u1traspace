@@ -1,6 +1,7 @@
 {% extends "/layouts/list.html" %}
 {% block props %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+    <meta name="description" content="search through all users and blog posts on u1traspace.">
     {% if search_term %}
         <title>u1traspace - search for '{{ search_term }}'</title>
     {% else %}

@@ -2,6 +2,7 @@
 {% block props %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog/browse.css') }}">
     <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
+    <meta name="description" content="a collection of all posts on {{ properties['username'] }}'s blog.">
     <title>u1traspace - {{ properties["username"] }}'s blogs</title>
 {% endblock %}
 {% block main %}
