@@ -30,12 +30,12 @@
                     <div class="nav-left">
                         <a href="{{ url_for('index') }}"><h1>u1traspace</h1></a>
                         <a href="{{ url_for('user.browse') }}">users</a>
+                        <a href="{{ url_for('news') }}">posts</a>
                         <a href="{{ url_for('search') }}">search</a>                        
                     </div>
                     {% if ("user_id") in session %}
                     <div class="nav-middle">
                         <a href="{{ url_for('user.page', user_id=session['user_id']) }}">profile</a>
-                        <a href="{{ url_for('user.friends', user_id=session['user_id']) }}">friends</a>
                         <a href="{{ url_for('message.browse') }}">messages</a>
                     </div>
                 {% endif %}
