@@ -24,6 +24,15 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     def before_request() -> None:
         return _before_request()
 
+    # defining redirects
+    @app.route("/users/")
+    def users_redirect() -> Response:
+        return redirect(url_for("user.browse"))
+    
+    @app.route("/posts/")
+    def posts_redirect() -> Response:
+        return redirect(url_for("news"))
+
     # registering all other miscellaneous routes
     @app.route("/preferences", methods=["GET", "POST"])
     @require_auth
