@@ -1,21 +1,21 @@
 @font-face {
     font-family: "merchant-copy";
-    src: url("/static/font/merchant_copy.woff2") format("woff2");
+    src: url("/font/merchant_copy.woff2") format("woff2");
 }
 
 @font-face { 
     font-family: "eb-garamond-italic";
-    src: url("/static/font/eb_garamond_italic.woff2") format("woff2");
+    src: url("/font/eb_garamond_italic.woff2") format("woff2");
 }
 
 @font-face {
     font-family: "lotion";
-    src: url("/static/font/lotion.ttf") format("truetype");
+    src: url("/font/lotion.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "fira-code";
-    src: url("/static/font/fira_code.ttf") format("truetype");
+    src: url("/font/fira_code.ttf") format("truetype");
 }
 
 html, body {
@@ -108,7 +108,7 @@ input[type=submit], .commentPost {
     font-size: 2.5rem;
 
     border: 2px solid grey;
-    background-image: url("/static/img/vortex.gif");
+    background-image: url("/img/vortex.gif");
 }
 
 .nav-top {
@@ -216,7 +216,7 @@ input:checked + .slider:before {
     flex-direction: column;
     width: fit-content;
 
-    background-image: url("/static/img/stars.gif");
+    background-image: url("/img/stars.gif");
     border: 1px solid #fefefe;
 }
 
