@@ -51,7 +51,7 @@
                             <span>{{ result["username"] }}</span>
                         </div>
                         <div class="content">
-                            <span><span class="title">{{ result["title"] }}</span> - <span>{{ result["date"] }}</span></span>
+                            <span><span class="title">{{ result["title"] }}</span> - <span>{{ time(result["date"]) }}</span></span>
                             <p class="corpus">{{ result["corpus"] | truncate(500) }}</p>
                         </div>
                     </a>

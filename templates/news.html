@@ -1,1 +1,30 @@
-{% extends "/layouts/base.html" %}
+{% extends "/layouts/list.html" %}
+{% block props %}
+    <title>u1traspace - news</title>
+{% endblock %}
+{% block top %}
+    <h2>news:</h2>
+{% endblock %}
+{% block content %}
+    {% if posts %}
+        {% for post in posts %}
+            <a class="blog" href="{{ url_for('user.blog.post', user_id=post['author_id'], post_id=post['blog_id']) }}">
+                <div class="avatar">
+                    <object
+                    data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ post['user_id'] }}.webp"
+                    type="image/webp"
+                    aria-label="{{ post['username'] }}"
+                    width="100"
+                    height="100">
+                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" alt="{{ post['username'] }}">
+                    </object>
+                    <span>{{ post["username"] }}</span>
+                </div>
+                <div class="content">
+                    <span><span class="title">{{ post["title"] }}</span> - <span>{{ time(post["date"]) }}</span></span>
+                    <p>{{ post["corpus"] | truncate(500) }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
