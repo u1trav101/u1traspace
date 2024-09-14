@@ -14,7 +14,7 @@ user_blueprint = Blueprint("user", __name__)
 def browse() -> str:
     return _browse()
 
-@user_blueprint.route("/random/")
+@user_blueprint.route("/random")
 def random() -> Response:
     return _random()
 
@@ -23,12 +23,12 @@ def random() -> Response:
 def page(user_id: int) -> Response | str | tuple:
     return _page(user_id)
 
-@user_blueprint.route("/<user_id>/friends/")
+@user_blueprint.route("/<user_id>/friends")
 @validate_url_vars
 def friends(user_id: int) -> Response | str:
     return _friends(user_id)
 
-@user_blueprint.route("/<user_id>/add-friend/", methods=["POST"])
+@user_blueprint.route("/<user_id>/add-friend", methods=["POST"])
 @validate_url_vars
 @require_auth
 def add_friend(user_id: int) -> Response:

@@ -44,19 +44,15 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     def set_timezone() -> str:
         return routes.set_timezone()
     
-    @app.route("/users/")
-    def redirect_to_users() -> Response | str:
-        return redirect(url_for("user.browse"))
-    
     @app.route("/news")
     def news() -> Response | str:
         return routes.news()
 
-    @app.route("/search/", methods=["GET", "POST"])
+    @app.route("/search", methods=["GET", "POST"])
     def search() -> Response | str | tuple:
         return routes.search()
     
-    @app.route("/konata/")
+    @app.route("/konata")
     def konata() -> Response:
         return routes.konata()
     
