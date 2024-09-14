@@ -1,6 +1,11 @@
 {% extends "/layouts/options.html" %}
 {% block props %}
+    <meta name="description" content="change your user settings and customise your profile.">
+    <meta property="og:title" content="u1traspace - preferences">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('preferences', _external=True, _scheme='https') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/preferences.css') }}">
+    <link rel="canonical" href="{{ url_for('preferences', _external=True, _scheme='https') }}">
     <script defer id="ace-js" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.34.2/ace.js" integrity="sha512-WdJDvPkK4mLIW1kpkWRd7dFtAF6Z0xnfD3XbfrNsK2/f36vMNGt/44iqYQuliJZwCFw32CrxDRh2hpM2TJS1Ew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script defer src="{{ url_for('static', filename='js/preferences.js') }}"></script>
     <title>u1traspace - preferences</title>

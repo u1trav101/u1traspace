@@ -13,12 +13,12 @@ blog_blueprint = Blueprint("blog", __name__)
 def browse(user_id: int) -> Response | str:
     return _browse(user_id)
 
-@blog_blueprint.route("/<post_id>/", methods=["GET", "POST"])
+@blog_blueprint.route("/<post_id>", methods=["GET", "POST"])
 @validate_url_vars
 def post(user_id: int, post_id: int) -> Response | str | tuple:
     return _post(user_id, post_id)
 
-@blog_blueprint.route("/new/", methods=["GET", "POST"])
+@blog_blueprint.route("/new", methods=["GET", "POST"])
 @validate_url_vars
 @require_auth
 @require_ownership

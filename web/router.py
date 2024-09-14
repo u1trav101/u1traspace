@@ -17,15 +17,24 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     @require_auth
     def conversation(ws, user_id) -> Response | None:
         return _conversation(user_id, ws)
-    app.register_blueprint(message_blueprint, url_prefix="/msg")
+    app.register_blueprint(message_blueprint, url_prefix="/message")
 
     # defining function to be called before each request is processed
     @app.before_request
     def before_request() -> None:
         return _before_request()
 
+    # defining redirects
+    @app.route("/users/")
+    def users_redirect() -> Response:
+        return redirect(url_for("user.browse"))
+    
+    @app.route("/posts/")
+    def posts_redirect() -> Response:
+        return redirect(url_for("news"))
+
     # registering all other miscellaneous routes
-    @app.route("/preferences/", methods=["GET", "POST"])
+    @app.route("/preferences", methods=["GET", "POST"])
     @require_auth
     def preferences() -> Response | str:
         return routes.preferences()
@@ -44,19 +53,15 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     def set_timezone() -> str:
         return routes.set_timezone()
     
-    @app.route("/users/")
-    def redirect_to_users() -> Response | str:
-        return redirect(url_for("user.browse"))
-    
     @app.route("/news")
     def news() -> Response | str:
         return routes.news()
 
-    @app.route("/search/", methods=["GET", "POST"])
+    @app.route("/search", methods=["GET", "POST"])
     def search() -> Response | str | tuple:
         return routes.search()
     
-    @app.route("/konata/")
+    @app.route("/konata")
     def konata() -> Response:
         return routes.konata()
     
@@ -64,6 +69,6 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     def rss(request: str) -> Response | str | tuple:
         return routes.rss(request)
     
-    @app.route("/rules/")
+    @app.route("/rules")
     def rules() -> str:
         return routes.rules()

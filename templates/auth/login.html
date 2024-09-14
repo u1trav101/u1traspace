@@ -1,5 +1,10 @@
 {% extends "/layouts/form.html" %}
 {% block props %}
+    <meta property="og:title" content="u1traspace - login">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('auth.login') }}">
+    <meta name="description" content="login to your u1traspace account.">
+    <link rel="canonical" href="{{ url_for('auth.login', _external=True, _scheme='https') }}">
     <title>u1traspace - login</title>
 {% endblock %}
 {% block main %}

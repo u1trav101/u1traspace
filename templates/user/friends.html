@@ -1,7 +1,12 @@
 {% extends "/layouts/page.html" %}
 {% block props %}
+    <meta name="description" content="all of {{ properties['username'] }}'s friends">
+    <meta property="og:title" content="u1traspace - {{ properties['username'] }}'s friends">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('user.friends', user_id=properties['user_id'], _external=True, _scheme='https') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user/friends.css') }}">
     <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
+    <link rel="canonical" href="{{ url_for('user.friends', user_id=properties['user_id'], _external=True, _scheme='https') }}">
     <title>u1traspace - {{ properties["username"] }}'s friends</title>
 {% endblock %}
 {% block main %}

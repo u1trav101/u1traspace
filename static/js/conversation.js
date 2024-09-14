@@ -10,7 +10,7 @@ let avatarImages = {};
 const createSocket = recipientID => {
     userID = recipientID
     if (socket) { 
-        if (socket.url.includes(`/msg/${recipientID}`)) return;
+        if (socket.url.includes(`/message/${recipientID}`)) return;
         else {
             socket.close()
             console.log("Closed current socket connection")
@@ -21,9 +21,9 @@ const createSocket = recipientID => {
     messagesDiv = document.getElementById(`messages-${recipientID}`)
     renderedMessages = 0;
     
-    socket = new WebSocket(`/msg/${recipientID}`);
+    socket = new WebSocket(`/message/${recipientID}`);
     socket.onopen = (event) => {
-        console.log(`WebSocket opened on /msg/${recipientID}`);
+        console.log(`WebSocket opened on /message/${recipientID}`);
         socket.send(JSON.stringify({
             type: "get",
             resource: "messages"

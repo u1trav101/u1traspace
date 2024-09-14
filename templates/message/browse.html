@@ -1,6 +1,11 @@
 {% extends "/layouts/options.html" %}
 {% block props %}
+    <meta name="description" content="here you can send and receive direct messages with your friends on u1traspace.">
+    <meta property="og:title" content="u1traspace - messages">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('message.browse', _external=True, _scheme='https') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/message/browse.css') }}">
+    <link rel="canonical" href="{{ url_for('message.browse', _external=True, _scheme='https') }}">
     <script src="{{ url_for('static', filename='js/conversation.js') }}"></script>
     <title>u1traspace - messages</title>
 {% endblock %}

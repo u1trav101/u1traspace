@@ -1,0 +1,19 @@
+{
+    "name": "u1traspace",
+    "short_name": "u1traspace",
+    "display": "standalone",
+    "background_color": "#18012d",
+    "description": "the coolest space on the net ;]",
+    "icons": [
+        {
+            "src": "/img/icons/66px.png",
+            "sizes": "66x66",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/icons/57px.png",
+            "sizes": "57x57",
+            "type": "image/png"
+        }
+    ]
+}

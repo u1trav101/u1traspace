@@ -1,5 +1,10 @@
 {% extends "/layouts/form.html" %}
 {% block props %}
+    <meta property="og:title" content="u1traspace - register">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('auth.register', _external=True, _scheme='https') }}">
+    <meta name="description" content="create a new u1traspace account.">
+    <link rel="canonical" href="{{ url_for('auth.register', _external=True, _scheme='https') }}">
     <title>u1traspace - register</title>
 {% endblock %}
 {% block main %}

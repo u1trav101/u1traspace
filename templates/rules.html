@@ -1,6 +1,11 @@
 {% extends "/layouts/list.html" %}
 {% block props %}
-    <title>u1trav101et - rules</title>
+    <meta name="description" content="the rules that all users of u1traspace must abide by. please read these before making an account.">
+    <meta property="og:title" content="u1traspace - rules">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('rules', _external=True, _scheme='https') }}">
+    <link rel="canonical" href="{{ url_for('rules', _external=True, _scheme='https') }}">
+    <title>u1traspace - rules</title>
 {% endblock %}
 {% block top %}
     <h2>rules:</h2>

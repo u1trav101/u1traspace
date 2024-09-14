@@ -1,7 +1,15 @@
 {% extends "/layouts/page.html" %}
 {% block props %}
+    {% if properties['about'] %}
+        <meta name="description" content="{{ properties['about'] | truncate(150) }}">
+    {% endif %}
+    <meta property="og:title" content="{{ properties['username'] }}">
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="{{ url_for('user.page', user_id=properties['user_id'], _external=True, _scheme='https') }}">
+    <meta property="profile:username" content="{{ properties['username'] }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/user/page.css') }}">
     <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
+    <link rel="canonical" href="{{ url_for('user.page', user_id=properties['user_id'], _external=True, _scheme='https') }}">
     <title>u1traspace - {{ properties["username"] }}</title>
 {% endblock %}
 {% block main %}

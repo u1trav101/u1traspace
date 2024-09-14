@@ -1,1 +1,35 @@
-{% extends "/layouts/base.html" %}
+{% extends "/layouts/list.html" %}
+{% block props %}
+    <meta name="description" content="a list of all the newest blog posts by u1traspace users.">
+    <meta property="og:title" content="u1traspace - news">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('news', _external=True, _scheme='https') }}">
+    <link rel="canonical" href="{{ url_for('news', _external=True, _scheme='https') }}">
+    <title>u1traspace - new posts</title>
+{% endblock %}
+{% block top %}
+    <h2>new posts:</h2>
+{% endblock %}
+{% block content %}
+    {% if posts %}
+        {% for post in posts %}
+            <a class="blog" href="{{ url_for('user.blog.post', user_id=post['author_id'], post_id=post['blog_id']) }}">
+                <div class="avatar">
+                    <object
+                    data="{{ cdn_uri }}/usercontent/img/rsz/100px/{{ post['user_id'] }}.webp"
+                    type="image/webp"
+                    aria-label="{{ post['username'] }}"
+                    width="100"
+                    height="100">
+                        <img src="{{ cdn_uri }}/usercontent/img/rsz/100px/default.webp" alt="{{ post['username'] }}">
+                    </object>
+                    <span>{{ post["username"] }}</span>
+                </div>
+                <div class="content">
+                    <span><span class="title">{{ post["title"] }}</span> - <span>{{ time(post["date"]) }}</span></span>
+                    <p>{{ post["corpus"] | truncate(500) }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

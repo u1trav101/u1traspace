@@ -9,12 +9,16 @@
     |_____|_____|                       |_|                 |_____|__-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:site_name" content="u1traspace">
+    <meta property="og:image" content="{{ cdn_uri }}/static/favicon.gif">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts/base.css') }}">
     <link rel="shortcut icon" href="{{ cdn_uri }}/static/favicon.gif" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='img/icons/57px.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
     {% block head %}
     {% endblock %}
     <style>
-        html, body {
+        html, body, header {
             display: block !important;
         }
     </style>
@@ -27,12 +31,12 @@
                     <div class="nav-left">
                         <a href="{{ url_for('index') }}"><h1>u1traspace</h1></a>
                         <a href="{{ url_for('user.browse') }}">users</a>
+                        <a href="{{ url_for('news') }}">posts</a>
                         <a href="{{ url_for('search') }}">search</a>                        
                     </div>
                     {% if ("user_id") in session %}
                     <div class="nav-middle">
                         <a href="{{ url_for('user.page', user_id=session['user_id']) }}">profile</a>
-                        <a href="{{ url_for('user.friends', user_id=session['user_id']) }}">friends</a>
                         <a href="{{ url_for('message.browse') }}">messages</a>
                     </div>
                 {% endif %}

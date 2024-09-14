@@ -1,6 +1,11 @@
 {% extends "/layouts/base.html" %}
 {% block head %}
+    <meta name="description" content="do you miss the old internet? is social media draining your soul? do you wish you could fully express yourself online? then become an exclusive member of the coolest internet club right here (⌐■_■).">
+    <meta property="og:title" content="u1traspace">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('index', _external=True, _scheme='https') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="canonical" href="{{ url_for('index', _external=True, _scheme='https') }}">
     <title>u1traspace</title>
 {% endblock %}
 {% block body %}
@@ -41,6 +46,7 @@
                 <img src="{{ cdn_uri }}/static/img/love.gif" alt="made with love">
                 &nbspby&nbsp<a href="https://u1trav101.net" target="_blank" rel="noreferrer noopener">u1trav101et</a>&nbsp<3 
             </span><br><br>
+            <span class="version">u1traspace v{{ version }}</span><br>
             <span class="copyright">Copyright © 2024 u1trav101et. All rights reserved.</span>
         </section>
         <section class="user">

@@ -19,7 +19,7 @@ client.access_token_login(open(".bitwarden-access-token", "r").readline().strip(
 
 
 class CONFIG:
-    VERSION: str = "1.0.4"
+    VERSION: str = "1.1.0"
 
     DEBUG: bool = True
     PORT: int = 5000

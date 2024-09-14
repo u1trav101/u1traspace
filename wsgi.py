@@ -15,7 +15,7 @@ from setup import create_dirs
 create_dirs()
 
 # instialising wsgi app instance
-app: Flask = Flask("u1traspace")
+app: Flask = Flask("u1traspace", static_url_path="")
 
 # applying configs from config class
 app.config.from_object(CONFIG)
