@@ -9,6 +9,7 @@ def get_scheduled_tasks() -> list | None:
 
     return tasks if len(tasks) > 0 else None
 
+
 def get_running_tasks() -> list | None:
     inspect = current_app.control.inspect()
     tasks: list = inspect.active()

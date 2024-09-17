@@ -15,5 +15,5 @@ def _add_friend(recipient_id: int) -> Response:
 
             if approved:
                 return redirect(url_for("user.friends", user_id=session["user_id"]))
-    
+
     return redirect(url_for("user.page", user_id=recipient_id))

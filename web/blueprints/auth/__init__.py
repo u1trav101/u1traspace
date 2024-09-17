@@ -8,15 +8,18 @@ from web.decorators import require_auth, reject_auth
 
 auth_blueprint = Blueprint("auth", __name__)
 
+
 @auth_blueprint.route("/login", methods=["GET", "POST"])
 @reject_auth
 def login() -> Response | str:
     return _login()
 
+
 @auth_blueprint.route("/logout")
 @require_auth
 def logout() -> Response:
     return _logout()
+
 
 @auth_blueprint.route("/register", methods=["GET", "POST"])
 @reject_auth

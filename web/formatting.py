@@ -16,12 +16,13 @@ def epoch_to_readable(time: datetime, short=False, obj=False) -> str:
         time.minute,
         time.second,
         time.microsecond,
-        tzinfo=ZoneInfo(session["timezone"] if ("timezone") in session else "Etc/UTC")
+        tzinfo=ZoneInfo(session["timezone"] if ("timezone") in session else "Etc/UTC"),
     )
 
     if obj:
         return readable_time
     return readable_time.strftime(strf)
+
 
 # escapes characters with potential for XSS (e.g. 'javascript:')
 def regex_replace(text: str, find: str, replace: str) -> str:

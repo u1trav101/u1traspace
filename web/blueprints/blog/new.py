@@ -18,9 +18,7 @@ def _new(user_id: int) -> Response | str:
 
     return render_template(
         "blog/new.html",
-        new_blog_form = new_blog_form,
-        properties = get_profile_properties(user_id),
-        forms = {
-            "new_blog": new_blog_form
-        }
+        new_blog_form=new_blog_form,
+        properties=get_profile_properties(user_id),
+        forms={"new_blog": new_blog_form},
     )

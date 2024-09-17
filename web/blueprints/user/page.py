@@ -16,9 +16,7 @@ def _page(user_id: int) -> Response | str | tuple:
     if ("user_id") in session:
         if comment_form.validate_on_submit():
             messaging.send_profile_comment(
-                int(session["user_id"]),
-                user_id,
-                comment_form.corpus.data
+                int(session["user_id"]), user_id, comment_form.corpus.data
             )
 
         elif comment_delete_form.validate_on_submit():
@@ -29,14 +27,15 @@ def _page(user_id: int) -> Response | str | tuple:
             comment_id: int = int(res)
             comment: dict = query.select_page_comments(comment_id=int(res))[0]
 
-            if (int(session["user_id"]) == user_id) or (int(session["user_id"]) == comment["author_id"]):
+            if (int(session["user_id"]) == user_id) or (
+                int(session["user_id"]) == comment["author_id"]
+            ):
                 query.delete_page_comment(comment_id=comment_id, limit=1)
 
                 return redirect(url_for("user.page", user_id=user_id))
 
         if request.method == "POST":
             return redirect(url_for("user.page", user_id=user_id))
-
 
     query.increase_page_views(user_id)
 
@@ -50,14 +49,14 @@ def _page(user_id: int) -> Response | str | tuple:
 
     return render_template(
         template,
-        properties = properties,
-        comments = profile.get_profile_comments(user_id),
-        blogposts = profile.get_all_user_blogposts(user_id),
-        friends = profile.get_user_friends(user_id),
-        is_friends = profile.is_friends(user_id),
-        forms = {
+        properties=properties,
+        comments=profile.get_profile_comments(user_id),
+        blogposts=profile.get_all_user_blogposts(user_id),
+        friends=profile.get_user_friends(user_id),
+        is_friends=profile.is_friends(user_id),
+        forms={
             "comment": comment_form,
             "delete_comment": comment_delete_form,
-            "friend": forms.blank_form()
-        }
+            "friend": forms.blank_form(),
+        },
     )

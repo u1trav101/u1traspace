@@ -8,7 +8,7 @@ def get_profile_properties(user_id: int) -> dict | None:
 
     if not res:
         return None
-    
+
     return res[0]
 
 

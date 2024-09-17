@@ -10,7 +10,7 @@ def __setup() -> None:
             password=CONFIG.MARIADB_PASSWORD,
             host=CONFIG.MARIADB_HOST,
             port=CONFIG.MARIADB_PORT,
-            database=CONFIG.MARIADB_DATABASE
+            database=CONFIG.MARIADB_DATABASE,
         )
     except:
         print("Error connecting to MariaDB platform")

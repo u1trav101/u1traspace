@@ -14,14 +14,11 @@ def _login() -> Response | str:
         if auth.login_correct(login_form.email.data, login_form.password.data):
             # login successful
             query = Query()
-            user_id: int = query.select_users(email=login_form.email.data, limit=1)[0]["user_id"]
+            user_id: int = query.select_users(email=login_form.email.data, limit=1)[0][
+                "user_id"
+            ]
             session["user_id"] = str(user_id)
-            
+
             return redirect(url_for("user.page", user_id=user_id))
 
-    return render_template(
-        "auth/login.html",
-        forms = {
-            "login": login_form
-        }
-    )
+    return render_template("auth/login.html", forms={"login": login_form})

@@ -31,7 +31,7 @@ Limiter(
     app=app,
     key_func=get_remote_address,
     storage_uri=CONFIG.REDIS_BROKER_URL,
-    default_limits=["3 per second"]
+    default_limits=["3 per second"],
 )
 
 celery: Celery = celery_init_app(app)
