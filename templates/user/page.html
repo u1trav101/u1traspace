@@ -89,7 +89,7 @@
                             {% if is_friends == "pending" %}
                                 <button class="pmUser" disabled>message</button>
                             {% else %}
-                                <a href="{{ url_for('message.browse') }}?c={{ properties['user_id'] }}">
+                                <a href="{{ url_for('messages.browse') }}?c={{ properties['user_id'] }}">
                                     <button class="pmUser">message</button>
                                 </a>
                             {% endif %}

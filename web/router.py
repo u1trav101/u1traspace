@@ -31,7 +31,7 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     def conversation(ws, user_id) -> Response | None:
         return _conversation(user_id, ws)
 
-    app.register_blueprint(message_blueprint, url_prefix="/message")
+    app.register_blueprint(message_blueprint, url_prefix="/messages")
 
     # defining function to be called before each request is processed
     @app.before_request

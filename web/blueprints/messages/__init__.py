@@ -1,10 +1,10 @@
 from flask import Blueprint
 from werkzeug import Response
 from web.decorators import require_auth
-from web.blueprints.message.browse import _browse
+from web.blueprints.messages.browse import _browse
 
 
-message_blueprint = Blueprint("message", __name__)
+message_blueprint = Blueprint("messages", __name__)
 
 
 @message_blueprint.route("/")
