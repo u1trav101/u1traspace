@@ -39,8 +39,10 @@ class CONFIG:
     MARIADB_DATABASE: str = "u1traspace"
     SELECT_LIMIT: int = 999
 
-    REDIS_BROKER_URL: str = "redis://127.0.0.1:6379/0"
-    REDIS_RESULT_URL: str = "redis://127.0.0.1:6379/1"
+    REDIS_HOST: str = "127.0.0.1"
+    REDIS_PORT: int = 6379
+    REDIS_BROKER_URL: str = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
+    REDIS_RESULT_URL: str = f"redis://{REDIS_HOST}:{REDIS_PORT}/1"
 
     CDN_URI: str = "https://cdn.u1trav101.net/u1traspace"
     INSECURE_CDN_URI: str = "http://cdn.u1trav101.net/ultraspace"
@@ -57,8 +59,10 @@ class CONFIG:
         "ping_interval": 25,  # seconds (s)
     }
 
-    CACHE_TYPE: str = "SimpleCache"
+    CACHE_TYPE: str = "RedisCache"
     CACHE_DEFAULT_TIMEOUT: int = 300  # seconds
+    CACHE_REDIS_HOST = REDIS_HOST
+    CACHE_REDIS_PORT = REDIS_PORT
 
     S3_ACCESS_ID: str = (
         client.secrets().get("fa54bc8d-5d1f-43dc-9139-b17f002037ad").data.value
