@@ -6,7 +6,7 @@ from web.forms import blank_form
 import profile
 
 
-def _browse(user_id: int) -> Response | str:
+def browse(user_id: int) -> Response | str:
     post_delete_form = blank_form()
 
     if ("user_id") in session:

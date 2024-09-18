@@ -3,7 +3,7 @@ from web.forms import input_form
 import profile
 
 
-def _browse() -> str:
+def browse() -> str:
     pagination: tuple = profile.users_paginator()
 
     return render_template(

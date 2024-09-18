@@ -8,7 +8,7 @@ import profile
 import messaging
 
 
-def _page(user_id: int) -> Response | str | tuple:
+def page(user_id: int) -> Response | str | tuple:
     comment_form: FlaskForm = forms.input_form(textarea=True)
     comment_delete_form: FlaskForm = forms.blank_form()
     query = Query()

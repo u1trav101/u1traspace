@@ -10,15 +10,18 @@ from markdown import markdown
 from celery import Celery
 from tasks import celery_init_app
 from config import CONFIG
+from web.blueprints.auth import AuthBlueprint
+from web.blueprints.friends import FriendsBlueprint
+from web.blueprints.messages import MessagesBlueprint
+from web.blueprints.user import UserBlueprint
 from web.formatting import regex_replace
 from web.router import router
 from web.blueprints import (
-    auth_blueprint,
-    user_blueprint,
-    blog_blueprint,
-    friend_blueprint,
-    message_blueprint,
-    conversation as _conversation,
+    AuthBlueprint,
+    UserBlueprint,
+    BlogBlueprint,
+    FriendsBlueprint,
+    MessagesBlueprint,
 )
 from web.decorators import (
     before_request as _before_request,
@@ -56,22 +59,22 @@ def create_app():
     app.add_template_filter(markdown)
 
     # building blueprints
-    app.register_blueprint(auth_blueprint, url_prefix="/auth")
+    auth_blueprint = AuthBlueprint(cache).get_blueprint()
+    user_blueprint = UserBlueprint().get_blueprint()
+    blog_blueprint = BlogBlueprint().get_blueprint()
+    friends_blueprint = FriendsBlueprint().get_blueprint()
+    messages_blueprint = MessagesBlueprint(sock).get_blueprint()
+
     user_blueprint.register_blueprint(blog_blueprint, url_prefix="<user_id>/blog")
-    user_blueprint.register_blueprint(friend_blueprint, url_prefix="<user_id>/friends")
+    user_blueprint.register_blueprint(friends_blueprint, url_prefix="<user_id>/friends")
+
+    app.register_blueprint(auth_blueprint, url_prefix="/auth")
     app.register_blueprint(user_blueprint, url_prefix="/user")
+    app.register_blueprint(messages_blueprint, url_prefix="/messages")
 
     @app.before_request
     def before_request() -> None:
         return _before_request()
-
-    @sock.route("/<user_id>", message_blueprint)
-    @validate_url_vars
-    @require_auth
-    def conversation(ws, user_id) -> Response | None:
-        return _conversation(user_id, ws)
-
-    app.register_blueprint(message_blueprint, url_prefix="/messages")
 
     app = router(app)
     app.app_context().push()

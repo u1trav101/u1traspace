@@ -1,7 +1,7 @@
 from flask import redirect, url_for
 from werkzeug import Response
-from profile import random
+import profile
 
 
-def _random() -> Response:
-    return redirect(url_for("user.page", user_id=random()["user_id"]))
+def random() -> Response:
+    return redirect(url_for("user.page", user_id=profile.random()["user_id"]))

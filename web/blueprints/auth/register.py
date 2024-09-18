@@ -6,7 +6,7 @@ import web.forms as forms
 import auth
 
 
-def _register() -> Response | str:
+def register() -> Response | str:
     register_form: FlaskForm = forms.register_form()
 
     if register_form.validate_on_submit():

@@ -7,7 +7,7 @@ import web.forms as forms
 import auth
 
 
-def _login() -> Response | str:
+def login() -> Response | str:
     login_form: FlaskForm = forms.login_form()
 
     if login_form.validate_on_submit():
