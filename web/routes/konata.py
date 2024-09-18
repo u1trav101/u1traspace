@@ -8,4 +8,4 @@ def konata() -> Response:
     else:
         session["konata"] = True
 
-    return redirect(url_for("user-list"))
+    return redirect(url_for("user.browse"))

@@ -37,7 +37,7 @@
                     {% if ("user_id") in session %}
                     <div class="nav-middle">
                         <a href="{{ url_for('user.page', user_id=session['user_id']) }}">profile</a>
-                        <a href="{{ url_for('message.browse') }}">messages</a>
+                        <a href="{{ url_for('messages.browse') }}">messages</a>
                     </div>
                 {% endif %}
                     <div class="nav-right">

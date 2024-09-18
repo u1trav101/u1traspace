@@ -3,7 +3,9 @@ from db import Query
 
 def get_blogpost(user_id: int, post_id: int) -> dict | None:
     query = Query()
-    res: list[dict] | list[None] = query.select_blogs(author_id=user_id, blog_id=post_id)
+    res: list[dict] | list[None] = query.select_blogs(
+        author_id=user_id, blog_id=post_id
+    )
 
     if not res:
         return None
@@ -27,5 +29,5 @@ def get_all_user_blogposts(author_id: int) -> list[dict] | None:
 
     if not res:
         return None
-    
+
     return res

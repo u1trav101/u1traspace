@@ -18,18 +18,16 @@ def search() -> Response | str | tuple:
     if request.method == "GET":
         return render_template(
             "search.html",
-            results = None,
-            search_term = None,
-            search_terms = None,
-            forms = {
-                "search": search_form
-            }
+            results=None,
+            search_term=None,
+            search_terms=None,
+            forms={"search": search_form},
         )
 
     corpus: str | None = search_form.corpus.data
     if not corpus:
         return redirect(url_for("search"))
-    
+
     results: dict[str, list] | None = None
     if corpus.replace(" ", "") not in CONFIG.BLACKLISTED_SEARCHES:
         results = search_db(corpus)
@@ -41,10 +39,8 @@ def search() -> Response | str | tuple:
 
     return render_template(
         "search.html",
-        results = results,
-        search_term = search_term,
-        search_terms = search_terms,
-        forms = {
-            "search": search_form
-        }
+        results=results,
+        search_term=search_term,
+        search_terms=search_terms,
+        forms={"search": search_form},
     )

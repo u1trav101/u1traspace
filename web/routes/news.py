@@ -8,8 +8,5 @@ def news() -> Response | str:
     blogs: list[dict] | None = None
 
     blogs = query.select_blogs(limit=20)
-    
-    return render_template(
-        "news.html",
-        posts = blogs
-    )
+
+    return render_template("news.html", posts=blogs)

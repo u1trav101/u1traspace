@@ -30,12 +30,12 @@
                             {% endif %}
                             {% if blogpost is defined %}
                                 {% if "blog/" + blogpost["blog_id"] | string in request.path %}
-                                    <a class="active" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blogpost['blog_id']) }}">{{ blogpost["title"] | truncate(40) }}</a>/
+                                    <a class="active" href="{{ url_for('user.blog.post', user_id=properties['user_id'], post_id=blogpost['blog_id']) }}">{{ blogpost["title"] | truncate(40) }}</a>
                                 {% endif %}
                             {% endif %}
                         </div>
                         <div>
-                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('user.friends', user_id=properties['user_id']) }}">friends</a>
+                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('user.friends.browse', user_id=properties['user_id']) }}">friends</a>
                         </div>
                     </div>
                 </h2>
@@ -61,13 +61,6 @@
                 <a class="settings" href="{{ url_for('preferences') }}">
                     <img src="{{ cdn_uri }}/static/img/gears.gif" alt="user preferences">
                 </a>
-            {% elif ("user_id") in session and session["user_id"] | int != properties["user_id"] %}
-                {% if not is_friends %}
-                    <form class="add-friend" action="{{ url_for('user.add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
-                        {{ forms.friend.hidden_tag() }}
-                        <input id="friend" name="friend" type="submit" value="send friend request">
-                    </form>
-                {% endif %}
             {% endif %}
         </section>
         {% block main %}

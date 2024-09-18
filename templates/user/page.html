@@ -83,17 +83,22 @@
                 </div>
                 <div class="interaction">
                     {% if (session.get("user_id") != None) and (session.get("user_id") | int != properties["user_id"] | int) %}
-                        {% if not session.get('user_id') | int in friends | map(attribute="recipient_id")%}
-                            <form action="{{ url_for('user.add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
+                        {% if is_friends %}
+                            <button disabled>send friend request</button>
+
+                            {% if is_friends == "pending" %}
+                                <button class="pmUser" disabled>message</button>
+                            {% else %}
+                                <a href="{{ url_for('messages.browse') }}?c={{ properties['user_id'] }}">
+                                    <button class="pmUser">message</button>
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <form action="{{ url_for('user.friends.add', user_id=properties['user_id']) }}" method="post" novalidate>
                                 {{ forms.friend.hidden_tag() }}
                                 <input id="friend" name="friend" type="submit" value="send friend request">
                             </form>
                             <button disabled>message</button>
-                        {% else %}
-                            <button disabled>send friend request</button>
-                            <a href="{{ url_for('user.add_friend', user_id=properties['user_id']) }}">
-                                <button class="pmUser">message</button>
-                            </a>
                         {% endif %}
                     {% else %}
                         <button disabled>send friend request</button>

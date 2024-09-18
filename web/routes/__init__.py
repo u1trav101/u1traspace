@@ -6,4 +6,3 @@ from web.routes.set_timezone import set_timezone
 from web.routes.rss import rss
 from web.routes.rules import rules
 from web.routes.preferences import preferences
-from web.routes.remove_friend import remove_friend

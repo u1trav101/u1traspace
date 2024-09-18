@@ -1,47 +1,19 @@
-from flask import Flask
-from flask_cors import CORS
-from flask_limiter.util import get_remote_address
-from flask_sock import Sock
-from flask_limiter import Limiter
-from werkzeug.middleware.proxy_fix import ProxyFix
-from markdown import markdown
 from celery import Celery
-from tasks import celery_init_app
-from web import declare_routes, regex_replace
+from flask import Flask
+from flask_caching import Cache
+from flask_sock import Sock
 from config import CONFIG
 from setup import create_dirs
+from web import create_app
 
 # create necessary directories
 create_dirs()
 
-# instialising wsgi app instance
-app: Flask = Flask("u1traspace", static_url_path="")
-
-# applying configs from config class
-app.config.from_object(CONFIG)
-
-# fixing rate_limiter key_func if in prod (deployed behind reverse proxy)
-if not CONFIG.DEBUG:
-    ProxyFix(app.wsgi_app, x_for=CONFIG.NUM_OF_PROXIES)
-
-# initialising flask extensions
-CORS(app)
-sock = Sock(app)
-Limiter(
-    app=app,
-    key_func=get_remote_address,
-    storage_uri=CONFIG.REDIS_BROKER_URL,
-    default_limits=["3 per second"]
-)
-
-celery: Celery = celery_init_app(app)
-
-# declaring jinja filters
-app.add_template_filter(regex_replace)
-app.add_template_filter(markdown)
-
-# declaring the app URL endpoints
-declare_routes(app, sock)
+contexts = create_app()
+app: Flask = contexts[0]
+sock: Sock = contexts[1]
+cache: Cache = contexts[2]
+celery: Celery = contexts[3]
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=CONFIG.PORT)

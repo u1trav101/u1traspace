@@ -1,0 +1,51 @@
+.pending {
+    border-top: 1px solid grey;
+    text-align: center;
+}
+
+.pending h4 {
+    margin: 10px 0;
+}
+
+.friends {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    border-top: 1px solid grey;
+}
+
+.friend {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.friend a {
+    display: flex;
+    flex-direction: column;
+
+    border: none;
+}
+
+.friend a span {
+    font-size: 3rem;
+}
+
+.friend input[type=submit], .friend button[type=submit] {
+    margin: 20px 0 0;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.actions .approve input, .actions .approve button {
+    margin-top: 20px;
+}
+
+.actions .deny input, .actions .deny button {
+    margin: 0;
+}

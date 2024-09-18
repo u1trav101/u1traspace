@@ -7,7 +7,7 @@ from web.overloads import render_template
 import web.forms as forms
 
 
-def _new(user_id: int) -> Response | str:
+def new(user_id: int) -> Response | str:
     new_blog_form: FlaskForm = forms.new_blog_form()
     if new_blog_form.validate_on_submit():
         query = Query()
@@ -18,9 +18,7 @@ def _new(user_id: int) -> Response | str:
 
     return render_template(
         "blog/new.html",
-        new_blog_form = new_blog_form,
-        properties = get_profile_properties(user_id),
-        forms = {
-            "new_blog": new_blog_form
-        }
+        new_blog_form=new_blog_form,
+        properties=get_profile_properties(user_id),
+        forms={"new_blog": new_blog_form},
     )

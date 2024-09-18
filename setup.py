@@ -9,8 +9,9 @@ DIRS: list[str] = [
     "./usercontent/img/rsz/32px",
     "./usercontent/audio",
     "./usercontent/css",
-    "/tmp/u1traspace"
+    "/tmp/u1traspace",
 ]
+
 
 def create_dirs() -> None:
     for directory in DIRS:
@@ -18,6 +19,7 @@ def create_dirs() -> None:
         with open(Path(Path(directory).resolve() / "stub").resolve(), "w") as stub:
             stub.write("stub")
             stub.close()
+
 
 if __name__ == "__main__":
     create_dirs()

@@ -1,0 +1,69 @@
+{% extends "/layouts/page.html" %}
+{% block props %}
+    <meta name="description" content="all of {{ properties['username'] }}'s friends">
+    <meta property="og:title" content="u1traspace - {{ properties['username'] }}'s friends">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url_for('user.friends.browse', user_id=properties['user_id'], _external=True, _scheme='https') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/friends/browse.css') }}">
+    <link rel="stylesheet" href="{{ cdn_uri }}/usercontent/css/{{ properties['user_id'] }}.css">
+    <link rel="canonical" href="{{ url_for('user.friends.browse', user_id=properties['user_id'], _external=True, _scheme='https') }}">
+    <title>u1traspace - {{ properties["username"] }}'s friends</title>
+{% endblock %}
+{% block main %}
+    <h3 class="header">{{ properties["username"] }}'s friends:</h3>
+    {% if ("user_id") in session and (session["user_id"] | int == properties["user_id"]) and friend_requests %}
+        <div class="pending">
+            <h4>friend requests:</h4>
+            <section class="friends">
+                {% for friend in friend_requests %}
+                    <a class="user" href="{{ url_for('user.page', user_id=friend['user_id']) }}">
+                        <object 
+                        data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" 
+                        type="image/webp"
+                        aria-label="{{ friend['username'] }}"
+                        width="200"
+                        height="200">
+                            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ friend['username'] }}">
+                        </object>
+                        <span>{{ friend["username"] }}</span>
+                        <div class="actions">
+                            <form class="approve" action="{{ url_for('user.friends.add', user_id=friend['sender_id']) }}" method="post" novalidate>
+                                {{ forms.friend.hidden_tag() }}
+                                <input id="friend" name="friend" type="submit" value="approve">
+                            </form>
+                            <form class="deny" action="{{ url_for('user.friends.remove', user_id=friend['sender_id']) }}" method="post" novalidate>
+                                {{ forms.friend.hidden_tag() }}
+                                <button id="friend" name="friend" type="submit" value="{{ friend['friend_id'] }}">deny</button>
+                            </form>
+                        </div>
+                    </a>
+                {% endfor %}
+            </section>
+        </div>
+    {% endif %}
+    {% if friends %}
+        <section class="friends">
+            {% for friend in friends %}
+                <div class="user friend">
+                    <a href="{{ url_for('user.page', user_id=friend['user_id']) }}">
+                        <object 
+                        data="{{ cdn_uri }}/usercontent/img/rsz/200px/{{ friend['user_id'] }}.webp" 
+                        type="image/webp"
+                        aria-label="{{ friend['username'] }}"
+                        width="200"
+                        height="200">
+                            <img src="{{ cdn_uri }}/usercontent/img/rsz/200px/default.webp" alt="{{ friend['username'] }}">
+                        </object>
+                        <span>{{ friend["username"] }}</span>
+                    </a>
+                    {% if ("user_id") in session and session["user_id"] | int == properties['user_id'] %}
+                        <form action="{{ url_for('user.friends.remove', user_id=friend['sender_id']) }}" method="post" novalidate>
+                            {{ forms.friend.hidden_tag() }}
+                            <button id="friend" name="friend" type="submit" value="{{ friend['friend_id'] }}">unfriend</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </section>
+    {% endif %}
+{% endblock %}
