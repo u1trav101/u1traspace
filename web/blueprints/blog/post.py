@@ -10,7 +10,7 @@ import messaging
 
 def _post(user_id: int, post_id: int) -> Response | str | tuple:
     comment_form: FlaskForm = forms.input_form(textarea=True)
-    delete_form: FlaskForm = forms.blank_form()
+    comment_delete_form: FlaskForm = forms.blank_form()
 
     if ("user_id") in session:
         if comment_form.validate_on_submit():
@@ -20,7 +20,7 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
 
             return redirect(url_for("user.blog.post", user_id=user_id, post_id=post_id))
 
-        elif delete_form.validate_on_submit():
+        elif comment_delete_form.validate_on_submit():
             comment_id: str | None = request.form.get("delete")
 
             if comment_id:
@@ -62,7 +62,7 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
         is_friends=profile.is_friends(user_id),
         forms={
             "comment": comment_form,
-            "delete_post": delete_form,
+            "delete_comment": comment_delete_form,
             "friend": forms.forms.blank_form(),
         },
     )
