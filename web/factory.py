@@ -61,7 +61,7 @@ def create_app():
     # building blueprints
     auth_blueprint = AuthBlueprint(cache).get_blueprint()
     user_blueprint = UserBlueprint().get_blueprint()
-    blog_blueprint = BlogBlueprint().get_blueprint()
+    blog_blueprint = BlogBlueprint(cache).get_blueprint()
     friends_blueprint = FriendsBlueprint().get_blueprint()
     messages_blueprint = MessagesBlueprint(sock).get_blueprint()
 
@@ -76,7 +76,7 @@ def create_app():
     def before_request() -> None:
         return _before_request()
 
-    app = router(app)
+    app = router(app, cache)
     app.app_context().push()
 
     return app, sock, cache, celery

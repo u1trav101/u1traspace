@@ -60,7 +60,8 @@ class CONFIG:
     }
 
     CACHE_TYPE: str = "RedisCache"
-    CACHE_DEFAULT_TIMEOUT: int = 300  # seconds
+    CACHE_DEFAULT_TIMEOUT: int = 300  # seconds (5 minutes)
+    CACHE_EXT_TIMEOUT: int = 10800  # seconds (3 hours)
     CACHE_REDIS_HOST = REDIS_HOST
     CACHE_REDIS_PORT = REDIS_PORT
 
