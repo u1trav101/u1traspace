@@ -31,7 +31,6 @@ def _post(user_id: int, post_id: int) -> Response | str | tuple:
                         url_for("user.blog.post", user=user_id, post_id=post_id)
                     )
 
-                print(comment_id)
                 query = Query()
                 comments: list[dict] = query.select_blog_comments(
                     comment_id=int(comment_id), limit=1
