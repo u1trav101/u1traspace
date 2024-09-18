@@ -9,6 +9,7 @@ def select_friends(
     limit: int,
     sender_id: int | None,
     recipient_id: int | None,
+    friend_id: int | None,
 ) -> list:
     params: list = []
     if approved is not None:
@@ -19,7 +20,16 @@ def select_friends(
         params.append(recipient_id)
     params.append(limit)
 
-    if (
+    if friend_id:
+        cur.execute(
+            """
+            SELECT * FROM friends
+            WHERE friend_id = ?
+            LIMIT 1;
+        """,
+            [friend_id],
+        )
+    elif (
         sender_id and not recipient_id
     ):  # if only sender_id is provided then only JOIN on recipient_id
         cur.execute(

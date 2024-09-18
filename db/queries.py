@@ -200,6 +200,7 @@ class _Query:
         limit: int = CONFIG.SELECT_LIMIT,
         sender_id: int | None = None,
         recipient_id: int | None = None,
+        friend_id: int | None = None,
     ) -> list:
         return friends.select_friends(
             self.cur,
@@ -209,6 +210,7 @@ class _Query:
             limit=limit,
             sender_id=sender_id,
             recipient_id=recipient_id,
+            friend_id=friend_id,
         )
 
     def insert_friend(

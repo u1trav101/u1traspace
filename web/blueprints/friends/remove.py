@@ -8,12 +8,20 @@ from db import Query
 def remove(user_id: int) -> Response:
     friend_form: FlaskForm = blank_form()
     if friend_form.validate_on_submit():
-        friend_id: str | None = request.form.get("friend")
-        if friend_id:
+        res: str | None = request.form.get("friend")
+        if res:
             try:
-                print(friend_id)
+                friend_id = int(res)
+
                 query = Query()
-                query.delete_friend(int(friend_id))
+                friends = query.select_friends(friend_id=friend_id)
+
+                if friends:
+                    friend = friends[0]
+                    if friend["sender_id"] == int(session["user_id"]) or friend[
+                        "recipient_id"
+                    ] == int(session["user_id"]):
+                        query.delete_friend(friend_id)
             except ValueError:
                 pass
 
