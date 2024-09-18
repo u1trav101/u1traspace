@@ -4,7 +4,7 @@ celery==5.4.0
 feedgen==0.9.0
 Flask==2.3.2
 flask_caching==2.3.0
-Flask_Cors==4.0.1
+Flask_Cors==4.0.2
 flask_limiter==3.8.0
 flask_paginate==2022.1.8
 flask_sock==0.7.0
