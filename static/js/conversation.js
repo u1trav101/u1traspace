@@ -1,7 +1,7 @@
 let socket = null;
 let messages = {};
 let messagesDiv = null;
-let renderedMessages = 0;
+let renderedMessages = {};
 let messageCounts = {};
 let recipientID = null;
 let avatarImages = {};
@@ -9,7 +9,7 @@ let avatarImages = {};
 
 const createSocket = recipientID => {
     userID = recipientID
-    if (socket) { 
+    if (socket) {
         if (socket.url.includes(`/messages/${recipientID}`)) return;
         else {
             socket.close()
@@ -19,8 +19,9 @@ const createSocket = recipientID => {
 
     messages = [];
     messagesDiv = document.getElementById(`messages-${recipientID}`)
-    renderedMessages = 0;
-    
+
+    if (!renderedMessages[userID]) renderedMessages[[userID]] = 0;
+
     socket = new WebSocket(`/messages/${recipientID}`);
     socket.onopen = (event) => {
         console.log(`WebSocket opened on /messages/${recipientID}`);
@@ -38,7 +39,7 @@ const createSocket = recipientID => {
 
 const refreshMessages = () => {
     console.log("Refreshing messages...");
-    
+
     socket.send(JSON.stringify({
         type: "poll",
         resource: "messages"
@@ -54,7 +55,7 @@ const sendMessage = textarea => {
             resource: "messages",
             data: textarea.value
         }));
-    
+
         textarea.value = "";
     }
 }
@@ -69,10 +70,10 @@ const receiveMessage = event => {
         }
     }
     else if (msg.type === "post") {
-        switch(msg.resource) {
+        switch (msg.resource) {
             case "messages":
                 console.log("Receiving messages...");
-                
+
                 if (msg.data.constructor != Object) {
                     messages = messages.concat(msg.data);
                 } else {
@@ -83,7 +84,7 @@ const receiveMessage = event => {
                 messageCounts[userID] = messages[messages.length]
 
                 break;
-            
+
             default:
                 break;
         }
@@ -93,9 +94,9 @@ const receiveMessage = event => {
 const renderAvatars = (userID) => {
     console.log("Rendering profile pictures...")
     const avatarElms = document.getElementsByClassName(`avatar ${userID}`);
-    
+
     for (let i = 0; i < avatarElms.length; i++) {
-        avatarElms[i].setAttribute("src", avatarImages[userID] ? 
+        avatarElms[i].setAttribute("src", avatarImages[userID] ?
             `https://cdn.u1trav101.net/u1traspace/usercontent/img/rsz/100px/${userID}.webp` :
             "https://cdn.u1trav101.net/u1traspace/usercontent/img/rsz/100px/default.webp"
         );
@@ -103,26 +104,26 @@ const renderAvatars = (userID) => {
 }
 
 const avatarExists = async (userID, callback) => {
-    fetch(`https://cdn.u1trav101.net/u1traspace/usercontent/img/rsz/100px/${userID}.webp`, { 
+    fetch(`https://cdn.u1trav101.net/u1traspace/usercontent/img/rsz/100px/${userID}.webp`, {
         method: "head",
         mode: "cors",
         headers: {
             "Access-Control-Allow-Origin": "*"
         }
     })
-    .then(status => {
-        callback(status.ok);
-    })
-    .catch(() => {
-        callback(true);
-    });
-  }
+        .then(status => {
+            callback(status.ok);
+        })
+        .catch(() => {
+            callback(true);
+        });
+}
 
 const renderMessages = () => {
     if ((!messageCounts[userID]) || messages.length > messageCounts[userID]) {
         console.log("Rendering...");
 
-        for (let i = renderedMessages; i < messages.length; i++) {
+        for (let i = renderedMessages[userID]; i < messages.length; i++) {
             // creating new elements
             const newMessage = document.createElement("div");
             const avatar = document.createElement("img"); // checking whether the message author has a profile picture
@@ -136,7 +137,7 @@ const renderMessages = () => {
                     avatarExists(`${messages[i]["user_id"]}`, exists => {
                         avatarImages[messages[i]["user_id"]] = exists;
                         console.log(`User ${messages[i]["user_id"]} ${exists ? "has" : "doesn't have"} a profile picture.`);
-                        
+
                         renderAvatars(messages[i]["user_id"]);
                     });
                 }
@@ -148,7 +149,7 @@ const renderMessages = () => {
             const date = document.createTextNode(`at ${messages[i]["date"]}`);
             const corpus = document.createElement("p");
             corpus.innerHTML = messages[i]["corpus"];
-            
+
             // applying classes to new elements
             avatar.classList = `avatar ${messages[i]["user_id"]}`;
             newMessage.classList = "message";
@@ -156,7 +157,7 @@ const renderMessages = () => {
             right.classList = "right"
             author.classList = "username";
             corpus.classList = "corpus";
-    
+
             // organising new element tree
             top.appendChild(author);
             top.appendChild(date);
@@ -164,13 +165,13 @@ const renderMessages = () => {
             right.appendChild(corpus)
             newMessage.appendChild(avatar);
             newMessage.appendChild(right);
-    
+
             // rendering element
             messagesDiv.appendChild(newMessage);
-    
+
             // incrementing counter of rendered messages
-            renderedMessages++;
-    
+            renderedMessages[userID]++
+
             // scrolling to bottom
             messagesDiv.scrollTo(0, messagesDiv.scrollHeight);
         }
