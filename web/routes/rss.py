@@ -1,16 +1,16 @@
-from flask import url_for, make_response, session
+from flask import url_for, make_response
 from werkzeug import Response
 from feedgen.feed import FeedGenerator
-from datetime import datetime
-from zoneinfo import ZoneInfo
 from web.formatting import epoch_to_readable
 from db import Query
 from config import CONFIG
+from web.utils import get_image_size
 
 
 def rss(request: str) -> Response | str | tuple:
     fg: FeedGenerator = FeedGenerator()
-    fg.logo(CONFIG.CDN_URI + "/static/favicon.gif")
+    fg.logo(CONFIG.CDN_URI + "/static/favicon.ico")
+
     query = Query()
     posts: list | None = None
     author: str | None = None
@@ -47,20 +47,34 @@ def rss(request: str) -> Response | str | tuple:
         fg.description(f"all of {author}'s blogposts on u1traspace")
 
     for post in posts:
+        fe = fg.add_entry()
+
         blog_url = url_for(
             "user.blog.post",
             user_id=post["author_id"],
             post_id=post["blog_id"],
             _external=True,
         )
-        fe = fg.add_entry()
+        image_size = get_image_size(
+            f"{CONFIG.CDN_URI}/usercontent/img/rsz/200px/{post['author_id']}.webp"
+        )
+
         fe.id(blog_url)
         fe.link(href=blog_url)
-        fe.content(content=post["corpus"])
-        fe.enclosure(
-            url=f"{CONFIG.CDN_URI}/usercontent/img/rsz/200px/{post['author_id']}.webp",
-            type="image/webp",
-        )
+        fe.content(post["corpus"], type="CDATA")
+
+        if image_size > 0:
+            fe.enclosure(
+                url=f"{CONFIG.CDN_URI}/usercontent/img/rsz/200px/{post['author_id']}.webp",
+                type="image/webp",
+                length=str(image_size),
+            )
+        else:
+            fe.enclosure(
+                url=f"{CONFIG.CDN_URI}/usercontent/img/rsz/200px/default.webp",
+                type="image/webp",
+                length="18354",
+            )
 
         if request == "all":
             fe.author(
@@ -68,7 +82,6 @@ def rss(request: str) -> Response | str | tuple:
                 email="enquiries@u1trav101.net",
             )
             fe.title(post["title"])
-
         else:
             fe.author(
                 name=f"{author} [{post['author_id']}]", email="enquiries@u1trav101.net"
@@ -77,7 +90,7 @@ def rss(request: str) -> Response | str | tuple:
 
         fe.published(epoch_to_readable(post["date"], obj=True))
 
-    rss_str = fg.rss_str(pretty=True)
+    rss_str = fg.atom_str(pretty=True)
     response = make_response(rss_str)
     response.headers.set("Content-Type", "application/rss+xml")
 
