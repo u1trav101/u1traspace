@@ -223,7 +223,7 @@ class _Query:
             self.cur, sender_id=sender_id, recipient_id=recipient_id, approved=approved
         )
 
-    def remove_friend(self, friend_id: int) -> None:
+    def delete_friend(self, friend_id: int) -> None:
         friends.delete_friend(self.cur, friend_id=friend_id)
 
     # works on messages table

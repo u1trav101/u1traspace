@@ -94,7 +94,7 @@
                                 </a>
                             {% endif %}
                         {% else %}
-                            <form action="{{ url_for('user.add_friend', user_id=properties['user_id']) }}" method="post" novalidate>
+                            <form action="{{ url_for('user.friends.add', user_id=properties['user_id']) }}" method="post" novalidate>
                                 {{ forms.friend.hidden_tag() }}
                                 <input id="friend" name="friend" type="submit" value="send friend request">
                             </form>

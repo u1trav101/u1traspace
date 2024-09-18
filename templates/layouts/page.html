@@ -35,7 +35,7 @@
                             {% endif %}
                         </div>
                         <div>
-                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('user.friends', user_id=properties['user_id']) }}">friends</a>
+                            /<a class="friends-crumb {{ 'active' if 'friends' in request.path }}" href="{{ url_for('user.friends.browse', user_id=properties['user_id']) }}">friends</a>
                         </div>
                     </div>
                 </h2>

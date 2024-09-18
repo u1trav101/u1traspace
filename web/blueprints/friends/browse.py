@@ -4,15 +4,15 @@ from web.forms import blank_form
 import profile
 
 
-def _friends(user_id: int) -> Response | str:
+def browse(user_id: int) -> Response | str:
     properties: dict = profile.get_profile_properties(user_id)
 
-    template: str = "user/friends.html"
+    template: str = "friend/browse.html"
     match properties["layout"]:
         case "twitter":
-            template = "twitter/user/friends.html"
+            template = "twitter/friend/browse.html"
         case "myspace":
-            template = "myspace93/user/friends.html"
+            template = "myspace93/friend/browse.html"
 
     return render_template(
         template,

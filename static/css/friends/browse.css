@@ -32,7 +32,7 @@
     font-size: 3rem;
 }
 
-.friend input[type=submit] {
+.friend input[type=submit], .friend button[type=submit] {
     margin: 20px 0 0;
 }
 
@@ -42,10 +42,10 @@
     align-items: center;
 }
 
-.actions .approve input {
+.actions .approve input, .actions .approve button {
     margin-top: 20px;
 }
 
-.actions .deny input {
+.actions .deny input, .actions .deny button {
     margin: 0;
 }

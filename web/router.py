@@ -7,6 +7,7 @@ from web.blueprints import (
     blog_blueprint,
     message_blueprint,
     user_blueprint,
+    friend_blueprint,
     conversation as _conversation,
 )
 from web.decorators import (
@@ -21,6 +22,7 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     # registering blueprints
     app.register_blueprint(auth_blueprint, url_prefix="/auth")
     user_blueprint.register_blueprint(blog_blueprint, url_prefix="<user_id>/blog")
+    user_blueprint.register_blueprint(friend_blueprint, url_prefix="<user_id>/friends")
     app.register_blueprint(user_blueprint, url_prefix="/user")
 
     @sock.route("/<user_id>", message_blueprint)
@@ -50,12 +52,6 @@ def declare_routes(app: Flask, sock: Sock) -> None:
     @require_auth
     def preferences() -> Response | str:
         return routes.preferences()
-
-    @app.route("/remove-friend/<user_id>", methods=["POST"])
-    @require_auth
-    @validate_url_vars
-    def remove_friend(user_id: int) -> Response:
-        return routes.remove_friend(user_id)
 
     @app.route("/")
     def index() -> str:

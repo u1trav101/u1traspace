@@ -40,7 +40,9 @@ def validate_url_vars(func: Callable) -> Callable:
             try:
                 kwargs["friend_id"] = int(kwargs["friend_id"])
             except ValueError:
-                return redirect(url_for("user.friends", user_id=session["user_id"]))
+                return redirect(
+                    url_for("user.friends.browse", user_id=session["user_id"])
+                )
 
         return func(*args, **kwargs)
 
