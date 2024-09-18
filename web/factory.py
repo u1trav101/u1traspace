@@ -4,16 +4,11 @@ from flask_caching import Cache
 from flask_limiter.util import get_remote_address
 from flask_sock import Sock
 from flask_limiter import Limiter
-from werkzeug import Response
 from werkzeug.middleware.proxy_fix import ProxyFix
 from markdown import markdown
 from celery import Celery
 from tasks import celery_init_app
 from config import CONFIG
-from web.blueprints.auth import AuthBlueprint
-from web.blueprints.friends import FriendsBlueprint
-from web.blueprints.messages import MessagesBlueprint
-from web.blueprints.user import UserBlueprint
 from web.formatting import regex_replace
 from web.router import router
 from web.blueprints import (
@@ -25,8 +20,6 @@ from web.blueprints import (
 )
 from web.decorators import (
     before_request as _before_request,
-    validate_url_vars,
-    require_auth,
 )
 
 
