@@ -3,11 +3,10 @@ from flask import Flask
 from flask_caching import Cache
 from flask_sock import Sock
 from config import CONFIG
-from setup import create_dirs
+from setup import setup
 from web import create_app
 
-# create necessary directories
-create_dirs()
+setup()
 
 contexts = create_app()
 app: Flask = contexts[0]

@@ -1,5 +1,7 @@
 from pathlib import Path
 from os import makedirs
+from config.config import CONFIG
+import tasks
 
 
 DIRS: list[str] = [
@@ -13,6 +15,13 @@ DIRS: list[str] = [
 ]
 
 
+def setup() -> None:
+    create_dirs()
+    if not CONFIG.DEBUG:
+        tasks.sync_static()
+
+
+# create necessary directories
 def create_dirs() -> None:
     for directory in DIRS:
         makedirs(Path(directory).resolve(), exist_ok=True)

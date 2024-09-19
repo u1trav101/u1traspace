@@ -7,7 +7,7 @@ def cleanup(file_path: str) -> None:
     os.remove(file_path)
 
 
-@shared_task()
+@shared_task
 def transcode_and_upload_image(
     file_path: str, usercontent_dir: str, user_id: int, size: int
 ) -> None:
