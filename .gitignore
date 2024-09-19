@@ -7,6 +7,7 @@ db_*/
 .nix-shell/
 usercontent/
 .Trash-1000/
+logs/
 
 .bitwarden-access-token
 chiyo.ini
@@ -16,3 +17,4 @@ dump.rdb
 minio
 mc
 *DS_Store*
+.stub
