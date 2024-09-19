@@ -17,7 +17,7 @@ client: BitwardenClient = BitwardenClient(
     )
 )
 
-client.access_token_login(open(".bitwarden-access-token", "r").readline().strip())
+client.access_token_login(Path("config/.bitwarden-access-token").read_text().strip())
 
 
 class CONFIG:
