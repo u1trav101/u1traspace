@@ -33,21 +33,11 @@ def sync_static():
         local_mtime = datetime.fromtimestamp(getmtime(local_file.resolve())).astimezone(
             timezone.utc
         )
-
         remote_mtime = file.get("LastModified")
 
         if local_mtime.timestamp() > remote_mtime.timestamp():
-            log.write(
-                __name__,
-                f"{file.get("Key")} is out of date. uploading local version...",
-            )
-
+            log.write(__name__, f"{file.get("Key")} is out of date")
             upload(local_file.resolve(), file.get("Key"))
-
-            log.write(
-                __name__,
-                f"{file.get("Key")} is out of date. uploading local version... DONE",
-            )
-
     log.write(__name__, "checking modification dates of local static files... DONE")
+
     log.write(__name__, "syncing static files with cdn... DONE")

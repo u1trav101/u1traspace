@@ -22,6 +22,7 @@ def setup() -> None:
     create_dirs()
     if not CONFIG.DEBUG:
         tasks.sync_static()
+    log.write(__name__, "setting up... DONE")
 
 
 # create necessary directories
