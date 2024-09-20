@@ -12,7 +12,7 @@ def login_correct(email: str, input_password: str) -> bool:
     if check_password_hash(user_rows[0]["password"], input_password):
         log.write(
             __name__,
-            f"{user_rows[0]["password"]}[{user_rows[0]["user_id"]}] authenticated...",
+            f"{user_rows[0]["username"]}[{user_rows[0]["user_id"]}] authenticated...",
         )
         query.update_last_seen(user_rows[0]["user_id"])
         return True
