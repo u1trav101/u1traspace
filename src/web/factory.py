@@ -21,9 +21,12 @@ from web.blueprints import (
 from web.decorators import (
     before_request as _before_request,
 )
+import log
 
 
 def create_app():
+    log.write(__name__, "building application...")
+
     # instialising wsgi app instance
     app: Flask = Flask("u1traspace", static_url_path="")
 
@@ -71,5 +74,7 @@ def create_app():
 
     app = router(app, cache)
     app.app_context().push()
+
+    log.write(__name__, "building application... DONE")
 
     return app, sock, cache, celery

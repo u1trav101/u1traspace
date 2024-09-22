@@ -1,5 +1,8 @@
 from pathlib import Path
 from os import makedirs
+from config.config import CONFIG
+import log
+import tasks
 
 
 DIRS: list[str] = [
@@ -10,15 +13,29 @@ DIRS: list[str] = [
     "./usercontent/audio",
     "./usercontent/css",
     "/tmp/u1traspace",
+    "../logs",
 ]
 
 
+def setup() -> None:
+    log.write(__name__, "setting up...")
+    create_dirs()
+    if not CONFIG.DEBUG:
+        tasks.sync_static()
+    log.write(__name__, "setting up... DONE")
+
+
+# create necessary directories
 def create_dirs() -> None:
+    log.write(__name__, "creating directories...")
+
     for directory in DIRS:
         makedirs(Path(directory).resolve(), exist_ok=True)
-        with open(Path(Path(directory).resolve() / "stub").resolve(), "w") as stub:
+        with open(Path(Path(directory).resolve() / ".stub").resolve(), "w") as stub:
             stub.write("stub")
             stub.close()
+
+    log.write(__name__, "creating directories... DONE")
 
 
 if __name__ == "__main__":

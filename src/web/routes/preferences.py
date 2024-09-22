@@ -1,4 +1,4 @@
-from flask import redirect, session, url_for, request
+from flask import redirect, session, request
 from werkzeug import Response
 from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
