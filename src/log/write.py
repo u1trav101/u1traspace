@@ -16,7 +16,11 @@ def write(module: str, msg: str) -> None:
     except FileNotFoundError:
         pass
 
-    with open(LOG_PATH, "a") as log:
-        log.write(
-            f"{'\n' if number_of_lines != 0 else ''}({time_str}) [{module}] {msg}"
-        )
+    try:
+        with open(Path(LOG_PATH).resolve(), "a") as log:
+            log.write(
+                f"{'\n' if number_of_lines != 0 else ''}({time_str}) [{module}] {msg}"
+            )
+    except FileNotFoundError:
+        with open(Path(LOG_PATH).resolve(), "w") as log:
+            log.write(f"({time_str}) [{module}] {msg}")
