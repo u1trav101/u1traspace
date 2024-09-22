@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_caching import Cache
 from flask_limiter.util import get_remote_address
 from flask_sock import Sock
 from flask_limiter import Limiter
@@ -40,7 +39,6 @@ def create_app():
     # initialising flask extensions
     CORS(app)
     sock = Sock(app)
-    cache = Cache(app)
     Limiter(
         app=app,
         key_func=get_remote_address,
@@ -72,9 +70,9 @@ def create_app():
     def before_request() -> None:
         return _before_request()
 
-    app = router(app, cache)
+    app = router(app)
     app.app_context().push()
 
     log.write(__name__, "building application... DONE")
 
-    return app, sock, cache, celery
+    return app, sock, celery
