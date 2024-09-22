@@ -1,18 +1,14 @@
 from flask import Blueprint
-from flask_caching import Cache
 from werkzeug import Response
-from config.config import CONFIG
 from web.decorators import require_auth, require_ownership, validate_url_vars
 from web.blueprints.blog.browse import browse as _browse
 from web.blueprints.blog.post import post as _post
 from web.blueprints.blog.new import new as _new
-from web.utils import method_is_post
 
 
 class BlogBlueprint:
-    def __init__(self, cache) -> None:
+    def __init__(self) -> None:
         self.blueprint: Blueprint = Blueprint("blog", __name__)
-        self.cache: Cache = cache
 
         self._setup()
 
@@ -28,7 +24,6 @@ class BlogBlueprint:
             return _post(user_id, post_id)
 
         @self.blueprint.route("/new", methods=["GET", "POST"])
-        @self.cache.cached(timeout=CONFIG.CACHE_EXT_TIMEOUT, unless=method_is_post)
         @validate_url_vars
         @require_auth
         @require_ownership

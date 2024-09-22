@@ -55,9 +55,9 @@ def create_app():
     app.add_template_filter(markdown)
 
     # building blueprints
-    auth_blueprint = AuthBlueprint(cache).get_blueprint()
+    auth_blueprint = AuthBlueprint().get_blueprint()
     user_blueprint = UserBlueprint().get_blueprint()
-    blog_blueprint = BlogBlueprint(cache).get_blueprint()
+    blog_blueprint = BlogBlueprint().get_blueprint()
     friends_blueprint = FriendsBlueprint().get_blueprint()
     messages_blueprint = MessagesBlueprint(sock).get_blueprint()
 

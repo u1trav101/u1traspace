@@ -7,7 +7,6 @@ from web.decorators import (
     require_auth,
 )
 import web.routes as routes
-from web.utils import method_is_post
 
 
 def router(app: Flask, cache: Cache) -> Flask:
@@ -43,7 +42,6 @@ def router(app: Flask, cache: Cache) -> Flask:
         return routes.news()
 
     @app.route("/search", methods=["GET", "POST"])
-    @cache.cached(timeout=CONFIG.CACHE_EXT_TIMEOUT, unless=method_is_post)
     def search() -> Response | str | tuple:
         return routes.search()
 
