@@ -29,22 +29,25 @@
             <nav class="navbar glNav">
                 <div class="nav-top">
                     <div class="nav-left">
-                        <a href="{{ url_for('index') }}"><h1>u1traspace</h1></a>
-                        <a href="{{ url_for('user.browse') }}">users</a>
-                        <a href="{{ url_for('news') }}">posts</a>
-                        <a href="{{ url_for('search') }}">search</a>                        
+                        <div class="title">
+                            <a href="{{ url_for('index') }}"><h1>u1traspace</h1></a>
+                            <button onclick="toggleNav();" class="menu">&#8964;</button>
+                        </div>
+                        <a class="nav-link" href="{{ url_for('user.browse') }}">users</a>
+                        <a class="nav-link" href="{{ url_for('news') }}">posts</a>
+                        <a class="nav-link" href="{{ url_for('search') }}">search</a>                        
                     </div>
                     {% if ("user_id") in session %}
-                    <div class="nav-middle">
-                        <a href="{{ url_for('user.page', user_id=session['user_id']) }}">profile</a>
-                        <a href="{{ url_for('messages.browse') }}">messages</a>
-                    </div>
-                {% endif %}
+                        <div class="nav-middle">
+                            <a class="nav-link" href="{{ url_for('user.page', user_id=session['user_id']) }}">profile</a>
+                            <a class="nav-link" href="{{ url_for('messages.browse') }}">messages</a>
+                        </div>
+                    {% endif %}
                     <div class="nav-right">
                         {% if ("user_id" in session) %}
-                            <a href="{{ url_for('auth.logout') }}">logout</a>
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">logout</a>
                         {% else %}
-                            <a href="{{ url_for('auth.login') }}">login</a>
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">login</a>
                         {% endif %}
                     </div>
                 </div>
@@ -57,16 +60,29 @@
     </main>
 </body>
 <script>
+    const navLinks = document.getElementsByClassName("nav-link");
+    let navOpen = false;
+    const inputs = document.getElementsByClassName("comment-input");
+
     // automatically adjusts the height of textarea elements to match their content
     const textAreaAdjust = (element) => {
         element.style.height = "auto";
         if (element.scrollHeight - 20 > 30) element.style.height = element.scrollHeight - 20 + "px";
     }
 
-    const elements = document.getElementsByClassName("comment-input");
-    for (let i in elements) {
-        textAreaAdjust(elements[i]);
-    }    
+    const toggleNav = () => {
+        for (let i in navLinks) {
+            navOpen ? 
+                navLinks[i].className = "nav-link" :
+                navLinks[i].className = "nav-link show";
+        }
+
+        navOpen = !navOpen;
+    }
+
+    for (let i in inputs) {
+        textAreaAdjust(inputs[i]);
+    }
 </script>
 {% if "timezone" not in session %}
     <script>
