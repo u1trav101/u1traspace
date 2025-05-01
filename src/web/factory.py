@@ -34,7 +34,8 @@ def create_app():
 
     # fixing rate_limiter key_func if in prod (deployed behind reverse proxy)
     if not CONFIG.DEBUG:
-        ProxyFix(app.wsgi_app, x_for=CONFIG.NUM_OF_PROXIES)
+        app.wsgi_app = ProxyFix(app.wsgi_app, x_for=CONFIG.NUM_OF_PROXIES)
+        app.config["SESSION_COOKIE_SECURE"] = True
 
     # initialising flask extensions
     CORS(app)
