@@ -139,8 +139,17 @@ input[type=submit]:hover, button[type=submit]:hover {
     margin-right: 20px;
 }
 
-.nav-left h1 {
+.nav-left .title {
+    display: flex;
+    flex-direction: row;
+}
+
+.title h1 {
     margin: 0;
+}
+
+.title .menu {
+    display: none;
 }
 
 .nav-middle, .nav-right {
@@ -252,4 +261,44 @@ input:checked + .slider:before {
 
 .avatar.twohundred.online {
     border: 2px solid lawngreen;
+}
+
+@media only screen and (max-width: 950px) {
+    .navbar a {
+        font-size: 2rem;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .nav-top, .nav-top div {
+        flex-direction: column;
+    }
+
+    .navbar a {
+        margin: 0;
+
+        font-size: 3rem;
+    }
+
+    .nav-link {
+        display: none;
+    }
+
+    .nav-link.show {
+        display: block;
+    }
+
+    .navbar .title a {
+        display: flex;
+    }
+
+    .navbar .menu {
+        all: unset;
+        position: absolute;
+        top: -50px;
+        right: 50px;
+        
+        cursor: pointer;
+        font-size: 6rem;
+    }
 }
